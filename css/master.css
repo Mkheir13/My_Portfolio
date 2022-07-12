@@ -1,63 +1,96 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat:400,400i,700");
+
 * {
-    padding: 0;
     margin: 0;
-    overflow: hidden;
+    padding: 0;
+    font-family: Montserrat, sans-serif;
+    list-style-type: none;
 }
 
 body {
-    background: #171738;
-    font-family: "JetBrains Mono ExtraLight", monospace;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    height: 98vh;
-    scroll-snap-type: y mandatory;
-}
-
-#name {
-    color: #fff;
-    font-size: 5em;
-    font-weight: normal;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-#title {
-    color: #fff;
-    font-size: 1.5em;
-    font-weight: normal;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 2%;
+    background: linear-gradient(29deg, rgb(41, 42, 47) 50%, rgb(19, 21, 25) 50.1%) fixed;
 }
 
 #container {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    flex-direction: row;
+    height: 100vh;
+    width: 100vw;
 }
 
-.btn {
-    background: #171738;
-    border: 1px solid #fff;
-    color: #fff;
-    padding: 10px;
-    font-size: 1.5em;
-    font-weight: normal;
+
+.box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: url("../images/kheir.png") no-repeat center fixed;
+    background-size: auto 100%;
+    border: 3px solid #fff;
+    border-radius: 50%;
+    padding: 150px;
+    transform: scale(1);
+}
+
+
+.box:hover {
+    transform: scale(1.1);
     cursor: pointer;
-    transition: 0.3s;
-    margin: 10px;
+}
+
+#menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 40%;
+    z-index: 1;
+}
+
+#menu ul {
+    font-size: 1.5em;
+    list-style-type: none;
+}
+
+#menu ul li {
+    margin: 50px 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    text-align: center;
+}
+
+a {
+    border-radius: 10px;
+    color: rgba(255, 255, 255, 0.37);
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
 
 }
 
-.btn:hover {
-    background: #fff;
-    color: #171738;
-    scale: 1.1;
+a:hover {
+    cursor: pointer;
+    color: #ffffff;
 }
+
+a:active {
+    color: #0f9dec;
+}
+
+#name {
+    font-size: 4em;
+    color: rgb(255, 255, 255);
+    margin: 0;
+    position: absolute;
+    top: 10%;
+    left: 5.2%;
+    z-index: 3;
+}
+
+
