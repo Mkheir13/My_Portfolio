@@ -130,7 +130,7 @@ const createCarrousel = () => {
     const carrouselProps = onResize();
     const length = carrouselItems.length;
     const degress = 360 / length;
-    const gap = 100; //
+    const gap = 10; //
     const tz = distanceZ(carrouselProps.w, length, gap)
 
     const fov = calculateFov(carrouselProps);
