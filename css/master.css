@@ -41,13 +41,13 @@ body {
     gap: 50px;
 }
 
-#curriculum {
+.curriculum {
     color: #33cccc;
     font-size: 1.7rem;
     animation: fadein 2s infinite;
 }
 
-#curriculum:hover {
+.curriculum:hover {
     color: #33cccc;
 }
 
