@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>Portfolio</title>
@@ -8,19 +8,112 @@
     <script defer src="js/index.js"></script>
 </head>
 <body>
-<div id="container">
+<div id="container1">
     <div id="names">
-        <h1 id="name">MEDERREG<br>KHEIR-EDDINE</h1>
+        <p id="name">MEDERREG<br>KHEIR-EDDINE</p>
     </div>
+    <h1>I am a&thinsp;<span id="content">
+        <li class="active">Developer .</li>
+        <li>Programmer .</li>
+        <li>Problem Solver .</li>
+    </span></h1>
     <div id="menu">
         <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="about.html">About</a></li>
-            <li><a href="portfolio.html">Portfolio</a></li>
-            <li><a href="contact.html">Contact</a></li>
+            <li><a href="index.html" >Internship</a></li>
+            <li><a href="#container2">About</a></li>
+            <li><a href="#container3">Skills</a></li>
+            <li><a href="#container4">Projects</a></li>
+            <li><a href="#container5">contact</a></li>
+            <li><a download href="images/cv.pdf" id="curriculum">Curriculum</a></li>
         </ul>
     </div>
-    <div class="box"></div>
+
+</div>
+<div id="container2">
+    <h2>About me</h2>
+
+    <div id="container2-cont">
+        <img alt="me" id="me" src="images/kheir.png">
+        <img class="gifme" src="images/point.gif">
+        <p>
+            My name is Mederreg Kheir-Eddine. I am a student at Ynov Aix-en-Provence, France.<br>
+            I am currently working to obtain my Master<br><br>
+            I discovered programming in 2017. I started to learn programming in the first year of my studies.<br>
+            Since then, I have been learning programming and developing my skills.<br><br>
+            My main goal is to improve myself to become better day by day.
+        </p>
+    </div>
+</div>
+<div id="container3">
+    <div class="skill-container">
+        <p><img src="images/html.png"></p>
+        <p><img src="images/swift.png"></p>
+        <p><img src="images/js.png"></p>
+        <p><img src="images/mysql.png"></p>
+        <p><img src="images/css.png"></p>
+    </div>
+    <h2 id="title">Skills</h2>
+    <p id="subtitle">Some of my skills</p>
+    <div class="skill-container">
+        <p><img src="images/c++.png"></p>
+        <p><img src="images/golang.png"></p>
+        <p><img src="images/c.png"></p>
+        <p><img src="images/python.png"></p>
+        <p><img src="images/git.png"></p>
+    </div>
+</div>
+
+<div id="container4">
+    <h2>Some Projects</h2>
+    <div class="container">
+        <div class="container-carrousel">
+            <div class="carrousel">
+                <div class="carrousel-item"><p>Helpy<br><br>Helpy is a Educative Forum, we created it with 2 friends to
+                    help our classmates for their homework.<br><br>
+                    languages : HTML, CSS, JavaScript, MySQL, GO<br><br>
+                    to see more : <a href="https://github.com/Bahsiik/Helpy" target="_blank">https://github.com/Bahsiik/Helpy</a>
+                </p></div>
+                <div class="carrousel-item"><p>B-ONE<br><br>The Website B-One was created to help new students to socialize
+                    and help them find each other.<br><br>
+                    languages : HTML, CSS, JavaScript, GO<br><br>
+                    to see more : <a href="https://github.com/Mkheir13/Site-Ynov-AtikMederreg" target="_blank">https://github.com/Mkheir13/Site-Ynov-AtikMederreg</a>
+                </p></div>
+                <div class="carrousel-item"><p>Blue Voice<br><br>The first project that we hade was to create a 2d game
+                    that follow a little story you want to know more about it ?<br><br>
+                    languages : GO<br><br>
+                    to see more : <a href="https://github.com/xhmyjae/Blue-Voice" target="_blank">https://github.com/xhmyjae/Blue-Voice</a>
+                </p></div>
+                <div class="carrousel-item"><p>Y-Adventure<br><br>A Website game with a little story that we made when
+                    we
+                    were introduced to HTML/CSS<br><br>
+                    languages : HTML, CSS<br><br>
+                    to see more : <a href="https://github.com/Mkheir13/Firsthtmltp" target="_blank">https://github.com/Mkheir13/Firsthtmltp</a>
+                </p></div>
+                <div class="carrousel-item"><p>Y-mazon<br><br>A copy of Amazon...What ? not our kind<br><br>
+                    languages : HTML, CSS, JavaScript<br><br>
+                    to see more : <a href="https://github.com/Mkheir13/TP-JS/tree/main/Shop" target="_blank">https://github.com/Mkheir13/TP-JS/tree/main/Shop</a>
+                </p></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="container5">
+    <h2>Contact</h2>
+    <div id="Contact">
+        <form action="https://formspree.io/f/mnqrnnnp" class="topBefore" id="form" method="POST">
+            <label>
+                <input id="nameform" name="name" placeholder="NAME" required="required" type="name">
+            </label>
+            <label>
+                <input id="email" name="email" placeholder="E-MAIL" required="required" type="email">
+            </label>
+            <label>
+                <textarea id="message" name="message" placeholder="MESSAGE"></textarea>
+            </label>
+            <input id="submit" type="submit" value="GO!">
+        </form>
+    </div>
+    <a href="https://github.com/Mkheir13" target="_blank"><img id="github" src="images/github.png"></a>
 </div>
 </body>
 </html>

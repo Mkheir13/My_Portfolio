@@ -8,36 +8,97 @@
 }
 
 body {
-    background: linear-gradient(29deg, rgb(41, 42, 47) 50%, rgb(19, 21, 25) 50.1%) fixed;
+    background: #fafafa;
+    overflow-x: hidden;
 }
 
-#container {
+#container1 {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    height: 99vh;
+    width: 99vw;
+    background: #fffdfd;
+}
+
+#container2 {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    width: 100vw;
+    height: 99vh;
+    width: 99vw;
+    background-color: #fffdfd;
+    gap: 20px;
+}
+
+#container2-cont {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+}
+
+#curriculum {
+    color: #33cccc;
+    font-size: 1.7rem;
+    animation: fadein 2s infinite;
+}
+
+#curriculum:hover {
+    color: #33cccc;
+}
+
+@keyframes fadein {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
 }
 
 
-.box {
+#container3 {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: url("../images/kheir.png") no-repeat center fixed;
-    background-size: auto 100%;
-    border: 3px solid #fff;
-    border-radius: 50%;
-    padding: 150px;
-    transform: scale(1);
+    height: 99vh;
+    width: 99vw;
+    background-color: #fffdfd;
+    gap: 20px;
 }
 
+#container4 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 99vh;
+    width: 99vw;
+    background-color: #fffdfd;
+    gap: 20px;
+}
 
-.box:hover {
-    transform: scale(1.1);
-    cursor: pointer;
+#container5 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 99vh;
+    width: 99vw;
+    background-color: #fffdfd;
+    gap: 20px;
+}
+
+#photos {
+    max-width: 50%;
 }
 
 #menu {
@@ -45,12 +106,10 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 100vw;
-    height: 100vh;
-    position: fixed;
     top: 0;
-    left: 40%;
     z-index: 1;
+    margin-right: 100px;
+    margin-left: 600px;
 }
 
 #menu ul {
@@ -65,27 +124,27 @@ body {
     text-align: center;
 }
 
+#menu ul li:hover {
+    color: #33cccc;
+}
+
 a {
-    border-radius: 10px;
-    color: rgba(255, 255, 255, 0.37);
+    color: rgba(0, 0, 0, 0.87);
     text-align: center;
     text-decoration: none;
     display: inline-block;
+
 
 }
 
 a:hover {
     cursor: pointer;
-    color: #ffffff;
-}
-
-a:active {
-    color: #0f9dec;
+    color: #33cccc;
 }
 
 #name {
     font-size: 4em;
-    color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
     margin: 0;
     position: absolute;
     top: 10%;
@@ -93,4 +152,468 @@ a:active {
     z-index: 3;
 }
 
+#name:hover {
+    color: #33cccc;
+}
 
+h1 {
+    text-align: left;
+    position: relative;
+    line-height: 1.1em;
+    height: 0.1em;
+    display: inline-block;
+    -moz-transform: translate(0%, -50%);
+    -ms-transform: translate(0%, -50%);
+    -webkit-transform: translate(0%, -50%);
+    transform: translate(0%, -50%);
+}
+
+h2 {
+    font-size: 32px;
+}
+
+.skill-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 70%;
+    height: 70%;
+    margin: 0;
+    padding: 0;
+}
+
+.skill-container p {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.skill-container img {
+    width: 30%;
+    height: 30%;
+    margin: 0;
+    padding: 0;
+}
+
+#title:hover {
+    cursor: pointer;
+    transform: scale(1.2);
+}
+
+
+@-moz-keyframes blinkCursor {
+    0% {
+        border-left: 0.1em solid transparent;
+    }
+    50% {
+        border-left: 0.1em solid transparent;
+    }
+    51% {
+        border-left: 0.1em solid #1a1919;
+    }
+    100% {
+        border-left: 0.1em solid #1a1919;
+    }
+}
+
+@-webkit-keyframes blinkCursor {
+    0% {
+        border-left: 0.1em solid transparent;
+    }
+    50% {
+        border-left: 0.1em solid transparent;
+    }
+    51% {
+        border-left: 0.1em solid #000000;
+    }
+    100% {
+        border-left: 0.1em solid #000000;
+    }
+}
+
+@keyframes blinkCursor {
+    0% {
+        border-left: 0.1em solid transparent;
+    }
+    50% {
+        border-left: 0.1em solid transparent;
+    }
+    51% {
+        border-left: 0.1em solid #000000;
+    }
+    100% {
+        border-left: 0.1em solid #000000;
+    }
+}
+
+#content {
+    position: absolute;
+    list-style: none;
+    display: inline-block;
+    overflow: hidden;
+    left: 100%;
+    top: 0;
+    white-space: nowrap;
+}
+
+#content li {
+    display: none;
+    position: relative;
+    line-height: 100%;
+}
+
+#content li.active {
+    display: inline-block;
+}
+
+#content li.active.typing {
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+    opacity: 0;
+}
+
+#content .fakeContent {
+    position: absolute;
+    display: inline-block;
+    left: 0;
+    top: 0;
+    height: 1em;
+}
+
+#content .fakeContent:after {
+    content: "";
+    position: absolute;
+    width: 100vw;
+    height: 1em;
+    left: calc(100% - 0.1em);
+    top: 0;
+    z-index: -2;
+    border-left: 0.1em solid #000000;
+    background-color: #e0e0e0;
+    -moz-background-clip: padding;
+    -o-background-clip: padding-box;
+    -webkit-background-clip: padding;
+    background-clip: padding-box;
+    -moz-animation: blinkCursor 1.5s linear infinite;
+    -webkit-animation: blinkCursor 1.5s linear infinite;
+    animation: blinkCursor 1.5s linear infinite;
+}
+
+#content .fakeContent.typing:after {
+    background-color: transparent;
+    -moz-animation: none;
+    -webkit-animation: none;
+    animation: none;
+    left: 100%;
+}
+
+#content .fakeContent.selecting:after {
+    -moz-animation: none;
+    -webkit-animation: none;
+    animation: none;
+}
+
+#subtitle {
+    animation: fadein 2s infinite;
+}
+
+
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 100px;
+    margin-right: 200px;
+
+}
+
+.container-carrousel {
+    --widthItem: 200px;
+    --heightItem: 150px;
+    width: var(--widthItem);
+    height: var(--heightItem);
+    perspective: 1000px;
+}
+
+.carrousel {
+    --rotatey: 0;
+    font-size: 25rem;
+    position: relative;
+    transform: rotatey(var(--rotatey));
+    transform-style: preserve-3d;
+    user-select: none;
+    cursor: grab;
+}
+
+.carrousel-item {
+    opacity: 1;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+}
+
+
+.carrousel,
+.carrousel-item {
+    width: 120%;
+    height: 120%;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    font-size: 0.7rem;
+    color: transparent;
+}
+
+.carrousel-item:hover a {
+    color: white;
+}
+
+.carrousel-item a {
+    color: transparent;
+}
+
+.carrousel-item:nth-child(1) {
+    --rotatey: 0;
+    transform: rotatey(var(--rotatey)) translatez(var(--tz));
+    background-image: url(../images/unknown.png);
+    background-size: cover;
+}
+
+.carrousel-item:nth-child(1):hover {
+    background: rgb(26, 25, 25);
+    color: white;
+}
+
+
+.carrousel-item:nth-child(2) {
+    --rotatey: 0;
+    transform: rotatey(var(--rotatey)) translatez(var(--tz));
+    background-image: url(../images/Bone.png);
+    background-size: cover;
+}
+
+.carrousel-item:nth-child(2):hover {
+    background: rgb(26, 25, 25);
+    color: white;
+}
+
+
+.carrousel-item:nth-child(3) {
+    --rotatey: 0;
+    transform: rotatey(var(--rotatey)) translatez(var(--tz));
+    background-image: url(../images/Blue.png);
+    background-size: cover;
+}
+
+.carrousel-item:nth-child(3):hover {
+    background: rgb(26, 25, 25);
+    color: white;
+}
+
+.carrousel-item:nth-child(4) {
+    --rotatey: 0;
+    transform: rotatey(var(--rotatey)) translatez(var(--tz));
+    background-image: url(../images/Bizzare.png);
+    background-size: cover;
+}
+
+.carrousel-item:nth-child(4):hover {
+    background: rgb(26, 25, 25);
+    color: white;
+}
+
+.carrousel-item:nth-child(5) {
+    --rotate: 0;
+    transform: rotatey(var(--rotatey)) translatez(var(--tz));
+    background-image: url(../images/Ydiscount.png);
+    background-size: cover;
+}
+
+.carrousel-item:nth-child(5):hover {
+    background: rgb(26, 25, 25);
+    color: white;
+}
+
+@media screen and (min-width: 576px) {
+    .container-carrousel {
+        --widthItem: 250px;
+        --heightItem: 200px;
+    }
+}
+
+@import url(https://fonts.googleapis.com/css?family=Lato:100,300,400);
+
+input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
+    color: #000000;
+    font-size: 0.875em;
+}
+
+input:focus::-webkit-input-placeholder, textarea:focus::-webkit-input-placeholder {
+    color: #000000;
+}
+
+input::-moz-placeholder, textarea::-moz-placeholder {
+    color: #000000;
+    font-size: 0.875em;
+}
+
+input:focus::-moz-placeholder, textarea:focus::-moz-placeholder {
+    color: #000000;
+}
+
+input::placeholder, textarea::placeholder {
+    color: #000000;
+    font-size: 0.875em;
+}
+
+input:focus::placeholder, textarea::focus:placeholder {
+    color: #000000;
+}
+
+input::-ms-placeholder, textarea::-ms-placeholder {
+    color: #000000;
+    font-size: 0.875em;
+}
+
+input:focus::-ms-placeholder, textarea:focus::-ms-placeholder {
+    color: #000000;
+}
+
+/* on hover placeholder */
+
+input:hover::-webkit-input-placeholder, textarea:hover::-webkit-input-placeholder {
+    color: #000000;
+    font-size: 0.875em;
+}
+
+input:hover:focus::-webkit-input-placeholder, textarea:hover:focus::-webkit-input-placeholder {
+    color: #000000;
+}
+
+input:hover::-moz-placeholder, textarea:hover::-moz-placeholder {
+    color: #000000;
+    font-size: 0.875em;
+}
+
+input:hover:focus::-moz-placeholder, textarea:hover:focus::-moz-placeholder {
+    color: #000000;
+}
+
+input:hover::placeholder, textarea:hover::placeholder {
+    color: #000000;
+    font-size: 0.875em;
+}
+
+input:hover:focus::placeholder, textarea:hover:focus::placeholder {
+    color: #000000;
+}
+
+input:hover::placeholder, textarea:hover::placeholder {
+    color: #000000;
+    font-size: 0.875em;
+}
+
+input:hover:focus::-ms-placeholder, textarea:hover::focus:-ms-placeholder {
+    color: #000000;
+}
+
+
+header {
+    position: relative;
+    margin: 100px 0 25px 0;
+    font-size: 2.3em;
+    text-align: center;
+    letter-spacing: 7px;
+}
+
+#form {
+    position: relative;
+    width: 500px;
+    margin: 50px auto 100px auto;
+}
+
+input {
+    font-family: 'Lato', sans-serif;
+    font-size: 0.875em;
+    width: 470px;
+    height: 50px;
+    padding: 0px 15px 0px 15px;
+
+    background: transparent;
+    outline: none;
+    color: #000000;
+
+    border: solid 1px #b3aca7;
+    border-bottom: none;
+
+    transition: all 0.3s ease-in-out;
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -ms-transition: all 0.3s ease-in-out;
+}
+
+input:hover {
+    background: #b3aca7;
+    color: #000000;
+}
+
+textarea {
+    width: 470px;
+    max-width: 470px;
+    height: 110px;
+    max-height: 110px;
+    padding: 15px;
+
+    background: transparent;
+    outline: none;
+
+    color: #000000;
+    font-family: 'Lato', sans-serif;
+    font-size: 0.875em;
+
+    border: solid 1px #000000;
+
+    transition: all 0.3s ease-in-out;
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -ms-transition: all 0.3s ease-in-out;
+
+    resize: none;
+}
+
+textarea:hover {
+    background: rgba(255, 255, 255, 0.37);
+    color: #000000;
+}
+
+#submit {
+    width: 502px;
+
+    padding: 0;
+    margin: -5px 0px 0px 0px;
+
+    font-family: 'Lato', sans-serif;
+    font-size: 0.875em;
+    color: #b3aca7;
+
+    outline:none;
+    cursor: pointer;
+
+    border: solid 1px #b3aca7;
+    border-top: none;
+}
+
+#submit:hover {
+    color: #e2dedb;
+}
+
+.gifme {
+    width: 10%;
+}
+
+#github {
+    width: 10%;
+}
