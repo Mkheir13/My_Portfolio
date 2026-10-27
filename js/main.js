@@ -6,7 +6,7 @@ const EN = {
     "nav.contact": "Contact",
     "hero.iam": "I'm",
     "hero.genai": "Generative AI",
-    "hero.pitch": "I run data projects end to end: from raw data to a model in production.",
+    "hero.pitch": "I turn raw data into models that run in production. The rest of the time: Destiny, League of Legends, and coffee.",
     "hero.cv": "Download my resume",
     "hero.contact": "Get in touch ↗",
     "hero.bubble": "Let's make your data talk!",
@@ -28,7 +28,8 @@ const EN = {
     "about.w2": "Teaching",
     "about.w3": "Critical thinking",
     "about.p1": "I'm Kheir-eddine, a Data Scientist based in Marseille, with a Master's in AI & Data Science from Ynov.",
-    "about.p2": "I like complete projects: collecting and cleaning data, training a model, then shipping it with an API, CI and monitoring. Two years of mentoring taught me to explain complex things simply.",
+    "about.p2": "I like complete projects: collecting and cleaning data, training a model, then shipping it with an API, CI and monitoring. My final-year project runs on the Destiny API, and I built a League of Legends stats tracker because I wanted to know why I kept losing.",
+    "about.p3": "Two years of mentoring at Ynov taught me to explain complex things simply. Fan of the Bungie aesthetic, hence this site.",
     "about.looking": "I'm looking for a Data Scientist position.",
     "contact.title1": "Let's build something",
     "contact.title2": "smart!",
@@ -52,23 +53,54 @@ setLang(saved || (navigator.language.startsWith("fr") ? "fr" : "en"));
 document.getElementById("lang").addEventListener("click", () =>
     setLang(document.documentElement.lang === "en" ? "fr" : "en"));
 
-// Ransom-note name: each letter gets one of four looks and a slight tilt, fixed per position.
-document.querySelectorAll(".hero h1").forEach(el => {
-    const kinds = ["rn-a", "rn-a", "rn-b", "rn-a", "rn-c", "rn-a", "rn-d"];
-    let i = 0;
-    const letter = ch => {
-        i++;
-        const k = kinds[(i * 5 + ch.charCodeAt(0)) % kinds.length];
-        return `<span class="rn ${k}" style="transform:rotate(${(i * 37) % 7 - 3}deg)">${ch}</span>`;
-    };
-    el.innerHTML = el.textContent.trim().split(/\s+/)
-        .map(w => w.split(/(?<=-)/).map(p => `<span class="rn-w">${[...p].map(letter).join("")}</span>`).join(""))
-        .join('<span class="rn-sp"></span>');
-});
-
 // Reveal cards as they scroll into view (hidden only when JS runs, so content never stays invisible).
 document.documentElement.classList.add("js");
 const io = new IntersectionObserver(entries => entries.forEach(e => {
     if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
 }), { threshold: .15 });
 document.querySelectorAll(".reveal").forEach(el => io.observe(el));
+
+// Cascade order for tiles and timeline steps.
+document.querySelectorAll(".tiles, .timeline").forEach(list =>
+    [...list.children].forEach((li, i) => li.style.setProperty("--i", i)));
+
+// Underline the nav link of the section on screen.
+const links = [...document.querySelectorAll(".nav nav a")];
+const sectionObserver = new IntersectionObserver(entries => entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    links.forEach(a => a.classList.toggle("active", a.getAttribute("href") === "#" + e.target.id));
+}), { rootMargin: "-40% 0px -55% 0px" });
+document.querySelectorAll("main section[id], footer[id]").forEach(s => sectionObserver.observe(s));
+
+// Preloader: counts to 100 then slides away.
+const loader = document.querySelector(".loader"), count = loader?.querySelector(".count");
+if (loader) {
+    let n = 0;
+    const tick = setInterval(() => {
+        n = Math.min(100, n + 3 + Math.random() * 6); count.textContent = Math.floor(n);
+        if (n >= 100) { clearInterval(tick); loader.classList.add("done"); document.documentElement.classList.add("ready"); }
+    }, 40);
+}
+
+// Local time in Marseille, in the header.
+const clock = document.getElementById("clock");
+const showTime = () => clock.textContent = new Date().toLocaleTimeString("fr-FR", { timeZone: "Europe/Paris", hour: "2-digit", minute: "2-digit" });
+if (clock) { showTime(); setInterval(showTime, 30000); }
+
+// Split hero text into words so each can rise in with its own delay. Re-run after a language switch.
+const splitWords = () => document.querySelectorAll(".split").forEach(el => {
+    el.innerHTML = el.textContent.trim().split(/\s+/).map((w, i) => `<span class="w" style="--d:${i * 45}ms">${w}</span>`).join(" ");
+});
+splitWords();
+document.getElementById("lang").addEventListener("click", splitWords);
+
+// Custom cursor: a lime dot that grows over links and buttons (desktop only).
+const cursor = document.querySelector(".cursor");
+if (cursor && matchMedia("(hover: hover)").matches) {
+    document.documentElement.classList.add("has-cursor");
+    addEventListener("mousemove", e => { cursor.style.left = e.clientX + "px"; cursor.style.top = e.clientY + "px"; });
+    document.querySelectorAll("a, button, .tiles li").forEach(el => {
+        el.addEventListener("mouseenter", () => cursor.classList.add("big"));
+        el.addEventListener("mouseleave", () => cursor.classList.remove("big"));
+    });
+}
