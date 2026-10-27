@@ -87,8 +87,25 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
         24px 36px var(--acid), -12px 36px var(--blue), 0 48px var(--blue), 12px 48px var(--blue);
 }
 
-/* Cards: stacked blocks sharing borders */
-.card { padding: 48px; border: 2px solid var(--acid); margin-bottom: -2px; }
+/* Sections: full-bleed bands, alternating ink and charcoal, no frames */
+.card { padding: 64px 48px; }
+#skills { background: var(--ink-deep); }
+
+/* Projects: cards with a colour band, a headline stat and the stack */
+.projects { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+.project {
+    position: relative; display: grid; align-content: start; gap: 10px; padding: 24px;
+    background: var(--ink-deep); border-top: 6px solid var(--band);
+    transition: transform .2s, box-shadow .2s;
+}
+.project:hover { transform: translateY(-6px); box-shadow: 0 0 0 2px var(--band); }
+.project .stat { font: 900 40px/1 var(--display); font-stretch: 75%; text-transform: uppercase; color: var(--band); }
+.project h3 { font-size: 20px; }
+.project p:not(.stat):not(.stack) { color: var(--muted); font-family: Inter, sans-serif; }
+.project .stack { font: 700 10px var(--mono); letter-spacing: 1px; text-transform: uppercase; color: var(--acid); }
+.project a { font: 700 11px var(--mono); letter-spacing: 2px; text-transform: uppercase; margin-top: auto; }
+.project a:hover { color: var(--acid); }
+.project a::after { content: ""; position: absolute; inset: 0; }
 .marker { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 28px; font-size: 36px; letter-spacing: -.5px; line-height: 1; }
 .marker::before {
     content: counter(section, decimal-leading-zero); counter-increment: section;
@@ -98,15 +115,15 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
 /* Skills */
 .skill-groups { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 32px; }
 .skill-group h3 { margin-bottom: 12px; color: var(--acid); font: 700 11px var(--mono); letter-spacing: 2px; text-transform: uppercase; }
-.tiles { display: flex; flex-wrap: wrap; gap: 16px; }
-.tiles li { display: grid; justify-items: center; gap: 6px; width: 76px; font-size: 11px; text-align: center; color: var(--muted); }
-.tiles span {
-    display: grid; place-items: center; width: 52px; height: 52px;
-    background: var(--grey); color: var(--ink); font: 900 16px var(--display); font-stretch: 75%;
-    transition: background .15s;
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chips li {
+    display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px;
+    border: 1px solid var(--grey); color: var(--text); font: 700 11px var(--mono); letter-spacing: 1px; text-transform: uppercase;
+    transition: background .15s, color .15s, border-color .15s;
 }
-.tiles span img { width: 28px; height: 28px; }
-.tiles li:hover span { background: var(--acid); }
+.chips img { width: 16px; height: 16px; filter: invert(1); }
+.chips li:hover { background: var(--acid); color: var(--ink); border-color: var(--acid); }
+.chips li:hover img { filter: none; }
 
 /* Timeline */
 .timeline { border-left: 2px solid var(--acid); margin-left: 8px; }
@@ -160,7 +177,8 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
     .pitch { margin-inline: auto; }
     .buttons { justify-content: center; }
     .bubble { justify-self: center; text-align: center; }
-    .card, .about-visual, .about-copy, .contact { padding: 28px 20px; }
+    .card, .about-visual, .about-copy, .contact { padding: 40px 20px; }
+    .projects { grid-template-columns: 1fr; }
     .marker { font-size: 30px; }
     .contact { margin: 0 16px; }
 }
@@ -179,15 +197,14 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
 
 
 /* Cascade: tiles and timeline steps appear one after another (--i set in js/main.js) */
-.js .reveal .tiles li, .js .reveal .timeline li { opacity: 0; transform: translateY(14px); transition: opacity .4s, transform .4s; transition-delay: calc(var(--i) * 50ms); }
-.js .reveal.in .tiles li, .js .reveal.in .timeline li { opacity: 1; transform: none; }
-.tiles li:hover span { transform: translateY(-3px); }
-.tiles span { transition: background .15s, transform .15s; }
+.js .reveal .chips li, .js .reveal .timeline li, .js .reveal .project { opacity: 0; transform: translateY(14px); transition: opacity .4s, transform .4s; transition-delay: calc(var(--i) * 50ms); }
+.js .reveal.in .chips li, .js .reveal.in .timeline li, .js .reveal.in .project { opacity: 1; transform: none; transition-delay: calc(var(--i) * 50ms), calc(var(--i) * 50ms); }
+.js .reveal.in .project { transition: opacity .4s, transform .2s, box-shadow .2s; }
 
 /* Active section in the nav */
 .nav nav a.active { text-decoration: underline; text-decoration-color: var(--blue); text-decoration-thickness: 2px; text-underline-offset: 4px; }
 
-@media (prefers-reduced-motion: reduce) { .js .hero-text > *, .js .hero-visual::after, .js .hero-text::after { animation: none; } .js .reveal .tiles li, .js .reveal .timeline li { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .js .hero-text > *, .js .hero-visual::after, .js .hero-text::after { animation: none; } .js .reveal .chips li, .js .reveal .timeline li, .js .reveal .project { opacity: 1; transform: none; } }
 
 /* HUD corners, data readouts, 3D canvas backdrop */
 #fx { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; }
@@ -213,8 +230,8 @@ main { perspective: 1200px; }
 
 /* Preloader */
 .loader {
-    position: fixed; inset: 0; z-index: 50; display: grid; place-items: center;
-    background: var(--ink); color: var(--acid); font: 900 clamp(64px, 12vw, 160px) var(--display); font-stretch: 75%;
+    position: fixed; inset: 0; z-index: 50; display: flex; align-items: center; justify-content: center;
+    background: var(--ink); color: var(--acid); font: 900 clamp(64px, 12vw, 160px)/1 var(--display); font-stretch: 75%;
     transition: transform .7s cubic-bezier(.7,0,.2,1);
 }
 .loader.done { transform: translateY(-100%); }

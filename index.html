@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Kheir-eddine Mederreg · Data Scientist</title>
     <meta name="description" content="Portfolio de Kheir-eddine Mederreg, Data Scientist à Marseille : machine learning, MLOps et IA générative.">
+    <meta property="og:title" content="Kheir-eddine Mederreg · Data Scientist">
+    <meta property="og:description" content="Machine learning, MLOps et IA générative. Projets, parcours et contact.">
+    <meta property="og:url" content="https://mkheir13.github.io/My_Portfolio/">
+    <meta property="og:type" content="website">
     <link rel="icon" href="images/favicon.ico">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,6 +25,7 @@
     <a href="#top" class="logo">KHEIR<span>.</span></a>
     <span class="meta">43.2965° N, 5.3698° E · Marseille · <time id="clock">--:--</time></span>
     <nav>
+        <a href="#projects" data-i18n="nav.projects">Projets</a>
         <a href="#skills" data-i18n="nav.skills">Compétences</a>
         <a href="#parcours" data-i18n="nav.path">Parcours</a>
         <a href="#about" data-i18n="nav.about">À propos</a>
@@ -51,48 +56,96 @@
         </div>
     </section>
 
+    <section id="projects" class="card reveal">
+        <h2 class="marker" data-i18n="projects.title">Projets</h2>
+        <ul class="projects">
+            <li class="project" style="--band: var(--acid)">
+                <p class="stat">F1 0.92</p>
+                <h3 data-i18n="projects.destiny.title">Classifieur sur l'API Destiny</h3>
+                <p data-i18n="projects.destiny.text">Projet de fin d'études : pipeline ETL sur l'API Bungie, Random Forest entraîné sur 392 échantillons, contrôle des fuites de données, servi par une API avec CI.</p>
+                <p class="stack">Python · scikit-learn · FastAPI · GitHub Actions</p>
+                <a href="https://github.com/Mkheir13" data-i18n="projects.code">Voir le code →</a>
+            </li>
+            <li class="project" style="--band: var(--blue)">
+                <p class="stat">mAP +37%</p>
+                <h3 data-i18n="projects.yolo.title">Détection d'objets YOLOv8</h3>
+                <p data-i18n="projects.yolo.text">Fine-tuning de YOLOv8 sur un jeu de données annoté : +37 % de mAP50-95 par rapport au modèle de base.</p>
+                <p class="stack">PyTorch · YOLOv8 · Python</p>
+                <a href="https://github.com/Mkheir13" data-i18n="projects.code">Voir le code →</a>
+            </li>
+            <li class="project" style="--band: var(--acid)">
+                <p class="stat">TensorFlow</p>
+                <h3>DrawMatch</h3>
+                <p data-i18n="projects.draw.text">Jeu web multijoueur en temps réel : deux joueurs dessinent, une IA TensorFlow devine. Websockets Django Channels, 345 mots, classement.</p>
+                <p class="stack">Python · Django Channels · TensorFlow · scikit-image</p>
+                <a href="https://github.com/antaww/DrawMatch" data-i18n="projects.code">Voir le code →</a>
+            </li>
+            <li class="project" style="--band: var(--blue)">
+                <p class="stat">8 <span data-i18n="projects.over.stat">pages</span></p>
+                <h3>Overgraph</h3>
+                <p data-i18n="projects.over.text">Dashboard Streamlit des stats de l'Overwatch League : scrapers, détection d'images pour enrichir les datasets, profils joueurs, équipes et matchs.</p>
+                <p class="stack">Python · Streamlit · pandas · scraping</p>
+                <a href="https://github.com/antaww/Overgraph" data-i18n="projects.code">Voir le code →</a>
+            </li>
+            <li class="project" style="--band: var(--acid)">
+                <p class="stat">Bungie API</p>
+                <h3>Destiny Hub</h3>
+                <p data-i18n="projects.hub.text">Plateforme communautaire Destiny 2 : OAuth Bungie, synchronisation du manifest (armes, triomphes), système de builds, guides et profils.</p>
+                <p class="stack">React · TypeScript · Node.js · Supabase</p>
+                <a href="https://github.com/BrayTechOrg/bookish-potato" data-i18n="projects.code">Voir le code →</a>
+            </li>
+            <li class="project" style="--band: var(--grey)">
+                <p class="stat">10 <span data-i18n="projects.mee7.stat">commandes</span></p>
+                <h3>MEE7</h3>
+                <p data-i18n="projects.mee7.text">Bot Discord en équipe : notifications de streams, disponibilités communes via iCal, recommandations de contenu, modération.</p>
+                <p class="stack">Python · discord.py · iCal</p>
+                <a href="https://github.com/antaww/MEE7" data-i18n="projects.code">Voir le code →</a>
+            </li>
+        </ul>
+    </section>
+
     <section id="skills" class="card reveal">
         <h2 class="marker" data-i18n="skills.title">Compétences</h2>
         <div class="skill-groups">
             <div class="skill-group">
                 <h3>Machine learning</h3>
-                <ul class="tiles">
-                    <li><span><img src="images/logos/python.svg" alt=""></span>Python</li>
-                    <li><span><img src="images/logos/scikitlearn.svg" alt=""></span>scikit-learn</li>
-                    <li><span>Xg</span>XGBoost</li>
-                    <li><span><img src="images/logos/pytorch.svg" alt=""></span>PyTorch</li>
-                    <li><span>Yo</span>YOLOv8</li>
-                    <li><span><img src="images/logos/pandas.svg" alt=""></span>pandas</li>
+                <ul class="chips">
+                    <li><img src="images/logos/python.svg" alt="">Python</li>
+                    <li><img src="images/logos/scikitlearn.svg" alt="">scikit-learn</li>
+                    <li>XGBoost</li>
+                    <li><img src="images/logos/pytorch.svg" alt="">PyTorch</li>
+                    <li>YOLOv8</li>
+                    <li><img src="images/logos/pandas.svg" alt="">pandas</li>
                 </ul>
             </div>
             <div class="skill-group">
                 <h3>Data &amp; MLOps</h3>
-                <ul class="tiles">
-                    <li><span>Sq</span>SQL</li>
-                    <li><span><img src="images/logos/postgresql.svg" alt=""></span>PostgreSQL</li>
-                    <li><span><img src="images/logos/fastapi.svg" alt=""></span>FastAPI</li>
-                    <li><span><img src="images/logos/pytest.svg" alt=""></span>pytest</li>
-                    <li><span><img src="images/logos/githubactions.svg" alt=""></span>GitHub Actions</li>
-                    <li><span>Bi</span>Power BI</li>
+                <ul class="chips">
+                    <li>SQL</li>
+                    <li><img src="images/logos/postgresql.svg" alt="">PostgreSQL</li>
+                    <li><img src="images/logos/fastapi.svg" alt="">FastAPI</li>
+                    <li><img src="images/logos/pytest.svg" alt="">pytest</li>
+                    <li><img src="images/logos/githubactions.svg" alt="">GitHub Actions</li>
+                    <li>Power BI</li>
                 </ul>
             </div>
             <div class="skill-group">
                 <h3 data-i18n="skills.genai">IA générative &amp; API</h3>
-                <ul class="tiles">
-                    <li><span><img src="images/logos/openai.svg" alt=""></span>OpenAI</li>
-                    <li><span>Va</span>VAPI</li>
-                    <li><span><img src="images/logos/deepgram.svg" alt=""></span>Deepgram</li>
-                    <li><span><img src="images/logos/elevenlabs.svg" alt=""></span>ElevenLabs</li>
-                    <li><span><img src="images/logos/twilio.svg" alt=""></span>Twilio</li>
+                <ul class="chips">
+                    <li><img src="images/logos/openai.svg" alt="">OpenAI</li>
+                    <li>VAPI</li>
+                    <li><img src="images/logos/deepgram.svg" alt="">Deepgram</li>
+                    <li><img src="images/logos/elevenlabs.svg" alt="">ElevenLabs</li>
+                    <li><img src="images/logos/twilio.svg" alt="">Twilio</li>
                 </ul>
             </div>
             <div class="skill-group">
                 <h3 data-i18n="skills.dev">Développement</h3>
-                <ul class="tiles">
-                    <li><span><img src="images/logos/symfony.svg" alt=""></span>Symfony</li>
-                    <li><span><img src="images/logos/javascript.svg" alt=""></span>JavaScript</li>
-                    <li><span><img src="images/logos/go.svg" alt=""></span>Go</li>
-                    <li><span><img src="images/logos/git.svg" alt=""></span>Git</li>
+                <ul class="chips">
+                    <li><img src="images/logos/symfony.svg" alt="">Symfony</li>
+                    <li><img src="images/logos/javascript.svg" alt="">JavaScript</li>
+                    <li><img src="images/logos/go.svg" alt="">Go</li>
+                    <li><img src="images/logos/git.svg" alt="">Git</li>
                 </ul>
             </div>
         </div>
@@ -152,6 +205,7 @@
     <ul>
         <li><a href="mailto:kheir.eddine.mederreg@gmail.com">✉ kheir.eddine.mederreg@gmail.com</a></li>
         <li><a href="https://github.com/Mkheir13">⌥ github.com/Mkheir13</a></li>
+        <li><a href="https://www.linkedin.com/in/kheir-eddine-mederreg">⌥ linkedin.com/in/kheir-eddine-mederreg</a></li>
         <li>⌖ Marseille, France</li>
     </ul>
 </footer>
