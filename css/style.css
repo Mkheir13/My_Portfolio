@@ -128,7 +128,9 @@ main { max-width: 1100px; margin: 0 auto; padding: 0 16px; }
     background: #fff; color: #000; font: 20px var(--display);
     transform: skewX(-6deg); transition: background .15s, color .15s;
 }
+.tiles span img { width: 28px; height: 28px; transform: skewX(6deg); }
 .tiles li:hover span { background: var(--red); color: #fff; }
+.tiles li:hover span img { filter: invert(1); }
 
 /* Timeline */
 .timeline { border-left: 4px solid var(--red); margin-left: 8px; }
