@@ -1,6 +1,19 @@
 // French lives in the HTML; this dictionary only holds the English versions.
 const EN = {
+    "nav.projects": "Projects",
     "nav.skills": "Skills",
+    "projects.title": "Projects",
+    "projects.code": "View code →",
+    "projects.destiny.title": "Classifier on the Destiny API",
+    "projects.destiny.text": "Final-year project: ETL pipeline on the Bungie API, Random Forest trained on 392 samples, data-leak checks, served by an API with CI.",
+    "projects.yolo.title": "YOLOv8 object detection",
+    "projects.yolo.text": "Fine-tuned YOLOv8 on an annotated dataset: +37% mAP50-95 over the base model.",
+    "projects.draw.text": "Real-time multiplayer web game: two players draw, a TensorFlow AI guesses. Django Channels websockets, 345 words, leaderboard.",
+    "projects.over.stat": "pages",
+    "projects.over.text": "Streamlit dashboard of Overwatch League stats: scrapers, image detection to enrich the datasets, player, team and match profiles.",
+    "projects.hub.text": "Destiny 2 community platform: Bungie OAuth, manifest sync (weapons, triumphs), build system, guides and profiles.",
+    "projects.mee7.stat": "commands",
+    "projects.mee7.text": "Team-built Discord bot: stream notifications, shared availability from iCal, content recommendations, moderation.",
     "nav.path": "Journey",
     "nav.about": "About",
     "nav.contact": "Contact",
@@ -61,7 +74,7 @@ const io = new IntersectionObserver(entries => entries.forEach(e => {
 document.querySelectorAll(".reveal").forEach(el => io.observe(el));
 
 // Cascade order for tiles and timeline steps.
-document.querySelectorAll(".tiles, .timeline").forEach(list =>
+document.querySelectorAll(".chips, .timeline, .projects").forEach(list =>
     [...list.children].forEach((li, i) => li.style.setProperty("--i", i)));
 
 // Underline the nav link of the section on screen.
@@ -72,12 +85,12 @@ const sectionObserver = new IntersectionObserver(entries => entries.forEach(e =>
 }), { rootMargin: "-40% 0px -55% 0px" });
 document.querySelectorAll("main section[id], footer[id]").forEach(s => sectionObserver.observe(s));
 
-// Preloader: counts to 100 then slides away.
+// Preloader: counts to 100 in under a second, then slides away.
 const loader = document.querySelector(".loader"), count = loader?.querySelector(".count");
 if (loader) {
     let n = 0;
     const tick = setInterval(() => {
-        n = Math.min(100, n + 3 + Math.random() * 6); count.textContent = Math.floor(n);
+        n = Math.min(100, n + 8 + Math.random() * 10); count.textContent = Math.floor(n);
         if (n >= 100) { clearInterval(tick); loader.classList.add("done"); document.documentElement.classList.add("ready"); }
     }, 40);
 }
@@ -99,7 +112,7 @@ const cursor = document.querySelector(".cursor");
 if (cursor && matchMedia("(hover: hover)").matches) {
     document.documentElement.classList.add("has-cursor");
     addEventListener("mousemove", e => { cursor.style.left = e.clientX + "px"; cursor.style.top = e.clientY + "px"; });
-    document.querySelectorAll("a, button, .tiles li").forEach(el => {
+    document.querySelectorAll("a, button, .chips li, .project").forEach(el => {
         el.addEventListener("mouseenter", () => cursor.classList.add("big"));
         el.addEventListener("mouseleave", () => cursor.classList.remove("big"));
     });
