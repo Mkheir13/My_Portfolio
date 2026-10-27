@@ -1,119 +1,161 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Portfolio</title>
-    <link href="images/portfolio.ico" rel="icon" type="image/x-icon">
-    <link href="css/master.css" rel="stylesheet" type="text/css">
-    <script defer src="js/index.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Kheir-eddine Mederreg · Data Scientist</title>
+    <meta name="description" content="Portfolio de Kheir-eddine Mederreg, Data Scientist à Marseille : machine learning, MLOps et IA générative.">
+    <link rel="icon" href="images/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Permanent+Marker&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <script defer src="js/main.js"></script>
 </head>
 <body>
-<div id="container1">
-    <div id="names">
-        <p id="name">MEDERREG<br>KHEIR-EDDINE</p>
-    </div>
-    <h1>I am a&thinsp;<span id="content">
-        <li class="active">Developer .</li>
-        <li>Programmer .</li>
-        <li>Problem Solver .</li>
-    </span></h1>
-    <div id="menu">
-        <ul>
-            <li><a download href="images/2022.pdf" class="curriculum">Internship</a></li>
-            <li><a href="#container2">About</a></li>
-            <li><a href="#container3">Skills</a></li>
-            <li><a href="#container4">Projects</a></li>
-            <li><a href="#container5">contact</a></li>
-            <li><a download href="images/cv.pdf" class="curriculum">Curriculum</a></li>
-        </ul>
-    </div>
 
-</div>
-<div id="container2">
-    <h2>About me</h2>
+<header class="nav">
+    <a href="#top" class="logo">KHEIR<span>.</span></a>
+    <nav>
+        <a href="#skills" data-i18n="nav.skills">Compétences</a>
+        <a href="#parcours" data-i18n="nav.path">Parcours</a>
+        <a href="#about" data-i18n="nav.about">À propos</a>
+        <a href="#contact" data-i18n="nav.contact">Contact</a>
+    </nav>
+    <button id="lang" class="lang" aria-label="Switch to English">EN</button>
+</header>
 
-    <div id="container2-cont">
-        <img alt="me" id="me" src="images/kheir.png">
-        <img class="gifme" src="images/point.gif">
-        <p>
-            My name is Mederreg Kheir-Eddine. I am a student at Ynov Aix-en-Provence, France.<br>
-            I am currently working to obtain my Master<br><br>
-            I discovered programming in 2017. I started to learn programming in the first year of my studies.<br>
-            Since then, I have been learning programming and developing my skills.<br><br>
-            My main goal is to improve myself to become better day by day.
-        </p>
-    </div>
-</div>
-<div id="container3">
-    <div class="skill-container">
-        <p><img src="images/html.png"></p>
-        <p><img src="images/swift.png"></p>
-        <p><img src="images/js.png"></p>
-        <p><img src="images/mysql.png"></p>
-        <p><img src="images/css.png"></p>
-    </div>
-    <h2 id="title">Skills</h2>
-    <p id="subtitle">Some of my skills</p>
-    <div class="skill-container">
-        <p><img src="images/c++.png"></p>
-        <p><img src="images/golang.png"></p>
-        <p><img src="images/c.png"></p>
-        <p><img src="images/python.png"></p>
-        <p><img src="images/git.png"></p>
-    </div>
-</div>
-
-<div id="container4">
-    <h2>Some Projects</h2>
-    <div class="container">
-        <div class="container-carrousel">
-            <div class="carrousel">
-                <div class="carrousel-item"><p>Helpy<br><br>Helpy is a Educative Forum, we created it with 2 friends to
-                    help our classmates for their homework.<br><br>
-                    languages : HTML, CSS, JavaScript, MySQL, GO<br><br>
-                    to see more : <a href="https://github.com/Bahsiik/Helpy" target="_blank">https://github.com/Bahsiik/Helpy</a>
-                </p></div>
-                <div class="carrousel-item"><p>B-ONE<br><br>The Website B-One was created to help new students to socialize
-                    and help them find each other.<br><br>
-                    languages : HTML, CSS, JavaScript, GO<br><br>
-                    to see more : <a href="https://github.com/Mkheir13/Site-Ynov-AtikMederreg" target="_blank">https://github.com/Mkheir13/Site-Ynov-AtikMederreg</a>
-                </p></div>
-                <div class="carrousel-item"><p>Blue Voice<br><br>The first project that we hade was to create a 2d game
-                    that follow a little story you want to know more about it ?<br><br>
-                    languages : GO<br><br>
-                    to see more : <a href="https://github.com/xhmyjae/Blue-Voice" target="_blank">https://github.com/xhmyjae/Blue-Voice</a>
-                </p></div>
-                <div class="carrousel-item"><p>Y-Adventure<br><br>A Website game with a little story that we made when
-                    we
-                    were introduced to HTML/CSS<br><br>
-                    languages : HTML, CSS<br><br>
-                    to see more : <a href="https://github.com/Mkheir13/Firsthtmltp" target="_blank">https://github.com/Mkheir13/Firsthtmltp</a>
-                </p></div>
-                <div class="carrousel-item"><p>Y-mazon<br><br>A copy of Amazon...What ? not our kind<br><br>
-                    languages : HTML, CSS, JavaScript<br><br>
-                    to see more : <a href="https://github.com/Mkheir13/TP-JS/tree/main/Shop" target="_blank">https://github.com/Mkheir13/TP-JS/tree/main/Shop</a>
-                </p></div>
+<main id="top">
+    <section class="hero">
+        <div class="blob blob-purple" aria-hidden="true"></div>
+        <div class="blob blob-blue" aria-hidden="true"></div>
+        <div class="hero-text">
+            <p class="hey">Hey, <span data-i18n="hero.iam">je suis</span></p>
+            <h1>Kheir-eddine</h1>
+            <svg class="underline" viewBox="0 0 300 20" aria-hidden="true"><path d="M5 14 Q 80 4 150 10 T 295 8"/></svg>
+            <p class="roles">Data Scientist <b>•</b> Machine Learning <b>•</b> <span data-i18n="hero.genai">IA générative</span></p>
+            <p class="pitch" data-i18n="hero.pitch">Je mène des projets data de bout en bout : des données brutes au modèle en production.</p>
+            <div class="buttons">
+                <a class="btn btn-lime" href="images/cv-kheir-eddine-mederreg.pdf" download data-i18n="hero.cv">Télécharger mon CV</a>
+                <a class="btn btn-outline" href="#contact" data-i18n="hero.contact">Me contacter ↗</a>
             </div>
         </div>
-    </div>
-</div>
-<div id="container5">
-    <h2>Contact</h2>
-    <div id="Contact">
-        <form action="https://formspree.io/f/mnqrnnnp" class="topBefore" id="form" method="POST">
-            <label>
-                <input id="nameform" name="name" placeholder="NAME" required="required" type="name">
-            </label>
-            <label>
-                <input id="email" name="email" placeholder="E-MAIL" required="required" type="email">
-            </label>
-            <label>
-                <textarea id="message" name="message" placeholder="MESSAGE"></textarea>
-            </label>
-            <input id="submit" type="submit" value="GO!">
-        </form>
-    </div>
-    <a href="https://github.com/Mkheir13" target="_blank"><img id="github" src="images/github.png"></a>
-</div>
+        <div class="hero-visual">
+            <div class="bubble" data-i18n="hero.bubble">Faisons parler tes données !</div>
+            <!-- shortcut: placeholder until the AI avatar is generated, then swap for images/avatar.png -->
+            <svg class="avatar" viewBox="0 0 200 200" role="img" aria-label="Avatar">
+                <circle cx="100" cy="100" r="92" fill="#7B3CFF"/>
+                <text x="100" y="122" text-anchor="middle" font-family="Permanent Marker" font-size="64" fill="#D4FF3A">KM</text>
+            </svg>
+            <svg class="doodle doodle-chart" viewBox="0 0 80 60" aria-hidden="true"><path d="M5 55 L5 5 M5 55 L75 55 M10 45 L28 30 L42 38 L70 10"/></svg>
+            <svg class="doodle doodle-star" viewBox="0 0 40 40" aria-hidden="true"><path d="M20 3 L25 15 L38 16 L28 25 L31 37 L20 30 L9 37 L12 25 L2 16 L15 15 Z"/></svg>
+            <svg class="doodle doodle-bolt" viewBox="0 0 30 50" aria-hidden="true"><path d="M18 2 L4 28 L15 28 L10 48 L26 20 L15 20 Z"/></svg>
+        </div>
+    </section>
+
+    <section id="skills" class="card">
+        <h2 class="marker" data-i18n="skills.title">Compétences</h2>
+        <div class="skill-groups">
+            <div class="skill-group">
+                <h3>Machine learning</h3>
+                <ul class="tiles">
+                    <li><span>Py</span>Python</li>
+                    <li><span>Sk</span>scikit-learn</li>
+                    <li><span>Xg</span>XGBoost</li>
+                    <li><span>Pt</span>PyTorch</li>
+                    <li><span>Yo</span>YOLOv8</li>
+                    <li><span>Pd</span>pandas</li>
+                </ul>
+            </div>
+            <div class="skill-group">
+                <h3>Data &amp; MLOps</h3>
+                <ul class="tiles">
+                    <li><span>Sq</span>SQL</li>
+                    <li><span>Pg</span>PostgreSQL</li>
+                    <li><span>Fa</span>FastAPI</li>
+                    <li><span>Pt</span>pytest</li>
+                    <li><span>Gh</span>GitHub Actions</li>
+                    <li><span>Bi</span>Power BI</li>
+                </ul>
+            </div>
+            <div class="skill-group">
+                <h3 data-i18n="skills.genai">IA générative &amp; API</h3>
+                <ul class="tiles">
+                    <li><span>Ai</span>OpenAI</li>
+                    <li><span>Va</span>VAPI</li>
+                    <li><span>Dg</span>Deepgram</li>
+                    <li><span>El</span>ElevenLabs</li>
+                    <li><span>Tw</span>Twilio</li>
+                </ul>
+            </div>
+            <div class="skill-group">
+                <h3 data-i18n="skills.dev">Développement</h3>
+                <ul class="tiles">
+                    <li><span>Sf</span>Symfony</li>
+                    <li><span>Js</span>JavaScript</li>
+                    <li><span>Go</span>Go</li>
+                    <li><span>Gt</span>Git</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="parcours" class="card">
+        <h2 class="marker" data-i18n="path.title">Parcours</h2>
+        <ol class="timeline">
+            <li>
+                <time>2025 — 2026</time>
+                <h3 data-i18n="path.phoceenne.title">Développeur web (alternance) · Phocéenne Auto</h3>
+                <p data-i18n="path.phoceenne.text">Site de la concession de A à Z : catalogue avec filtres, prise de rendez-vous en ligne, SEO.</p>
+            </li>
+            <li>
+                <time>2025</time>
+                <h3 data-i18n="path.pdf.title">Data Scientist / Développeur IA (alternance) · Place des Finances</h3>
+                <p data-i18n="path.pdf.text">SaaS d'agents vocaux IA avec OpenAI, Deepgram, ElevenLabs et Twilio. Back et front en Symfony.</p>
+            </li>
+            <li>
+                <time>2023 — 2025</time>
+                <h3 data-i18n="path.mentor.title">Mentor · Ynov Campus Aix</h3>
+                <p data-i18n="path.mentor.text">Cours, TD et ateliers pour les étudiants de 1re et 2e année.</p>
+            </li>
+            <li>
+                <time>2022 — 2023</time>
+                <h3 data-i18n="path.bone.title">Chef de projet · B-One</h3>
+                <p data-i18n="path.bone.text">Encadrement d'une équipe, site en Go et conception de la base de données.</p>
+            </li>
+            <li>
+                <time>2021 — 2026</time>
+                <h3 data-i18n="path.ynov.title">Mastère Expert IA &amp; Data Scientist · Ynov Aix</h3>
+                <p data-i18n="path.ynov.text">Diplômé en 2026, titre RNCP niveau 7.</p>
+            </li>
+        </ol>
+    </section>
+
+    <section id="about" class="card about">
+        <div class="about-visual">
+            <ul class="words" aria-hidden="true">
+                <li>Leadership</li>
+                <li data-i18n="about.w2">Pédagogie</li>
+                <li data-i18n="about.w3">Esprit critique</li>
+            </ul>
+        </div>
+        <div>
+            <h2 class="marker" data-i18n="about.title">À propos</h2>
+            <p data-i18n="about.p1">Je suis Kheir-eddine, Data Scientist basé à Marseille et diplômé du Mastère Expert IA &amp; Data Scientist d'Ynov.</p>
+            <p data-i18n="about.p2">J'aime les projets complets : collecter et nettoyer les données, entraîner un modèle, puis le mettre en production avec une API, de la CI et du monitoring. Deux ans de mentorat m'ont appris à expliquer simplement ce qui est complexe.</p>
+            <p class="looking" data-i18n="about.looking">Je recherche un poste de Data Scientist.</p>
+        </div>
+    </section>
+</main>
+
+<footer id="contact" class="card contact">
+    <h2 class="marker"><span data-i18n="contact.title1">Construisons un truc</span> <em data-i18n="contact.title2">intelligent !</em></h2>
+    <ul>
+        <li><a href="mailto:kheir.eddine.mederreg@gmail.com">✉ kheir.eddine.mederreg@gmail.com</a></li>
+        <li><a href="https://github.com/Mkheir13">⌥ github.com/Mkheir13</a></li>
+        <li>⌖ Marseille, France</li>
+    </ul>
+</footer>
+
 </body>
 </html>
