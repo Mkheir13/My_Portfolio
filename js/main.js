@@ -46,6 +46,7 @@ const EN = {
     "about.looking": "I'm looking for a Data Scientist position.",
     "contact.title1": "Let's build something",
     "contact.title2": "smart!",
+    "contact.avail": "⌖ Available · Marseille or remote",
 };
 
 const nodes = document.querySelectorAll("[data-i18n]");
@@ -112,7 +113,7 @@ const cursor = document.querySelector(".cursor");
 if (cursor && matchMedia("(hover: hover)").matches) {
     document.documentElement.classList.add("has-cursor");
     addEventListener("mousemove", e => { cursor.style.left = e.clientX + "px"; cursor.style.top = e.clientY + "px"; });
-    document.querySelectorAll("a, button, .chips li, .project").forEach(el => {
+    document.querySelectorAll("a, button, .chips li, .project, .timeline li").forEach(el => {
         el.addEventListener("mouseenter", () => cursor.classList.add("big"));
         el.addEventListener("mouseleave", () => cursor.classList.remove("big"));
     });
