@@ -11,11 +11,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Archivo:wdth,wght@75,900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <script defer src="js/main.js"></script>
+    <script defer src="js/fx.js"></script>
 </head>
 <body>
+<div class="loader" aria-hidden="true"><span class="count">0</span>%</div>
+<div class="cursor" aria-hidden="true"></div>
 
 <header class="nav">
     <a href="#top" class="logo">KHEIR<span>.</span></a>
+    <span class="meta">43.2965° N, 5.3698° E · Marseille · <time id="clock">--:--</time></span>
     <nav>
         <a href="#skills" data-i18n="nav.skills">Compétences</a>
         <a href="#parcours" data-i18n="nav.path">Parcours</a>
@@ -31,19 +35,19 @@
             <p class="hey">Hey, <span data-i18n="hero.iam">je suis</span></p>
             <h1>Kheir-eddine</h1>
             <p class="roles">Data Scientist <b>•</b> Machine Learning <b>•</b> <span data-i18n="hero.genai">IA générative</span></p>
-            <p class="pitch" data-i18n="hero.pitch">Je mène des projets data de bout en bout : des données brutes au modèle en production.</p>
+            <p class="pitch split" data-i18n="hero.pitch">Je transforme des données brutes en modèles qui tournent en prod. Le reste du temps : Destiny, League of Legends, et du café.</p>
             <div class="buttons">
                 <a class="btn btn-main" href="images/cv-kheir-eddine-mederreg.pdf" download data-i18n="hero.cv">Télécharger mon CV</a>
                 <a class="btn btn-outline" href="#contact" data-i18n="hero.contact">Me contacter ↗</a>
             </div>
         </div>
         <div class="hero-visual">
+            <canvas id="fx" aria-hidden="true"></canvas>
+            <span class="hud hud-tl" aria-hidden="true"></span><span class="hud hud-tr" aria-hidden="true"></span>
+            <span class="hud hud-bl" aria-hidden="true"></span><span class="hud hud-br" aria-hidden="true"></span>
+            <p class="readout readout-1" aria-hidden="true"></p>
+            <p class="readout readout-2" aria-hidden="true"></p>
             <div class="bubble" data-i18n="hero.bubble">Faisons parler tes données !</div>
-            <!-- shortcut: placeholder until the AI avatar is generated, then swap for images/avatar.png -->
-            <svg class="avatar" viewBox="0 0 200 200" role="img" aria-label="Avatar">
-                <circle cx="100" cy="100" r="92" fill="#1F201C" stroke="#D6FF00" stroke-width="6"/>
-                <text x="100" y="124" text-anchor="middle" font-family="Archivo, Impact, sans-serif" font-weight="900" font-size="72" fill="#D6FF00">KM</text>
-            </svg>
         </div>
     </section>
 
@@ -136,7 +140,8 @@
         <div class="about-copy">
             <h2 class="marker" data-i18n="about.title">À propos</h2>
             <p data-i18n="about.p1">Je suis Kheir-eddine, Data Scientist basé à Marseille et diplômé du Mastère Expert IA &amp; Data Scientist d'Ynov.</p>
-            <p data-i18n="about.p2">J'aime les projets complets : collecter et nettoyer les données, entraîner un modèle, puis le mettre en production avec une API, de la CI et du monitoring. Deux ans de mentorat m'ont appris à expliquer simplement ce qui est complexe.</p>
+            <p data-i18n="about.p2">J'aime les projets complets : collecter et nettoyer les données, entraîner un modèle, puis le mettre en production avec une API, de la CI et du monitoring. Mon projet de fin d'études tourne sur l'API de Destiny, et j'ai codé un tracker de stats League of Legends parce que je voulais savoir pourquoi je perdais.</p>
+            <p data-i18n="about.p3">Deux ans de mentorat à Ynov m'ont appris à expliquer simplement ce qui est complexe. Fan de l'esthétique Bungie, d'où ce site.</p>
             <p class="looking" data-i18n="about.looking">Je recherche un poste de Data Scientist.</p>
         </div>
     </section>
