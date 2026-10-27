@@ -8,7 +8,7 @@
     <link rel="icon" href="images/favicon.ico">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Permanent+Marker&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Anton&family=Bodoni+Moda:ital,wght@1,900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <script defer src="js/main.js"></script>
 </head>
@@ -27,12 +27,9 @@
 
 <main id="top">
     <section class="hero">
-        <div class="blob blob-purple" aria-hidden="true"></div>
-        <div class="blob blob-blue" aria-hidden="true"></div>
         <div class="hero-text">
             <p class="hey">Hey, <span data-i18n="hero.iam">je suis</span></p>
             <h1>Kheir-eddine</h1>
-            <svg class="underline" viewBox="0 0 300 20" aria-hidden="true"><path d="M5 14 Q 80 4 150 10 T 295 8"/></svg>
             <p class="roles">Data Scientist <b>•</b> Machine Learning <b>•</b> <span data-i18n="hero.genai">IA générative</span></p>
             <p class="pitch" data-i18n="hero.pitch">Je mène des projets data de bout en bout : des données brutes au modèle en production.</p>
             <div class="buttons">
@@ -44,16 +41,13 @@
             <div class="bubble" data-i18n="hero.bubble">Faisons parler tes données !</div>
             <!-- shortcut: placeholder until the AI avatar is generated, then swap for images/avatar.png -->
             <svg class="avatar" viewBox="0 0 200 200" role="img" aria-label="Avatar">
-                <circle cx="100" cy="100" r="92" fill="#7B3CFF"/>
-                <text x="100" y="122" text-anchor="middle" font-family="Permanent Marker" font-size="64" fill="#D4FF3A">KM</text>
+                <circle cx="100" cy="100" r="92" fill="#0C0C0E" stroke="#fff" stroke-width="6"/>
+                <text x="100" y="124" text-anchor="middle" font-family="Anton" font-size="72" fill="#fff">KM</text>
             </svg>
-            <svg class="doodle doodle-chart" viewBox="0 0 80 60" aria-hidden="true"><path d="M5 55 L5 5 M5 55 L75 55 M10 45 L28 30 L42 38 L70 10"/></svg>
-            <svg class="doodle doodle-star" viewBox="0 0 40 40" aria-hidden="true"><path d="M20 3 L25 15 L38 16 L28 25 L31 37 L20 30 L9 37 L12 25 L2 16 L15 15 Z"/></svg>
-            <svg class="doodle doodle-bolt" viewBox="0 0 30 50" aria-hidden="true"><path d="M18 2 L4 28 L15 28 L10 48 L26 20 L15 20 Z"/></svg>
         </div>
     </section>
 
-    <section id="skills" class="card">
+    <section id="skills" class="card reveal">
         <h2 class="marker" data-i18n="skills.title">Compétences</h2>
         <div class="skill-groups">
             <div class="skill-group">
@@ -100,7 +94,7 @@
         </div>
     </section>
 
-    <section id="parcours" class="card">
+    <section id="parcours" class="card reveal">
         <h2 class="marker" data-i18n="path.title">Parcours</h2>
         <ol class="timeline">
             <li>
@@ -131,7 +125,7 @@
         </ol>
     </section>
 
-    <section id="about" class="card about">
+    <section id="about" class="card about reveal">
         <div class="about-visual">
             <ul class="words" aria-hidden="true">
                 <li>Leadership</li>
@@ -148,7 +142,7 @@
     </section>
 </main>
 
-<footer id="contact" class="card contact">
+<footer id="contact" class="card contact reveal">
     <h2 class="marker"><span data-i18n="contact.title1">Construisons un truc</span> <em data-i18n="contact.title2">intelligent !</em></h2>
     <ul>
         <li><a href="mailto:kheir.eddine.mederreg@gmail.com">✉ kheir.eddine.mederreg@gmail.com</a></li>
