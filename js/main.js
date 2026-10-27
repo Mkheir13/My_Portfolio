@@ -51,3 +51,24 @@ try { saved = localStorage.getItem("lang"); } catch {}
 setLang(saved || (navigator.language.startsWith("fr") ? "fr" : "en"));
 document.getElementById("lang").addEventListener("click", () =>
     setLang(document.documentElement.lang === "en" ? "fr" : "en"));
+
+// Ransom-note name: each letter gets one of four looks and a slight tilt, fixed per position.
+document.querySelectorAll(".hero h1").forEach(el => {
+    const kinds = ["rn-a", "rn-a", "rn-b", "rn-a", "rn-c", "rn-a", "rn-d"];
+    let i = 0;
+    const letter = ch => {
+        i++;
+        const k = kinds[(i * 5 + ch.charCodeAt(0)) % kinds.length];
+        return `<span class="rn ${k}" style="transform:rotate(${(i * 37) % 7 - 3}deg)">${ch}</span>`;
+    };
+    el.innerHTML = el.textContent.trim().split(/\s+/)
+        .map(w => w.split(/(?<=-)/).map(p => `<span class="rn-w">${[...p].map(letter).join("")}</span>`).join(""))
+        .join('<span class="rn-sp"></span>');
+});
+
+// Reveal cards as they scroll into view (hidden only when JS runs, so content never stays invisible).
+document.documentElement.classList.add("js");
+const io = new IntersectionObserver(entries => entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
+}), { threshold: .15 });
+document.querySelectorAll(".reveal").forEach(el => io.observe(el));
