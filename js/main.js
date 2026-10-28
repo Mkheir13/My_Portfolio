@@ -33,13 +33,13 @@ const EN = {
     "skills.genai": "Generative AI & APIs",
     "skills.dev": "Development",
     "path.title": "Journey",
-    "path.phoceenne.title": "Web developer (work-study) · Phocéenne Auto",
+    "path.phoceenne.role": "Web developer (work-study)",
     "path.phoceenne.text": "Built the dealership website end to end: filtered catalog, online booking, SEO.",
-    "path.pdf.title": "Data Scientist / AI developer (work-study) · Place des Finances",
+    "path.pdf.role": "Data Scientist / AI developer (work-study)",
     "path.pdf.text": "AI voice-agent SaaS with OpenAI, Deepgram, ElevenLabs and Twilio. Back and front end in Symfony.",
-    "path.mentor.title": "Mentor · Ynov Campus Aix",
+    "path.mentor.role": "Mentor",
     "path.mentor.text": "Lectures, labs and workshops for first and second year students.",
-    "path.bone.title": "Project lead · B-One",
+    "path.bone.role": "Project lead",
     "path.bone.text": "Led a team, built the site in Go and designed the database.",
     "path.ynov.title": "Master's in AI & Data Science · Ynov Aix",
     "path.ynov.text": "Graduated in 2026, RNCP level 7 (master's level).",
@@ -81,7 +81,7 @@ const io = new IntersectionObserver(entries => entries.forEach(e => {
 document.querySelectorAll(".reveal").forEach(el => io.observe(el));
 
 // Cascade order for chips, timeline steps, project cards and stat tiles.
-document.querySelectorAll(".chips, .timeline, .projects, .wall").forEach(list =>
+document.querySelectorAll(".chips, .jobs, .projects, .wall").forEach(list =>
     [...list.children].forEach((li, i) => li.style.setProperty("--i", i)));
 
 // Full-screen menu: MENU button toggles it, Escape and any link close it.
@@ -164,7 +164,7 @@ const cursor = document.querySelector(".cursor");
 if (cursor && matchMedia("(hover: hover)").matches) {
     document.documentElement.classList.add("has-cursor");
     addEventListener("mousemove", e => { cursor.style.left = e.clientX + "px"; cursor.style.top = e.clientY + "px"; });
-    document.querySelectorAll("a, button, .chips li, .project, .timeline li, .wall li").forEach(el => {
+    document.querySelectorAll("a, button, .chips li, .project, .wall li").forEach(el => {
         el.addEventListener("mouseenter", () => cursor.classList.add("big"));
         el.addEventListener("mouseleave", () => cursor.classList.remove("big"));
     });

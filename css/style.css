@@ -85,8 +85,7 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
 }
 .hero > :not(canvas):not(.hud):not(.readout) { position: relative; z-index: 1; }
 #fx { opacity: .55; }
-.hero-top { grid-column: 1; grid-row: 1; display: grid; gap: 12px; justify-items: start; }
-.hey { font: 700 12px var(--mono); letter-spacing: 2px; text-transform: uppercase; color: var(--acid); }
+.hero-top { grid-column: 1; grid-row: 1; justify-self: start; }
 .roles {
     display: inline-block; padding: 6px 10px; border: 1px solid var(--acid); color: var(--acid);
     font: 700 11px var(--mono); letter-spacing: 1px; text-transform: uppercase;
@@ -94,7 +93,8 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
 .roles b { color: var(--blue); }
 .hero-pitch { grid-column: 2; grid-row: 1; justify-self: end; max-width: 34ch; text-align: right; font: 18px/1.5 Inter, sans-serif; }
 .hero-cta { grid-column: 2; grid-row: 2; justify-self: end; align-self: end; display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 12px; }
-.hero-name { grid-column: 1 / -1; grid-row: 3; align-self: end; font-size: clamp(56px, 12vw, 200px); line-height: .85; letter-spacing: -.04em; }
+/* Name capped at 176px: "KHEIR-EDDINE" then spans the full 1100px content width */
+.hero-name { grid-column: 1 / -1; grid-row: 3; align-self: end; margin-left: -.04em; font-size: clamp(56px, 12.6vw, 176px); line-height: .85; letter-spacing: -.04em; }
 .hero-name span { display: block; }
 .hero-name span:last-child { color: var(--acid); }
 .btn {
@@ -115,9 +115,6 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
 .hud-tr { top: 14px; right: 14px; border-left: 0; border-bottom: 0; }
 .hud-bl { bottom: 14px; left: 14px; border-right: 0; border-top: 0; }
 .hud-br { bottom: 14px; right: 14px; border-left: 0; border-top: 0; }
-.readout { position: absolute; top: 50%; z-index: 1; font: 700 10px/1 var(--mono); letter-spacing: 2px; color: var(--acid); opacity: .8; }
-.readout-1 { right: var(--gutter); }
-.readout-2 { left: var(--gutter); }
 
 /* Glitch on hover: two clipped copies of the text, blue and magenta, offset for 300ms */
 .stat[data-text] { position: relative; }
@@ -146,30 +143,35 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
 .wall b em { font-size: .5em; }
 .wall span { font: 700 11px var(--mono); letter-spacing: 2px; text-transform: uppercase; }
 
-/* Sections: full-bleed bands with a lot of air, one idea per screen */
+/* Sections: full-bleed bands, one idea per screen, vertical rhythm that varies from one to the next */
 .card { position: relative; padding: 160px var(--gutter); }
-#projects { color: var(--ink); background: radial-gradient(rgba(11,11,11,.14) 1px, transparent 1.5px) 0 0/14px 14px, var(--acid); }
-#skills { background: var(--ink-deep); }
+#projects { background: var(--ink-deep); }
+#skills { padding-block: 120px; }
+#about { padding-block: 200px; }
 .marker { position: relative; isolation: isolate; display: flex; align-items: flex-start; gap: 16px; margin: 0 0 48px -4px; font-size: 64px; letter-spacing: -2px; line-height: 1; }
 .marker::before {
     content: "[ " counter(section, decimal-leading-zero) " ]"; counter-increment: section;
     margin-top: 10px; color: var(--blue); font: 700 11px var(--mono); letter-spacing: 2px;
 }
-/* Same section number as a huge watermark behind the title */
-.marker::after {
+/* Same section number as a huge watermark behind the title, on Projects and About only */
+#projects .marker::after, #about .marker::after {
     content: counter(section, decimal-leading-zero); position: absolute; left: -12px; top: -44px; z-index: -1;
     font-size: 180px; letter-spacing: -8px; opacity: .08;
 }
 
-/* Projects: ink cards on the acid band, a soft acid glow at the top, colour bar, headline stat and stack */
-.projects { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+/* Projects: four columns, the final-year project featured on two of them; ink cards with a soft glow of their band colour */
+.projects { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
 .project {
     position: relative; display: grid; align-content: start; gap: 10px; padding: 24px;
-    color: var(--text); border-top: 6px solid var(--band);
+    color: var(--text); border: 1px solid rgba(198,255,0,.2); border-top: 6px solid var(--band);
     background: linear-gradient(180deg, color-mix(in srgb, var(--band) 18%, transparent), transparent 45%), var(--ink);
     transition: transform .2s, box-shadow .2s;
 }
-.project:hover { transform: translateY(-6px); box-shadow: 0 0 0 2px var(--ink); }
+.project:hover { transform: translateY(-6px); box-shadow: 0 0 0 2px var(--acid); }
+.featured, .wide { grid-column: span 2; }
+.featured { padding: 32px; }
+.featured .stat { font-size: 96px; }
+.featured h3 { font-size: 28px; }
 .project::before, .project::after { content: ""; position: absolute; width: 16px; height: 16px; border: 2px solid var(--acid); opacity: 0; transition: opacity .2s; }
 .project::before { top: 8px; left: 8px; border-right: 0; border-bottom: 0; }
 .project::after { bottom: 8px; right: 8px; border-left: 0; border-top: 0; }
@@ -182,9 +184,10 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
 .project a:hover { color: var(--acid); }
 .project a::after { content: ""; position: absolute; inset: 0; }
 
-/* Skills */
-.skill-groups { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 32px; }
-.skill-group h3 { margin-bottom: 12px; color: var(--acid); font: 700 11px var(--mono); letter-spacing: 2px; text-transform: uppercase; }
+/* Skills: one ruled row per category, big category name on the left, chips on the right */
+.skill-row { display: grid; grid-template-columns: 1fr 2fr; gap: 24px; align-items: start; padding: 32px 0; border-top: 1px solid rgba(242,242,236,.15); }
+.skill-row:last-child { border-bottom: 1px solid rgba(242,242,236,.15); }
+.skill-row h3 { font-size: 40px; letter-spacing: -1px; line-height: 1; }
 .chips { display: flex; flex-wrap: wrap; gap: 8px; }
 .chips li {
     display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px;
@@ -195,13 +198,13 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
 .chips li:hover { background: var(--acid); color: var(--ink); border-color: var(--acid); }
 .chips li:hover img { filter: none; }
 
-/* Journey: one card per job, education on a single line below */
-.timeline { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; }
-.timeline li { padding: 24px; background: var(--ink-deep); border-left: 4px solid var(--blue); transition: transform .2s; }
-.timeline li:hover { transform: translateY(-6px); }
-.timeline time { color: var(--acid); font: 700 11px var(--mono); letter-spacing: 2px; }
-.timeline h3 { font-size: 20px; margin: 4px 0 8px; }
-.timeline p { color: var(--muted); font: 15px/1.5 Inter, sans-serif; }
+/* Journey: a numbered, ruled list (a break from the card grids above), education on a single line below */
+.jobs li { display: grid; grid-template-columns: 64px 1fr 1.4fr; gap: 24px; align-items: start; padding: 32px 0; border-top: 1px solid var(--ink-deep); }
+.jobs li:last-child { border-bottom: 1px solid var(--ink-deep); }
+.jobs .n { font: 700 12px var(--mono); letter-spacing: 2px; color: var(--blue); }
+.jobs h3 { font-size: 40px; letter-spacing: -1px; line-height: 1; }
+.jobs .role { margin-top: 10px; font: 700 11px var(--mono); letter-spacing: 2px; text-transform: uppercase; color: var(--acid); }
+.jobs p:not(.role) { color: var(--muted); font: 15px/1.5 Inter, sans-serif; }
 .edu { margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--ink-deep); font: 700 11px/1.8 var(--mono); letter-spacing: 2px; text-transform: uppercase; color: var(--muted); }
 .edu b { color: var(--acid); }
 
@@ -219,17 +222,17 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
     font: 700 12px var(--mono); letter-spacing: 1px; text-transform: uppercase;
 }
 
-/* Contact: big title on the left, acid buttons on the right, the 3D scatter faded behind */
+/* Contact as the finale: the title at the same scale as the hero name, links as buttons underneath, the 3D scatter faded behind */
 .contact {
-    position: relative; overflow: hidden; padding: 120px var(--gutter);
-    display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 32px;
+    position: relative; overflow: hidden; padding: 160px var(--gutter) 120px;
+    display: grid; gap: 48px;
     background: var(--ink); color: var(--text); border-top: 2px solid var(--acid);
 }
 .contact > :not(canvas) { position: relative; z-index: 1; }
-.contact .marker { margin: 0; max-width: 11ch; font-size: 48px; }
-.contact .marker::before, .contact .marker::after { display: none; }
-.contact em { padding: 0 10px; background: var(--acid); color: var(--ink); font-style: normal; white-space: nowrap; }
-.contact ul { display: grid; gap: 10px; font: 700 12px var(--mono); letter-spacing: 1px; text-transform: uppercase; }
+.contact .marker { display: block; margin: 0 0 0 -.04em; font-size: clamp(44px, 9.5vw, 132px); line-height: .9; letter-spacing: -.04em; }
+.contact .marker::before { display: none; }
+.contact em { padding: 0 .08em; background: var(--acid); color: var(--ink); font-style: normal; white-space: nowrap; }
+.contact ul { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; font: 700 12px var(--mono); letter-spacing: 1px; text-transform: uppercase; }
 .contact a { display: inline-block; padding: 12px 16px; background: var(--acid); color: var(--ink); transition: background .15s, color .15s; }
 .contact a:hover { background: var(--blue); color: #fff; }
 .contact li:last-child { color: var(--muted); }
@@ -241,10 +244,9 @@ main { perspective: 1200px; }
 .js .reveal.in { opacity: 1; transform: none; }
 
 /* Cascade: chips, timeline steps, project cards and stat tiles appear one after another (--i set in js/main.js) */
-.js .reveal :is(.chips li, .timeline li, .project, .wall li) { opacity: 0; transform: translateY(14px); transition: opacity .4s, transform .4s; transition-delay: calc(var(--i) * 60ms); }
-.js .reveal.in :is(.chips li, .timeline li, .project, .wall li) { opacity: 1; transform: none; }
+.js .reveal :is(.chips li, .jobs li, .project, .wall li) { opacity: 0; transform: translateY(14px); transition: opacity .4s, transform .4s; transition-delay: calc(var(--i) * 60ms); }
+.js .reveal.in :is(.chips li, .jobs li, .project, .wall li) { opacity: 1; transform: none; }
 .js .reveal.in .project { transition: opacity .4s, transform .2s, box-shadow .2s; }
-.js .reveal.in .timeline li { transition: transform .2s; }
 
 /* Intro: hero content rises in once the preloader is done (needs .js, skipped under reduced motion) */
 .js .hero > :is(.hero-top, .hero-pitch, .hero-cta, .hero-name) { animation: rise .7s cubic-bezier(.2,.8,.2,1) both; animation-play-state: paused; }
@@ -284,24 +286,31 @@ main { perspective: 1200px; }
     .hero-pitch { grid-row: 2; justify-self: start; text-align: left; font-size: 16px; }
     .hero-cta { grid-row: 3; justify-self: start; justify-content: flex-start; }
     .hero-name { grid-row: 4; font-size: clamp(48px, 15vw, 72px); }
-    .readout { display: none; }
     .wall { grid-template-columns: repeat(2, 1fr); }
     .wall .void { display: none; }
     .wall li:nth-child(9) { grid-column: 1 / -1; aspect-ratio: 2; }
-    .card, .contact { padding: 80px 20px; }
-    .projects, .timeline, .manifesto { grid-template-columns: 1fr; }
+    .card, .contact, #skills, #about { padding: 80px 20px; }
+    .projects, .manifesto, .skill-row { grid-template-columns: 1fr; }
+    .featured, .wide { grid-column: auto; }
+    .featured { padding: 24px; }
+    .featured .stat { font-size: 56px; }
+    .jobs li { grid-template-columns: 1fr; gap: 10px; }
+    .jobs h3, .skill-row h3 { font-size: 28px; }
     .about-visual { position: static; padding: 32px 24px; }
     .marker { font-size: 40px; letter-spacing: -1px; margin-bottom: 32px; }
     .marker::after { font-size: 110px; top: -28px; }
-    .contact .marker { font-size: 32px; max-width: none; }
     .contact em { white-space: normal; }
+}
+
+@media (max-width: 1000px) and (min-width: 761px) {
+    .projects { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (prefers-reduced-motion: reduce) {
     * { transition: none !important; animation: none !important; }
     html { scroll-behavior: auto; }
     .loader, .flash { display: none; }
-    .js .reveal, .js .reveal :is(.chips li, .timeline li, .project, .wall li), .split .w, .statement .w { opacity: 1; transform: none; }
+    .js .reveal, .js .reveal :is(.chips li, .jobs li, .project, .wall li), .split .w, .statement .w { opacity: 1; transform: none; }
     .js .hero > :is(.hero-top, .hero-pitch, .hero-cta, .hero-name) { opacity: 1; }
     .menu { transition: none; }
 }
