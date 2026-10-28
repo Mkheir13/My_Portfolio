@@ -10,6 +10,8 @@
     --muted: #B5BBB3;
     --display: Archivo, Impact, sans-serif;
     --mono: "Space Mono", monospace;
+    /* Side gutter: backgrounds run edge to edge, content stays within 1100px */
+    --gutter: max(48px, calc((100vw - 1100px) / 2));
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -22,14 +24,14 @@ body {
 }
 a { color: inherit; text-decoration: none; }
 ul, ol { list-style: none; }
-main { max-width: 1100px; margin: 0 auto; padding: 0 16px; counter-reset: section; }
+main { counter-reset: section; }
 h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch: 75%; text-transform: uppercase; }
 
 /* Nav */
 .nav {
     position: sticky; top: 0; z-index: 10;
     display: flex; align-items: center; gap: 28px;
-    max-width: 1100px; margin: 0 auto; padding: 14px 16px;
+    padding: 14px var(--gutter);
     background: var(--ink); color: var(--acid);
     border-bottom: 2px solid var(--acid);
 }
@@ -45,10 +47,10 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
 
 /* Hero: two blocks side by side, acid and charcoal */
 .hero { display: grid; grid-template-columns: 1.1fr .9fr; }
-.hero-text { position: relative; padding: 64px 48px; background: var(--olive); color: var(--ink); }
+.hero-text { position: relative; padding: 64px 48px 64px var(--gutter); background: var(--olive); color: var(--ink); }
 .hero-visual {
     position: relative; display: grid; place-items: center; gap: 16px;
-    min-height: 460px; padding: 48px; background: var(--ink); border-left: 2px solid var(--acid);
+    min-height: 460px; padding: 48px var(--gutter) 48px 48px; background: var(--ink); border-left: 2px solid var(--acid);
 }
 .hey { font: 700 12px var(--mono); letter-spacing: 2px; text-transform: uppercase; }
 .hero h1 { font-size: clamp(52px, 7.5vw, 92px); line-height: .95; letter-spacing: -1px; margin: 16px 0; }
@@ -88,12 +90,12 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
 }
 
 /* Sections: full-bleed bands, alternating ink and charcoal, no frames */
-.card { padding: 64px 48px; }
+.card { padding: 64px var(--gutter); }
 #projects { background: var(--acid); color: var(--ink); }
 #skills { background: var(--ink-deep); }
 
 /* Projects: ink cards on the acid band, each with a colour bar, a headline stat and the stack */
-.projects { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+.projects { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
 .project {
     position: relative; display: grid; align-content: start; gap: 10px; padding: 24px;
     background: var(--ink); color: var(--text); border-top: 6px solid var(--band);
@@ -138,8 +140,8 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
 
 /* About: orange word block beside charcoal text */
 .about { display: grid; grid-template-columns: 1fr 1.6fr; padding: 0; }
-.about-visual { display: flex; align-items: center; padding: 48px; background: var(--blue); color: #fff; }
-.about-copy { padding: 48px; }
+.about-visual { display: flex; align-items: center; padding: 48px 48px 48px var(--gutter); background: var(--blue); color: #fff; }
+.about-copy { padding: 48px var(--gutter) 48px 48px; }
 .about p { margin-bottom: 12px; font: 15px/1.6 Inter, sans-serif; }
 .words { font-size: 34px; line-height: 1.1; }
 .looking {
@@ -150,7 +152,7 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
 
 /* Contact: big title on the left, acid buttons on the right, the 3D scatter faded behind */
 .contact {
-    position: relative; overflow: hidden; max-width: 1100px; margin: 0 auto; padding: 80px 48px;
+    position: relative; overflow: hidden; padding: 80px var(--gutter);
     display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 32px;
     background: var(--ink); color: var(--text); border-top: 2px solid var(--acid);
 }
@@ -175,6 +177,7 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
 }
 
 @media (max-width: 760px) {
+    :root { --gutter: 20px; }
     .nav nav { display: none; }
     .hero, .about { grid-template-columns: 1fr; }
     .hero-visual { order: -1; border-left: 0; border-bottom: 2px solid var(--acid); padding: 32px 24px; }
@@ -186,7 +189,7 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
     .bubble { justify-self: center; text-align: center; }
     .card, .about-visual, .about-copy, .contact { padding: 40px 20px; }
     .projects, .timeline { grid-template-columns: 1fr; }
-    .contact .marker { font-size: 36px; }
+    .contact .marker { font-size: 32px; max-width: none; }
     .marker { font-size: 30px; }
 }
 
