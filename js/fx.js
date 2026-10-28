@@ -1,8 +1,8 @@
 // 3D scatter of three classified clusters, rotating slowly and steered by the mouse,
 // with a wireframe bounding cube and axes. Drawn on a 2D canvas, no 3D library.
 // One instance per canvas.fx (hero panel, faded behind the footer).
-// Skipped under prefers-reduced-motion (the hero then shows only the HUD readouts).
-if (!matchMedia("(prefers-reduced-motion: reduce)").matches) document.querySelectorAll("canvas.fx").forEach(canvas => {
+// Skipped under prefers-reduced-motion and on phones (a 60 fps canvas behind the hero costs battery for little).
+if (!matchMedia("(prefers-reduced-motion: reduce)").matches && !matchMedia("(max-width: 760px)").matches) document.querySelectorAll("canvas.fx").forEach(canvas => {
     const ctx = canvas.getContext("2d");
     const COLORS = ["#C6FF00", "#2F3DFF", "#B8BDB5"];
     let w, h, t = 0, mx = 0, my = 0;
@@ -30,7 +30,7 @@ if (!matchMedia("(prefers-reduced-motion: reduce)").matches) document.querySelec
     const frame = () => {
         t += .016;
         const a = t * .25 + mx * 1.2, b = .35 + my * .8;
-        const S = Math.min(w, h) * .3, cx = w / 2, cy = h / 2;
+        const S = Math.min(w * .45, h) * .35, cx = w / 2, cy = h / 2; // grows with width so it fills a wide hero
         const proj = v => { const [x, y, z] = rot(v, a, b); const f = 3 / (3 + z); return [cx + x * f * S, cy + y * f * S, z, f]; };
         ctx.clearRect(0, 0, w, h);
 
