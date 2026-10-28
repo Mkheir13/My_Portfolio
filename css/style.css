@@ -5,6 +5,7 @@
     --ink-deep: #2D3538;
     --blue: #2F3DFF;
     --orange: var(--blue); /* accent: electric blue (Marathon palette) */
+    --magenta: #FF2BD6; /* third accent, used sparingly: logo dot, CV button hover, one card band */
     --grey: #B8BDB5;
     --text: #F2F2EC;
     --muted: #B5BBB3;
@@ -37,6 +38,31 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
 }
 .logo { font: 900 20px var(--display); font-stretch: 75%; text-transform: uppercase; margin-right: auto; }
 .logo::before { content: "✕ "; font-family: var(--mono); color: var(--blue); }
+.logo span { color: var(--magenta); }
+
+/* Ticker: one line of mono text scrolling under the nav (two identical spans make the loop seamless) */
+.ticker {
+    overflow: hidden; white-space: nowrap;
+    background: var(--acid); color: var(--ink); border-bottom: 2px solid var(--ink);
+    font: 700 11px/32px var(--mono); letter-spacing: 2px; text-transform: uppercase;
+}
+.ticker span { display: inline-block; padding-right: 48px; animation: ticker 40s linear infinite; }
+@keyframes ticker { to { transform: translateX(-100%); } }
+
+/* Film grain over the whole page (SVG noise, no image file) */
+body::after {
+    content: ""; position: fixed; inset: 0; z-index: 40; pointer-events: none; opacity: .07;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Intro flash: an acid and a blue band sweep diagonally once the preloader lifts */
+.flash { position: fixed; inset: 0; z-index: 45; pointer-events: none; overflow: hidden; }
+.flash::before, .flash::after { content: ""; position: absolute; top: -20%; height: 140%; transform: skewX(-20deg) translateX(-60vw); }
+.flash::before { width: 18vw; background: var(--acid); }
+.flash::after { width: 5vw; background: var(--blue); }
+.ready .flash::before { animation: sweep 1s cubic-bezier(.7,0,.2,1) .45s both; }
+.ready .flash::after { animation: sweep 1s cubic-bezier(.7,0,.2,1) .55s both; }
+@keyframes sweep { to { transform: skewX(-20deg) translateX(140vw); } }
 .nav nav { display: flex; gap: 24px; font: 700 11px var(--mono); letter-spacing: 2px; text-transform: uppercase; }
 .nav nav a:hover { text-decoration: underline; }
 .lang {
@@ -47,11 +73,25 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
 
 /* Hero: two blocks side by side, acid and charcoal */
 .hero { display: grid; grid-template-columns: 1.1fr .9fr; }
-.hero-text { position: relative; padding: 64px 48px 64px var(--gutter); background: var(--olive); color: var(--ink); }
+.hero-text {
+    position: relative; padding: 64px 48px 64px var(--gutter); color: var(--ink);
+    background: radial-gradient(rgba(11,11,11,.14) 1px, transparent 1.5px) 0 0/14px 14px, var(--olive);
+}
 .hero-visual {
     position: relative; display: grid; place-items: center; gap: 16px;
-    min-height: 460px; padding: 48px var(--gutter) 48px 48px; background: var(--ink); border-left: 2px solid var(--acid);
+    min-height: 460px; padding: 48px var(--gutter) 48px 48px; border-left: 2px solid var(--acid);
+    background: repeating-linear-gradient(0deg, transparent 0 3px, rgba(198,255,0,.05) 3px 4px), var(--ink);
 }
+
+/* Glitch on hover: two clipped copies of the text, blue and magenta, offset for 300ms */
+h1[data-text], .stat[data-text] { position: relative; }
+h1[data-text]::before, h1[data-text]::after, .stat[data-text]::before, .stat[data-text]::after {
+    content: attr(data-text); position: absolute; inset: 0; pointer-events: none; opacity: 0;
+}
+h1[data-text]::before, .stat[data-text]::before { color: var(--blue); clip-path: inset(0 0 55% 0); transform: translateX(-3px); }
+h1[data-text]::after, .stat[data-text]::after { color: var(--magenta); clip-path: inset(55% 0 0 0); transform: translateX(3px); }
+h1[data-text]:hover::before, h1[data-text]:hover::after, .project:hover .stat::before, .project:hover .stat::after { animation: glitch .3s steps(3) forwards; }
+@keyframes glitch { from { opacity: 1; } to { opacity: 0; } }
 .hey { font: 700 12px var(--mono); letter-spacing: 2px; text-transform: uppercase; }
 .hero h1 { font-size: clamp(52px, 7.5vw, 92px); line-height: .95; letter-spacing: -1px; margin: 16px 0; }
 .roles {
@@ -72,6 +112,7 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
 .btn-outline { border: 2px solid var(--ink); color: var(--ink); }
 .btn:hover { background: var(--blue); color: #fff; border-color: var(--blue); }
 .btn:hover::after { color: #fff; }
+.btn-main:hover { background: var(--magenta); }
 
 .bubble {
     align-self: start; justify-self: start; max-width: 160px;
@@ -90,8 +131,13 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
 }
 
 /* Sections: full-bleed bands, alternating ink and charcoal, no frames */
-.card { padding: 64px var(--gutter); }
-#projects { background: var(--acid); color: var(--ink); }
+.card { position: relative; padding: 64px var(--gutter); }
+/* Spec-sheet metadata in the top-right corner of each section (data-meta on the element) */
+.card::before {
+    content: attr(data-meta); position: absolute; top: 20px; right: var(--gutter);
+    font: 700 10px var(--mono); letter-spacing: 2px; opacity: .45;
+}
+#projects { color: var(--ink); background: radial-gradient(rgba(11,11,11,.14) 1px, transparent 1.5px) 0 0/14px 14px, var(--acid); }
 #skills { background: var(--ink-deep); }
 
 /* Projects: ink cards on the acid band, each with a colour bar, a headline stat and the stack */
@@ -102,6 +148,11 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
     transition: transform .2s, box-shadow .2s;
 }
 .project:hover { transform: translateY(-6px); box-shadow: 0 0 0 2px var(--ink); }
+/* HUD corners that appear on hover */
+.project::before, .project::after { content: ""; position: absolute; width: 16px; height: 16px; border: 2px solid var(--acid); opacity: 0; transition: opacity .2s; }
+.project::before { top: 8px; left: 8px; border-right: 0; border-bottom: 0; }
+.project::after { bottom: 8px; right: 8px; border-left: 0; border-top: 0; }
+.project:hover::before, .project:hover::after { opacity: 1; }
 .project .stat { font: 900 40px/1 var(--display); font-stretch: 75%; text-transform: uppercase; color: var(--band); }
 .project h3 { font-size: 20px; }
 .project p:not(.stat):not(.stack) { color: var(--muted); font: 15px/1.5 Inter, sans-serif; }
@@ -109,10 +160,15 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
 .project a { font: 700 11px var(--mono); letter-spacing: 2px; text-transform: uppercase; margin-top: auto; }
 .project a:hover { color: var(--acid); }
 .project a::after { content: ""; position: absolute; inset: 0; }
-.marker { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 28px; font-size: 36px; letter-spacing: -.5px; line-height: 1; }
+.marker { position: relative; isolation: isolate; display: flex; align-items: flex-start; gap: 16px; margin: 0 0 32px -4px; font-size: 64px; letter-spacing: -2px; line-height: 1; }
 .marker::before {
-    content: counter(section, decimal-leading-zero); counter-increment: section;
-    margin-top: 6px; color: var(--blue); font: 700 11px var(--mono); letter-spacing: 2px;
+    content: "[ " counter(section, decimal-leading-zero) " ]"; counter-increment: section;
+    margin-top: 10px; color: var(--blue); font: 700 11px var(--mono); letter-spacing: 2px;
+}
+/* Same section number as a huge watermark behind the title */
+.marker::after {
+    content: counter(section, decimal-leading-zero); position: absolute; left: -12px; top: -44px; z-index: -1;
+    font-size: 180px; letter-spacing: -8px; opacity: .08;
 }
 
 /* Skills */
@@ -158,8 +214,12 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
 }
 .contact > :not(canvas) { position: relative; z-index: 1; }
 .contact .marker { margin: 0; max-width: 11ch; font-size: 48px; }
-.contact .marker::before { display: none; }
-.contact em { padding: 0 10px; background: var(--acid); color: var(--ink); font-style: normal; }
+.contact .marker::before, .contact .marker::after { display: none; }
+.contact .barcode {
+    position: absolute; right: var(--gutter); bottom: 20px; width: 120px; height: 32px; opacity: .7;
+    background: repeating-linear-gradient(90deg, var(--acid) 0 2px, transparent 2px 4px, var(--acid) 4px 7px, transparent 7px 9px, var(--acid) 9px 10px, transparent 10px 14px);
+}
+.contact em { padding: 0 10px; background: var(--acid); color: var(--ink); font-style: normal; white-space: nowrap; }
 .contact ul { display: grid; gap: 10px; font: 700 12px var(--mono); letter-spacing: 1px; text-transform: uppercase; }
 .contact a { display: inline-block; padding: 12px 16px; background: var(--acid); color: var(--ink); transition: background .15s, color .15s; }
 .contact a:hover { background: var(--blue); color: #fff; }
@@ -190,7 +250,11 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
     .card, .about-visual, .about-copy, .contact { padding: 40px 20px; }
     .projects, .timeline { grid-template-columns: 1fr; }
     .contact .marker { font-size: 32px; max-width: none; }
-    .marker { font-size: 30px; }
+    .contact em { white-space: normal; }
+    .marker { font-size: 40px; letter-spacing: -1px; }
+    .marker::after { font-size: 110px; top: -28px; }
+    .card::before { top: 12px; }
+    .contact .barcode { display: none; }
 }
 
 /* Intro: hero content rises in once the preloader is done (needs .js, skipped under reduced motion) */
@@ -263,4 +327,4 @@ main { perspective: 1200px; }
     background: var(--acid); mix-blend-mode: difference; transition: width .2s, height .2s, margin .2s;
 }
 .cursor.big { width: 40px; height: 40px; margin: -20px 0 0 -20px; }
-@media (prefers-reduced-motion: reduce) { .loader { display: none; } .split .w { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .loader, .flash { display: none; } .split .w { opacity: 1; transform: none; } .ticker span, h1[data-text]:hover::before, h1[data-text]:hover::after, .project:hover .stat::before, .project:hover .stat::after { animation: none; } }
