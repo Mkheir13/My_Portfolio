@@ -147,6 +147,11 @@ if (loader) {
     }, 40);
 }
 
+// Scroll progress, read by the gutter rails' marker.
+const setProgress = () => document.documentElement.style.setProperty("--progress",
+    (scrollY / (document.documentElement.scrollHeight - innerHeight) || 0).toFixed(4));
+setProgress(); addEventListener("scroll", setProgress, { passive: true });
+
 // Local time in Marseille, in the header.
 const clock = document.getElementById("clock");
 const showTime = () => clock.textContent = new Date().toLocaleTimeString("fr-FR", { timeZone: "Europe/Paris", hour: "2-digit", minute: "2-digit" });

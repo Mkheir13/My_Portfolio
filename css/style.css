@@ -145,6 +145,37 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
 .wall b em { font-size: .5em; }
 .wall span { font: 700 11px var(--mono); letter-spacing: 2px; text-transform: uppercase; }
 
+/* Gutters: two fixed rails with tick marks and a scroll marker, the section name written vertically on the left,
+   pixel clusters in the corners of the stats wall and the footer */
+.rail {
+    position: fixed; top: var(--nav-h); bottom: 0; z-index: 5; width: 1px; pointer-events: none;
+    background: repeating-linear-gradient(0deg, transparent 0 23px, rgba(198,255,0,.35) 23px 24px);
+}
+.rail::before { content: ""; position: absolute; top: 0; bottom: 0; left: 0; width: 1px; background: rgba(198,255,0,.15); }
+.rail-l { left: calc(var(--gutter) / 2); }
+.rail-r { right: calc(var(--gutter) / 2); }
+.rail::after {
+    content: ""; position: absolute; left: -5px; top: calc(var(--progress, 0) * (100% - 11px)); width: 11px; height: 11px;
+    background: var(--acid); transition: top .1s linear;
+}
+.rail-r::after { background: var(--blue); }
+.card[data-side]::before {
+    content: attr(data-side); position: absolute; top: 160px; left: calc(var(--gutter) / 2); transform: translateX(-50%);
+    writing-mode: vertical-rl; font: 700 10px var(--mono); letter-spacing: 3px; opacity: .45;
+}
+.stats::after, .contact::after {
+    content: ""; position: absolute; width: 10px; height: 10px; z-index: 1;
+}
+.stats { position: relative; }
+.stats::after {
+    right: calc(var(--gutter) / 2 - 20px); top: 24px; background: var(--ink);
+    box-shadow: 10px 0 var(--ink), 0 10px var(--ink), 20px 10px var(--ink), 10px 20px var(--ink), 30px 20px var(--ink), 20px 30px var(--ink), -10px 30px var(--blue), 0 40px var(--blue);
+}
+.contact::after {
+    left: calc(var(--gutter) / 2 - 20px); bottom: 32px; background: var(--acid);
+    box-shadow: 10px 0 var(--acid), 0 -10px var(--acid), 20px -10px var(--acid), 10px -20px var(--acid), 30px -20px var(--acid), -10px -30px var(--blue), 0 -40px var(--blue), 20px -30px var(--magenta);
+}
+
 /* Sections: full-bleed bands, one idea per screen, vertical rhythm that varies from one to the next */
 .card { position: relative; padding: 160px var(--gutter); }
 #projects { background: var(--ink-deep); }
@@ -290,6 +321,7 @@ main { perspective: 1200px; }
 
 @media (max-width: 760px) {
     :root { --gutter: 20px; }
+    .rail, .card[data-side]::before, .stats::after, .contact::after { display: none; }
     .hero { grid-template-columns: 1fr; grid-template-rows: auto auto 1fr auto; padding: 32px 20px; gap: 20px; }
     .hero-top, .hero-pitch, .hero-cta, .hero-name { grid-column: 1; }
     .hero-pitch { grid-row: 2; padding-left: 0; text-align: left; font-size: 16px; }
