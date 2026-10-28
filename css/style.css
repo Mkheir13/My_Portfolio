@@ -54,6 +54,7 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
 .logo::before { content: "✕ "; font-family: var(--mono); color: var(--blue); }
 .logo span { color: var(--magenta); }
 .meta { margin-right: auto; font: 700 10px var(--mono); letter-spacing: 2px; text-transform: uppercase; color: var(--muted); }
+#where { color: var(--acid); }
 .menu-btn {
     padding: 12px 16px; border: 1px solid var(--acid); background: transparent; color: var(--acid); cursor: pointer;
     font: 700 11px var(--mono); letter-spacing: 2px; text-transform: uppercase; transition: background .15s, color .15s;
@@ -241,7 +242,8 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
 .jobs li { display: grid; grid-template-columns: 64px 1fr 1.4fr; gap: 24px; align-items: start; padding: 32px 0; border-top: 1px solid rgba(242,242,236,.15); }
 .jobs li:last-child { border-bottom: 1px solid rgba(242,242,236,.15); }
 .jobs .n { font: 700 12px var(--mono); letter-spacing: 2px; color: var(--blue); }
-.jobs h3 { font-size: 40px; letter-spacing: -1px; line-height: 1; }
+.jobs h3 { font-size: 40px; letter-spacing: -1px; line-height: 1; transition: color .15s, transform .2s; }
+.jobs li:hover h3 { color: var(--acid); transform: translateX(8px); }
 .jobs .role { margin-top: 10px; font: 700 11px var(--mono); letter-spacing: 2px; text-transform: uppercase; color: var(--acid); }
 .jobs p:not(.role) { color: var(--muted); font: 15px/1.5 Inter, sans-serif; }
 .edu { margin-top: 24px; font: 700 11px/1.8 var(--mono); letter-spacing: 2px; text-transform: uppercase; color: var(--muted); }
@@ -350,6 +352,14 @@ main { perspective: 1200px; }
 
 @media (max-width: 1000px) and (min-width: 761px) {
     .projects { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media print {
+    .loader, .flash, .cursor, .rail, .menu, .menu-btn, .lang, canvas, .hud, .skip { display: none !important; }
+    .js .reveal, .js .reveal *, .statement .w, .split .w, .hero > * { opacity: 1 !important; transform: none !important; animation: none !important; }
+    .hero { min-height: 0; }
+    .card, .contact { padding: 40px var(--gutter); break-inside: avoid; }
+    .project a::after { content: " (" attr(href) ")"; position: static; font-size: 9px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

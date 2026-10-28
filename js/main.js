@@ -129,13 +129,18 @@ const splitStatement = () => document.querySelectorAll(".statement").forEach(el 
 splitStatement();
 document.getElementById("lang").addEventListener("click", splitStatement);
 
-// Highlight the menu link of the section on screen.
-const links = [...document.querySelectorAll(".menu a")];
+// Highlight the menu link of the section on screen and name it in the header.
+const links = [...document.querySelectorAll(".menu a")], where = document.getElementById("where");
 const sectionObserver = new IntersectionObserver(entries => entries.forEach(e => {
     if (!e.isIntersecting) return;
     links.forEach(a => a.classList.toggle("active", a.getAttribute("href") === "#" + e.target.id));
+    where.textContent = e.target.dataset.side || "SEC_00 // HOME";
 }), { rootMargin: "-40% 0px -55% 0px" });
-document.querySelectorAll("main section[id], footer[id]").forEach(s => sectionObserver.observe(s));
+document.querySelectorAll("main section, footer[id]").forEach(s => sectionObserver.observe(s));
+
+// Hero scatter fades as the hero scrolls away.
+const fx = document.getElementById("fx");
+addEventListener("scroll", () => { fx.style.opacity = Math.max(0, .7 - scrollY / innerHeight); }, { passive: true });
 
 // Preloader: counts to 100 in under a second, then slides away.
 const loader = document.querySelector(".loader"), count = loader?.querySelector(".count");
