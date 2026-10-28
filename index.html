@@ -24,41 +24,53 @@
 <header class="nav">
     <a href="#top" class="logo">KHEIR<span>.</span></a>
     <span class="meta">43.2965° N, 5.3698° E · Marseille · <time id="clock">--:--</time></span>
-    <nav>
-        <a href="#projects" data-i18n="nav.projects">Projets</a>
-        <a href="#skills" data-i18n="nav.skills">Compétences</a>
-        <a href="#parcours" data-i18n="nav.path">Parcours</a>
-        <a href="#about" data-i18n="nav.about">À propos</a>
-        <a href="#contact" data-i18n="nav.contact">Contact</a>
-    </nav>
+    <button id="menu-btn" class="menu-btn" aria-expanded="false" aria-controls="menu" data-i18n="nav.menu">Menu</button>
     <button id="lang" class="lang" aria-label="Switch to English">EN</button>
 </header>
+<nav id="menu" class="menu">
+    <a href="#projects" data-i18n="nav.projects">Projets</a>
+    <a href="#skills" data-i18n="nav.skills">Compétences</a>
+    <a href="#parcours" data-i18n="nav.path">Parcours</a>
+    <a href="#about" data-i18n="nav.about">À propos</a>
+    <a href="#contact" data-i18n="nav.contact">Contact</a>
+</nav>
 <div class="flash" aria-hidden="true"></div>
-<div class="ticker" aria-hidden="true"><span>Kheir-eddine Mederreg · Data Scientist · Marseille · F1 0.92 · mAP50-95 +37% · ETL → API → CI · Open to work · </span><span>Kheir-eddine Mederreg · Data Scientist · Marseille · F1 0.92 · mAP50-95 +37% · ETL → API → CI · Open to work · </span></div>
 
 <main id="top">
     <section class="hero">
-        <div class="hero-text">
+        <canvas id="fx" class="fx" aria-hidden="true"></canvas>
+        <span class="hud hud-tl" aria-hidden="true"></span><span class="hud hud-tr" aria-hidden="true"></span>
+        <span class="hud hud-bl" aria-hidden="true"></span><span class="hud hud-br" aria-hidden="true"></span>
+        <p class="readout readout-1" aria-hidden="true"></p>
+        <p class="readout readout-2" aria-hidden="true"></p>
+        <div class="hero-top">
             <p class="hey">Hey, <span data-i18n="hero.iam">je suis</span></p>
-            <h1 data-text="Kheir-eddine">Kheir-eddine</h1>
             <p class="roles">Data Scientist <b>•</b> Machine Learning <b>•</b> <span data-i18n="hero.genai">IA générative</span></p>
-            <p class="pitch split" data-i18n="hero.pitch">Je transforme des données brutes en modèles qui tournent en prod. Le reste du temps : Destiny, League of Legends, et du café.</p>
-            <div class="buttons">
-                <a class="btn btn-main" href="images/cv-kheir-eddine-mederreg.pdf" download data-i18n="hero.cv">Télécharger mon CV</a>
-                <a class="btn btn-outline" href="#contact" data-i18n="hero.contact">Me contacter ↗</a>
-            </div>
         </div>
-        <div class="hero-visual">
-            <canvas id="fx" class="fx" aria-hidden="true"></canvas>
-            <span class="hud hud-tl" aria-hidden="true"></span><span class="hud hud-tr" aria-hidden="true"></span>
-            <span class="hud hud-bl" aria-hidden="true"></span><span class="hud hud-br" aria-hidden="true"></span>
-            <p class="readout readout-1" aria-hidden="true"></p>
-            <p class="readout readout-2" aria-hidden="true"></p>
-            <div class="bubble" data-i18n="hero.bubble">Faisons parler tes données !</div>
+        <p class="hero-pitch split" data-i18n="hero.pitch">Je transforme des données brutes en modèles qui tournent en prod. Le reste du temps : Destiny, League of Legends, et du café.</p>
+        <div class="hero-cta">
+            <a class="btn btn-main" href="images/cv-kheir-eddine-mederreg.pdf" download data-i18n="hero.cv">Télécharger mon CV</a>
+            <a class="btn btn-outline" href="#contact" data-i18n="hero.contact">Me contacter ↗</a>
         </div>
+        <h1 class="hero-name"><span>Kheir-eddine</span><span>Mederreg</span></h1>
     </section>
 
-    <section id="projects" class="card reveal" data-meta="SEC_01 // PROJECTS">
+    <section id="stats" class="stats reveal" aria-label="Chiffres">
+        <ul class="wall">
+            <li><b data-count="6">0</b><span data-i18n="stats.projects">projets</span></li>
+            <li class="void" aria-hidden="true"></li>
+            <li><b data-count="2">0</b><span data-i18n="stats.mentor">ans de mentorat</span></li>
+            <li class="void" aria-hidden="true"></li>
+            <li><b><em>F1</em> <i data-count="0.92">0</i></b><span data-i18n="stats.f1">meilleur modèle</span></li>
+            <li class="void" aria-hidden="true"></li>
+            <li><b>+<i data-count="37">0</i>%</b><span>mAP50-95</span></li>
+            <li class="void" aria-hidden="true"></li>
+            <li><b data-count="4">0</b><span data-i18n="stats.companies">entreprises</span></li>
+            <li class="void" aria-hidden="true"></li>
+        </ul>
+    </section>
+
+    <section id="projects" class="card reveal">
         <h2 class="marker" data-i18n="projects.title">Projets</h2>
         <ul class="projects">
             <li class="project" style="--band: var(--acid)">
@@ -106,7 +118,7 @@
         </ul>
     </section>
 
-    <section id="skills" class="card reveal" data-meta="SEC_02 // SKILLS">
+    <section id="skills" class="card reveal">
         <h2 class="marker" data-i18n="skills.title">Compétences</h2>
         <div class="skill-groups">
             <div class="skill-group">
@@ -153,7 +165,7 @@
         </div>
     </section>
 
-    <section id="parcours" class="card reveal" data-meta="SEC_03 // JOURNEY">
+    <section id="parcours" class="card reveal">
         <h2 class="marker" data-i18n="path.title">Parcours</h2>
         <ol class="timeline">
             <li>
@@ -180,7 +192,7 @@
         <p class="edu"><b>2021 — 2026</b> · <span data-i18n="path.ynov.title">Mastère Expert IA &amp; Data Scientist · Ynov Aix</span> · <span data-i18n="path.ynov.text">Diplômé en 2026, titre RNCP niveau 7.</span></p>
     </section>
 
-    <section id="about" class="card about reveal" data-meta="SEC_04 // ABOUT">
+    <section id="about" class="card manifesto reveal">
         <div class="about-visual">
             <ul class="words" aria-hidden="true">
                 <li>Leadership</li>
@@ -190,17 +202,16 @@
         </div>
         <div class="about-copy">
             <h2 class="marker" data-i18n="about.title">À propos</h2>
+            <p class="statement" data-i18n="about.p2">J'aime les projets complets : collecter et nettoyer les données, entraîner un modèle, puis le mettre en production avec une API, de la CI et du monitoring. Mon projet de fin d'études tourne sur l'API de Destiny, et j'ai codé un tracker de stats League of Legends parce que je voulais savoir pourquoi je perdais.</p>
             <p data-i18n="about.p1">Je suis Kheir-eddine, Data Scientist basé à Marseille et diplômé du Mastère Expert IA &amp; Data Scientist d'Ynov.</p>
-            <p data-i18n="about.p2">J'aime les projets complets : collecter et nettoyer les données, entraîner un modèle, puis le mettre en production avec une API, de la CI et du monitoring. Mon projet de fin d'études tourne sur l'API de Destiny, et j'ai codé un tracker de stats League of Legends parce que je voulais savoir pourquoi je perdais.</p>
             <p data-i18n="about.p3">Deux ans de mentorat à Ynov m'ont appris à expliquer simplement ce qui est complexe. Fan de l'esthétique Bungie, d'où ce site.</p>
             <p class="looking" data-i18n="about.looking">Je recherche un poste de Data Scientist.</p>
         </div>
     </section>
 </main>
 
-<footer id="contact" class="card contact reveal" data-meta="BUILD 2026.10 // LAT 43.2965 // LON 5.3698">
+<footer id="contact" class="card contact reveal">
     <canvas id="fx2" class="fx" aria-hidden="true"></canvas>
-    <span class="barcode" aria-hidden="true"></span>
     <h2 class="marker"><span data-i18n="contact.title1">Construisons un truc</span> <em data-i18n="contact.title2">intelligent !</em></h2>
     <ul>
         <li><a href="mailto:kheir.eddine.mederreg@gmail.com">✉ kheir.eddine.mederreg@gmail.com</a></li>

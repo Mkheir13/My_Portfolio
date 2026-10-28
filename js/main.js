@@ -1,6 +1,11 @@
 // French lives in the HTML; this dictionary only holds the English versions.
 const EN = {
+    "nav.menu": "Menu",
     "nav.projects": "Projects",
+    "stats.projects": "projects",
+    "stats.mentor": "years of mentoring",
+    "stats.f1": "best model",
+    "stats.companies": "companies",
     "nav.skills": "Skills",
     "projects.title": "Projects",
     "projects.code": "View code →",
@@ -74,12 +79,46 @@ const io = new IntersectionObserver(entries => entries.forEach(e => {
 }), { threshold: .15 });
 document.querySelectorAll(".reveal").forEach(el => io.observe(el));
 
-// Cascade order for tiles and timeline steps.
-document.querySelectorAll(".chips, .timeline, .projects").forEach(list =>
+// Cascade order for chips, timeline steps, project cards and stat tiles.
+document.querySelectorAll(".chips, .timeline, .projects, .wall").forEach(list =>
     [...list.children].forEach((li, i) => li.style.setProperty("--i", i)));
 
-// Underline the nav link of the section on screen.
-const links = [...document.querySelectorAll(".nav nav a")];
+// Full-screen menu: MENU button toggles it, Escape and any link close it.
+const menuBtn = document.getElementById("menu-btn");
+const setMenu = open => {
+    document.documentElement.classList.toggle("menu-open", open);
+    menuBtn.setAttribute("aria-expanded", open);
+};
+menuBtn.addEventListener("click", () => setMenu(!document.documentElement.classList.contains("menu-open")));
+addEventListener("keydown", e => { if (e.key === "Escape") setMenu(false); });
+document.querySelectorAll(".menu a").forEach(a => a.addEventListener("click", () => setMenu(false)));
+
+// Stat tiles count up to their value the first time they scroll into view.
+const counters = new IntersectionObserver(entries => entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    counters.unobserve(e.target);
+    const el = e.target, target = parseFloat(el.dataset.count), decimals = (el.dataset.count.split(".")[1] || "").length, t0 = performance.now();
+    const step = now => {
+        const p = Math.min(1, (now - t0) / 1200);
+        el.textContent = (target * (1 - Math.pow(1 - p, 3))).toFixed(decimals);
+        if (p < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+}), { threshold: .5 });
+document.querySelectorAll("[data-count]").forEach(el => counters.observe(el));
+
+// Manifesto: each word lights up as it crosses the middle of the screen. Re-run after a language switch.
+const wordObserver = new IntersectionObserver(entries => entries.forEach(e =>
+    e.target.classList.toggle("on", e.isIntersecting)), { rootMargin: "-40% 0px -40% 0px" });
+const splitStatement = () => document.querySelectorAll(".statement").forEach(el => {
+    el.innerHTML = el.textContent.trim().split(/\s+/).map(w => `<span class="w">${w}</span>`).join(" ");
+    el.querySelectorAll(".w").forEach(w => wordObserver.observe(w));
+});
+splitStatement();
+document.getElementById("lang").addEventListener("click", splitStatement);
+
+// Highlight the menu link of the section on screen.
+const links = [...document.querySelectorAll(".menu a")];
 const sectionObserver = new IntersectionObserver(entries => entries.forEach(e => {
     if (!e.isIntersecting) return;
     links.forEach(a => a.classList.toggle("active", a.getAttribute("href") === "#" + e.target.id));
@@ -113,7 +152,7 @@ const cursor = document.querySelector(".cursor");
 if (cursor && matchMedia("(hover: hover)").matches) {
     document.documentElement.classList.add("has-cursor");
     addEventListener("mousemove", e => { cursor.style.left = e.clientX + "px"; cursor.style.top = e.clientY + "px"; });
-    document.querySelectorAll("a, button, .chips li, .project, .timeline li").forEach(el => {
+    document.querySelectorAll("a, button, .chips li, .project, .timeline li, .wall li").forEach(el => {
         el.addEventListener("mouseenter", () => cursor.classList.add("big"));
         el.addEventListener("mouseleave", () => cursor.classList.remove("big"));
     });
