@@ -49,9 +49,6 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
 .ticker span { display: inline-block; padding-right: 48px; animation: ticker 40s linear infinite; }
 @keyframes ticker { to { transform: translateX(-100%); } }
 
-/* Hazard stripes between sections */
-.stripe { height: 14px; background: repeating-linear-gradient(-45deg, var(--acid) 0 14px, var(--ink) 14px 28px); }
-
 /* Film grain over the whole page (SVG noise, no image file) */
 body::after {
     content: ""; position: fixed; inset: 0; z-index: 40; pointer-events: none; opacity: .07;
