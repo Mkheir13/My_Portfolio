@@ -16,6 +16,12 @@
     --nav-h: 66px;
 }
 
+/* Self-hosted fonts (latin subsets from Google Fonts, SIL Open Font License) */
+@font-face { font-family: Archivo; font-weight: 900; font-stretch: 75%; font-display: swap; src: url(../fonts/archivo-900-cond.woff2) format("woff2"); }
+@font-face { font-family: Inter; font-weight: 400 700; font-display: swap; src: url(../fonts/inter-var.woff2) format("woff2"); }
+@font-face { font-family: "Space Mono"; font-weight: 400; font-display: swap; src: url(../fonts/spacemono-400.woff2) format("woff2"); }
+@font-face { font-family: "Space Mono"; font-weight: 700; font-display: swap; src: url(../fonts/spacemono-700.woff2) format("woff2"); }
+
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 html, body { overflow-x: hidden; }
@@ -29,6 +35,9 @@ ul, ol { list-style: none; }
 main { counter-reset: section; }
 h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch: 75%; text-transform: uppercase; }
 :focus-visible { outline: 2px solid var(--acid); outline-offset: 3px; }
+/* Skip link: off screen until it gets keyboard focus */
+.skip { position: fixed; top: 8px; left: 8px; z-index: 70; padding: 10px 14px; background: var(--acid); color: var(--ink); font: 700 11px var(--mono); letter-spacing: 2px; text-transform: uppercase; transform: translateY(-200%); }
+.skip:focus { transform: none; }
 
 /* Nav: logo, coordinates, a MENU button that opens the full-screen overlay */
 .nav {

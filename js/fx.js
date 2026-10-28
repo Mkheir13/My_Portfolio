@@ -1,8 +1,8 @@
 // 3D scatter of three classified clusters, rotating slowly and steered by the mouse,
 // with a wireframe bounding cube and axes. Drawn on a 2D canvas, no 3D library.
 // One instance per canvas.fx (hero panel, faded behind the footer).
-// Skipped under prefers-reduced-motion (the hero then shows only the HUD readouts).
-if (!matchMedia("(prefers-reduced-motion: reduce)").matches) document.querySelectorAll("canvas.fx").forEach(canvas => {
+// Skipped under prefers-reduced-motion and on phones (a 60 fps canvas behind the hero costs battery for little).
+if (!matchMedia("(prefers-reduced-motion: reduce)").matches && !matchMedia("(max-width: 760px)").matches) document.querySelectorAll("canvas.fx").forEach(canvas => {
     const ctx = canvas.getContext("2d");
     const COLORS = ["#C6FF00", "#2F3DFF", "#B8BDB5"];
     let w, h, t = 0, mx = 0, my = 0;
