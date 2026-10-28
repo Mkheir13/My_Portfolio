@@ -11,8 +11,8 @@
     --muted: #B5BBB3;
     --display: Archivo, Impact, sans-serif;
     --mono: "Space Mono", monospace;
-    /* Side gutter: backgrounds run edge to edge, content stays within 1100px */
-    --gutter: max(48px, calc((100vw - 1100px) / 2));
+    /* Side gutter: 5% of the viewport, content grows with the screen up to 1600px */
+    --gutter: max(5vw, calc((100vw - 1600px) / 2));
     --nav-h: 66px;
 }
 
@@ -91,10 +91,10 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
     font: 700 11px var(--mono); letter-spacing: 1px; text-transform: uppercase;
 }
 .roles b { color: var(--blue); }
-.hero-pitch { grid-column: 2; grid-row: 1; justify-self: end; max-width: 34ch; text-align: right; font: 18px/1.5 Inter, sans-serif; }
+.hero-pitch { grid-column: 2; grid-row: 1; justify-self: end; max-width: 34ch; text-align: right; font: clamp(16px, 1.3vw, 21px)/1.5 Inter, sans-serif; }
 .hero-cta { grid-column: 2; grid-row: 2; justify-self: end; align-self: end; display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 12px; }
-/* Name capped at 176px: "KHEIR-EDDINE" then spans the full 1100px content width */
-.hero-name { grid-column: 1 / -1; grid-row: 3; align-self: end; margin-left: -.04em; font-size: clamp(56px, 12.6vw, 176px); line-height: .85; letter-spacing: -.04em; }
+/* 14.3vw: "KHEIR-EDDINE" spans the content width (90vw); capped once the content stops growing at 1600px */
+.hero-name { grid-column: 1 / -1; grid-row: 3; align-self: end; margin-left: -.04em; font-size: clamp(56px, 14.3vw, 254px); line-height: .85; letter-spacing: -.04em; }
 .hero-name span { display: block; }
 .hero-name span:last-child { color: var(--acid); }
 .btn {
@@ -212,7 +212,7 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
 .manifesto { display: grid; grid-template-columns: 1fr 2fr; gap: 48px; align-items: start; }
 .about-visual { position: sticky; top: calc(var(--nav-h) + 24px); display: flex; align-items: center; padding: 48px; background: var(--blue); color: #fff; }
 .words { font-size: 34px; line-height: 1.1; }
-.statement { margin-bottom: 40px; font: 900 clamp(28px, 4vw, 56px)/1.08 var(--display); font-stretch: 75%; text-transform: uppercase; text-align: justify; letter-spacing: -.01em; }
+.statement { margin-bottom: 40px; font: 900 clamp(28px, 4.4vw, 72px)/1.08 var(--display); font-stretch: 75%; text-transform: uppercase; text-align: justify; letter-spacing: -.01em; }
 .statement .w { opacity: .18; transition: opacity .35s; }
 .statement .w.on { opacity: 1; }
 .about-copy p:not(.statement):not(.looking) { max-width: 60ch; margin-bottom: 12px; font: 15px/1.6 Inter, sans-serif; color: var(--muted); }
@@ -229,7 +229,7 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
     background: var(--ink); color: var(--text); border-top: 2px solid var(--acid);
 }
 .contact > :not(canvas) { position: relative; z-index: 1; }
-.contact .marker { display: block; margin: 0 0 0 -.04em; font-size: clamp(44px, 9.5vw, 132px); line-height: .9; letter-spacing: -.04em; }
+.contact .marker { display: block; margin: 0 0 0 -.04em; font-size: clamp(44px, 9.5vw, 168px); line-height: .9; letter-spacing: -.04em; }
 .contact .marker::before { display: none; }
 .contact em { padding: 0 .08em; background: var(--acid); color: var(--ink); font-style: normal; white-space: nowrap; }
 .contact ul { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; font: 700 12px var(--mono); letter-spacing: 1px; text-transform: uppercase; }
