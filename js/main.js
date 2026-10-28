@@ -1,6 +1,7 @@
 // French lives in the HTML; this dictionary only holds the English versions.
 const EN = {
     "nav.menu": "Menu",
+    "nav.skip": "Skip to content",
     "nav.projects": "Projects",
     "stats.projects": "projects",
     "stats.mentor": "years of mentoring",
@@ -84,14 +85,25 @@ document.querySelectorAll(".chips, .timeline, .projects, .wall").forEach(list =>
     [...list.children].forEach((li, i) => li.style.setProperty("--i", i)));
 
 // Full-screen menu: MENU button toggles it, Escape and any link close it.
-const menuBtn = document.getElementById("menu-btn");
+// While open, the page behind is inert and Tab cycles between the button and the links.
+const menuBtn = document.getElementById("menu-btn"), menu = document.getElementById("menu");
+const menuLinks = [...menu.querySelectorAll("a")];
 const setMenu = open => {
     document.documentElement.classList.toggle("menu-open", open);
     menuBtn.setAttribute("aria-expanded", open);
+    document.querySelectorAll("main, footer, .skip").forEach(el => el.inert = open);
+    (open ? menuLinks[0] : menuBtn).focus();
 };
 menuBtn.addEventListener("click", () => setMenu(!document.documentElement.classList.contains("menu-open")));
-addEventListener("keydown", e => { if (e.key === "Escape") setMenu(false); });
-document.querySelectorAll(".menu a").forEach(a => a.addEventListener("click", () => setMenu(false)));
+addEventListener("keydown", e => {
+    if (!document.documentElement.classList.contains("menu-open")) return;
+    if (e.key === "Escape") setMenu(false);
+    if (e.key !== "Tab") return;
+    const last = menuLinks[menuLinks.length - 1];
+    if (e.shiftKey && document.activeElement === menuBtn) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); menuBtn.focus(); }
+});
+menuLinks.forEach(a => a.addEventListener("click", () => setMenu(false)));
 
 // Stat tiles count up to their value the first time they scroll into view.
 const counters = new IntersectionObserver(entries => entries.forEach(e => {
