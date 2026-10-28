@@ -89,19 +89,19 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
 .hero-top, .hero-pitch { grid-row: 1; padding-bottom: 24px; border-bottom: 1px solid rgba(198,255,0,.35); }
 .hero-top { grid-column: 1; }
 .roles {
-    display: inline-block; padding: 8px 12px; border: 1px solid var(--acid); color: var(--acid);
-    font: 700 13px var(--mono); letter-spacing: 2px; text-transform: uppercase;
+    display: inline-block; padding: 7px 10px; border: 1px solid var(--acid); color: var(--acid);
+    font: 700 11px var(--mono); letter-spacing: 2px; text-transform: uppercase;
 }
 .roles b { color: var(--blue); }
-.hero-pitch { grid-column: 2; padding-left: 40%; text-align: right; font: clamp(16px, 1.3vw, 21px)/1.5 Inter, sans-serif; }
+.hero-pitch { grid-column: 2; padding-left: 40%; text-align: right; font: clamp(15px, 1.1vw, 18px)/1.5 Inter, sans-serif; }
 .hero-cta { grid-column: 2; grid-row: 2; justify-self: end; align-self: end; display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 12px; }
 /* 14.3vw: "KHEIR-EDDINE" spans the content width (90vw); capped once the content stops growing at 1600px */
-.hero-name { grid-column: 1 / -1; grid-row: 3; align-self: end; margin-left: -.04em; font-size: clamp(56px, 14.3vw, 254px); line-height: .85; letter-spacing: -.04em; }
+.hero-name { grid-column: 1 / -1; grid-row: 3; align-self: end; margin-left: -.04em; font-size: clamp(48px, 11vw, 200px); line-height: .85; letter-spacing: -.04em; }
 .hero-name span { display: block; }
 .hero-name span:last-child { color: var(--acid); }
 .btn {
-    padding: 14px 22px;
-    font: 700 13px var(--mono); letter-spacing: 1px; text-transform: uppercase;
+    padding: 12px 18px;
+    font: 700 12px var(--mono); letter-spacing: 1px; text-transform: uppercase;
     transition: background .15s, color .15s, border-color .15s;
 }
 .btn-main { background: var(--acid); color: var(--ink); }
