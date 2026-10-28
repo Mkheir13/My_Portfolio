@@ -80,18 +80,20 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
 /* Hero: full viewport, 3D scatter behind, small text in the corners, the name huge at the bottom */
 .hero {
     position: relative; overflow: hidden; min-height: calc(100vh - var(--nav-h));
-    display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: auto 1fr auto; gap: 24px;
+    display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: auto 1fr auto; row-gap: 24px;
     padding: 48px var(--gutter); background: var(--ink);
 }
-.hero > :not(canvas):not(.hud):not(.readout) { position: relative; z-index: 1; }
-#fx { opacity: .55; }
-.hero-top { grid-column: 1; grid-row: 1; justify-self: start; }
+.hero > :not(canvas):not(.hud) { position: relative; z-index: 1; }
+#fx { opacity: .7; }
+/* Top row: roles left, pitch right, one thin acid rule under both */
+.hero-top, .hero-pitch { grid-row: 1; padding-bottom: 24px; border-bottom: 1px solid rgba(198,255,0,.35); }
+.hero-top { grid-column: 1; }
 .roles {
-    display: inline-block; padding: 6px 10px; border: 1px solid var(--acid); color: var(--acid);
-    font: 700 11px var(--mono); letter-spacing: 1px; text-transform: uppercase;
+    display: inline-block; padding: 8px 12px; border: 1px solid var(--acid); color: var(--acid);
+    font: 700 13px var(--mono); letter-spacing: 2px; text-transform: uppercase;
 }
 .roles b { color: var(--blue); }
-.hero-pitch { grid-column: 2; grid-row: 1; justify-self: end; max-width: 34ch; text-align: right; font: clamp(16px, 1.3vw, 21px)/1.5 Inter, sans-serif; }
+.hero-pitch { grid-column: 2; padding-left: 40%; text-align: right; font: clamp(16px, 1.3vw, 21px)/1.5 Inter, sans-serif; }
 .hero-cta { grid-column: 2; grid-row: 2; justify-self: end; align-self: end; display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 12px; }
 /* 14.3vw: "KHEIR-EDDINE" spans the content width (90vw); capped once the content stops growing at 1600px */
 .hero-name { grid-column: 1 / -1; grid-row: 3; align-self: end; margin-left: -.04em; font-size: clamp(56px, 14.3vw, 254px); line-height: .85; letter-spacing: -.04em; }
@@ -138,7 +140,7 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
 .wall { display: grid; grid-template-columns: repeat(5, 1fr); }
 .wall li { aspect-ratio: 1; padding: 24px; display: grid; align-content: end; gap: 8px; color: var(--ink); border: 1px solid rgba(11,11,11,.15); }
 .wall .void { background: var(--ink); border: 0; }
-.wall b { font: 900 clamp(40px, 5.5vw, 88px)/1 var(--display); font-stretch: 75%; font-variant-numeric: tabular-nums; }
+.wall b { font: 900 clamp(40px, 6.5vw, 120px)/1 var(--display); font-stretch: 75%; font-variant-numeric: tabular-nums; }
 .wall b em, .wall b i { font-style: normal; }
 .wall b em { font-size: .5em; }
 .wall span { font: 700 11px var(--mono); letter-spacing: 2px; text-transform: uppercase; }
@@ -147,7 +149,8 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
 .card { position: relative; padding: 160px var(--gutter); }
 #projects { background: var(--ink-deep); }
 #skills { padding-block: 120px; }
-#about { padding-block: 200px; }
+#parcours { background: var(--ink-deep); }
+#about { padding-block: 200px; background: var(--acid); color: var(--ink); }
 .marker { position: relative; isolation: isolate; display: flex; align-items: flex-start; gap: 16px; margin: 0 0 48px -4px; font-size: 64px; letter-spacing: -2px; line-height: 1; }
 .marker::before {
     content: "[ " counter(section, decimal-leading-zero) " ]"; counter-increment: section;
@@ -169,9 +172,11 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
 }
 .project:hover { transform: translateY(-6px); box-shadow: 0 0 0 2px var(--acid); }
 .featured, .wide { grid-column: span 2; }
-.featured { padding: 32px; }
-.featured .stat { font-size: 96px; }
+/* Featured card: the stat takes the left column, everything else stacks on the right */
+.featured { grid-template-columns: auto 1fr; column-gap: 40px; padding: 32px; }
+.featured .stat { grid-row: 1 / span 4; font-size: 96px; }
 .featured h3 { font-size: 28px; }
+.project p:not(.stat):not(.stack) { max-width: 40ch; }
 .project::before, .project::after { content: ""; position: absolute; width: 16px; height: 16px; border: 2px solid var(--acid); opacity: 0; transition: opacity .2s; }
 .project::before { top: 8px; left: 8px; border-right: 0; border-bottom: 0; }
 .project::after { bottom: 8px; right: 8px; border-left: 0; border-top: 0; }
@@ -199,25 +204,29 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
 .chips li:hover img { filter: none; }
 
 /* Journey: a numbered, ruled list (a break from the card grids above), education on a single line below */
-.jobs li { display: grid; grid-template-columns: 64px 1fr 1.4fr; gap: 24px; align-items: start; padding: 32px 0; border-top: 1px solid var(--ink-deep); }
-.jobs li:last-child { border-bottom: 1px solid var(--ink-deep); }
+.jobs li { display: grid; grid-template-columns: 64px 1fr 1.4fr; gap: 24px; align-items: start; padding: 32px 0; border-top: 1px solid rgba(242,242,236,.15); }
+.jobs li:last-child { border-bottom: 1px solid rgba(242,242,236,.15); }
 .jobs .n { font: 700 12px var(--mono); letter-spacing: 2px; color: var(--blue); }
 .jobs h3 { font-size: 40px; letter-spacing: -1px; line-height: 1; }
 .jobs .role { margin-top: 10px; font: 700 11px var(--mono); letter-spacing: 2px; text-transform: uppercase; color: var(--acid); }
 .jobs p:not(.role) { color: var(--muted); font: 15px/1.5 Inter, sans-serif; }
-.edu { margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--ink-deep); font: 700 11px/1.8 var(--mono); letter-spacing: 2px; text-transform: uppercase; color: var(--muted); }
+.edu { margin-top: 24px; font: 700 11px/1.8 var(--mono); letter-spacing: 2px; text-transform: uppercase; color: var(--muted); }
 .edu b { color: var(--acid); }
 
-/* About as a manifesto: blue word block sticky on the left, a big statement revealed word by word on the right */
+/* About as a manifesto on the acid band: a tall blue column sticky on the left (words on top, the job badge at the bottom), a big statement revealed word by word on the right */
 .manifesto { display: grid; grid-template-columns: 1fr 2fr; gap: 48px; align-items: start; }
-.about-visual { position: sticky; top: calc(var(--nav-h) + 24px); display: flex; align-items: center; padding: 48px; background: var(--blue); color: #fff; }
-.words { font-size: 34px; line-height: 1.1; }
+.about-visual {
+    position: sticky; top: calc(var(--nav-h) + 24px); min-height: 70vh;
+    display: flex; flex-direction: column; justify-content: space-between; align-items: flex-start; gap: 48px;
+    padding: 48px; background: var(--blue); color: #fff;
+}
+.words { font-size: clamp(34px, 3vw, 48px); line-height: 1.05; }
 .statement { margin-bottom: 40px; font: 900 clamp(28px, 4.4vw, 72px)/1.08 var(--display); font-stretch: 75%; text-transform: uppercase; text-align: justify; letter-spacing: -.01em; }
-.statement .w { opacity: .18; transition: opacity .35s; }
+.statement .w { opacity: .22; transition: opacity .35s; }
 .statement .w.on { opacity: 1; }
-.about-copy p:not(.statement):not(.looking) { max-width: 60ch; margin-bottom: 12px; font: 15px/1.6 Inter, sans-serif; color: var(--muted); }
+.about-copy p:not(.statement) { max-width: 60ch; margin-bottom: 12px; font: 15px/1.6 Inter, sans-serif; color: var(--ink-deep); }
 .looking {
-    display: inline-block; margin-top: 12px; padding: 2px 10px;
+    display: inline-block; padding: 4px 10px;
     background: var(--acid); color: var(--ink);
     font: 700 12px var(--mono); letter-spacing: 1px; text-transform: uppercase;
 }
@@ -283,7 +292,8 @@ main { perspective: 1200px; }
     :root { --gutter: 20px; }
     .hero { grid-template-columns: 1fr; grid-template-rows: auto auto 1fr auto; padding: 32px 20px; gap: 20px; }
     .hero-top, .hero-pitch, .hero-cta, .hero-name { grid-column: 1; }
-    .hero-pitch { grid-row: 2; justify-self: start; text-align: left; font-size: 16px; }
+    .hero-pitch { grid-row: 2; padding-left: 0; text-align: left; font-size: 16px; }
+    .hero-top { border-bottom: 0; padding-bottom: 0; }
     .hero-cta { grid-row: 3; justify-self: start; justify-content: flex-start; }
     .hero-name { grid-row: 4; font-size: clamp(48px, 15vw, 72px); }
     .wall { grid-template-columns: repeat(2, 1fr); }
@@ -292,8 +302,9 @@ main { perspective: 1200px; }
     .card, .contact, #skills, #about { padding: 80px 20px; }
     .projects, .manifesto, .skill-row { grid-template-columns: 1fr; }
     .featured, .wide { grid-column: auto; }
-    .featured { padding: 24px; }
-    .featured .stat { font-size: 56px; }
+    .featured { grid-template-columns: 1fr; padding: 24px; }
+    .featured .stat { grid-row: auto; font-size: 56px; }
+    .about-visual { min-height: 0; gap: 24px; }
     .jobs li { grid-template-columns: 1fr; gap: 10px; }
     .jobs h3, .skill-row h3 { font-size: 28px; }
     .about-visual { position: static; padding: 32px 24px; }

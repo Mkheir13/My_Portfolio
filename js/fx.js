@@ -30,7 +30,7 @@ if (!matchMedia("(prefers-reduced-motion: reduce)").matches && !matchMedia("(max
     const frame = () => {
         t += .016;
         const a = t * .25 + mx * 1.2, b = .35 + my * .8;
-        const S = Math.min(w, h) * .3, cx = w / 2, cy = h / 2;
+        const S = Math.min(w * .45, h) * .35, cx = w / 2, cy = h / 2; // grows with width so it fills a wide hero
         const proj = v => { const [x, y, z] = rot(v, a, b); const f = 3 / (3 + z); return [cx + x * f * S, cy + y * f * S, z, f]; };
         ctx.clearRect(0, 0, w, h);
 
