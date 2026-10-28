@@ -1,8 +1,8 @@
-// Hero visual: a 3D scatter of three classified clusters, rotating slowly and steered by the mouse,
+// 3D scatter of three classified clusters, rotating slowly and steered by the mouse,
 // with a wireframe bounding cube and axes. Drawn on a 2D canvas, no 3D library.
-// Skipped under prefers-reduced-motion (the panel then shows only the HUD readouts).
-const canvas = document.getElementById("fx");
-if (canvas && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+// One instance per canvas.fx (hero panel, faded behind the footer).
+// Skipped under prefers-reduced-motion (the hero then shows only the HUD readouts).
+if (!matchMedia("(prefers-reduced-motion: reduce)").matches) document.querySelectorAll("canvas.fx").forEach(canvas => {
     const ctx = canvas.getContext("2d");
     const COLORS = ["#C6FF00", "#2F3DFF", "#B8BDB5"];
     let w, h, t = 0, mx = 0, my = 0;
@@ -55,7 +55,7 @@ if (canvas && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
         requestAnimationFrame(frame);
     };
     frame();
-}
+});
 
 // HUD readouts: typewriter lines that rewrite themselves every few seconds.
 const LINES = ["MODEL: RANDOM_FOREST", "F1: 0.92", "SAMPLES: 392", "LEAK_CHECK: PASSED", "mAP50-95: +37%", "PIPELINE: ETL → API → CI"];
