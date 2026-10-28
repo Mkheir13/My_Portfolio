@@ -76,8 +76,13 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
 .menu a {
     display: flex; align-items: baseline; gap: 24px;
     font: 900 clamp(44px, 9vw, 112px)/1 var(--display); font-stretch: 75%; text-transform: uppercase; letter-spacing: -.03em;
-    transition: color .15s;
+    opacity: 0; transform: translateY(40px); transition: color .15s, opacity .4s, transform .5s cubic-bezier(.2,.8,.2,1);
 }
+.menu-open .menu a { opacity: 1; transform: none; }
+.menu-open .menu a:nth-child(2) { transition-delay: .06s; }
+.menu-open .menu a:nth-child(3) { transition-delay: .12s; }
+.menu-open .menu a:nth-child(4) { transition-delay: .18s; }
+.menu-open .menu a:nth-child(5) { transition-delay: .24s; }
 .menu a::before { content: "0" counter(menu); counter-increment: menu; font: 700 12px var(--mono); letter-spacing: 2px; color: var(--blue); }
 .menu a:hover, .menu a.active { color: var(--acid); }
 
@@ -101,18 +106,27 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
 .hero-cta { grid-column: 2; grid-row: 2; justify-self: end; align-self: end; display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 12px; }
 /* 14.3vw: "KHEIR-EDDINE" spans the content width (90vw); capped once the content stops growing at 1600px */
 .hero-name { grid-column: 1 / -1; grid-row: 3; align-self: end; margin-left: -.04em; font-size: clamp(48px, 11vw, 200px); line-height: .85; letter-spacing: -.04em; }
-.hero-name span { display: block; }
+.hero-name span { display: block; overflow: hidden; }
 .hero-name span:last-child { color: var(--acid); }
+/* Each line of the name rises out of a mask once the preloader lifts */
+.hero-name i { display: block; font-style: normal; }
+.js .hero-name i { transform: translateY(110%); transition: transform .9s cubic-bezier(.2,.8,.2,1) .35s; }
+.js .hero-name span:last-child i { transition-delay: .5s; }
+.ready .hero-name i { transform: none; }
+/* Buttons: a colour wipes in from the left on hover, the arrow nudges */
 .btn {
-    padding: 12px 18px;
+    position: relative; isolation: isolate; overflow: hidden; padding: 12px 18px;
     font: 700 12px var(--mono); letter-spacing: 1px; text-transform: uppercase;
-    transition: background .15s, color .15s, border-color .15s;
+    transition: color .2s, border-color .2s;
 }
+.btn::before { content: ""; position: absolute; inset: 0; z-index: -1; background: var(--blue); transform: translateX(-101%); transition: transform .3s cubic-bezier(.7,0,.2,1); }
+.btn:hover::before { transform: none; }
 .btn-main { background: var(--acid); color: var(--ink); }
-.btn-main::after { content: "  →"; }
+.btn-main::before { background: var(--magenta); }
+.btn-main::after { content: "→"; display: inline-block; margin-left: 10px; transition: transform .2s; }
+.btn-main:hover::after { transform: translateX(4px); }
 .btn-outline { border: 2px solid var(--acid); color: var(--acid); }
-.btn:hover { background: var(--blue); color: #fff; border-color: var(--blue); }
-.btn-main:hover { background: var(--magenta); }
+.btn:hover { color: #fff; border-color: var(--blue); }
 
 /* HUD corners, data readouts, 3D canvas backdrop */
 #fx, #fx2 { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; }
@@ -137,6 +151,9 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
 .flash::after { width: 5vw; background: var(--blue); }
 .ready .flash::before { animation: sweep 1s cubic-bezier(.7,0,.2,1) .45s both; }
 .ready .flash::after { animation: sweep 1s cubic-bezier(.7,0,.2,1) .55s both; }
+/* Replayed (without delay) when a menu link is clicked, as a page transition */
+.flash.go::before { animation: sweep .8s cubic-bezier(.7,0,.2,1) both; }
+.flash.go::after { animation: sweep .8s cubic-bezier(.7,0,.2,1) .08s both; }
 @keyframes sweep { to { transform: skewX(-20deg) translateX(140vw); } }
 
 /* Stats wall: acid tiles with numbers that count up, black voids staggered between them */
@@ -187,6 +204,12 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
 #parcours { background: var(--ink-deep); }
 #about { padding-block: 200px; background: var(--acid); color: var(--ink); }
 .marker { position: relative; isolation: isolate; display: flex; align-items: flex-start; gap: 16px; margin: 0 0 48px -4px; font-size: 64px; letter-spacing: -2px; line-height: 1; }
+/* Section titles wipe in from the left; a thin acid line scans the section once it is revealed */
+.js .reveal .marker { clip-path: inset(0 100% 0 0); transition: clip-path .9s cubic-bezier(.7,0,.2,1) .1s; }
+.js .reveal.in .marker { clip-path: inset(0 0 0 0); }
+.js .reveal::after { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 2px; background: var(--acid); opacity: 0; pointer-events: none; }
+.js .reveal.in::after { animation: scan 1.1s cubic-bezier(.7,0,.2,1) both; }
+@keyframes scan { 0% { top: 0; opacity: .9; } 100% { top: 100%; opacity: 0; } }
 .marker::before {
     content: "[ " counter(section, decimal-leading-zero) " ]"; counter-increment: section;
     margin-top: 10px; color: var(--blue); font: 700 11px var(--mono); letter-spacing: 2px;
@@ -321,6 +344,9 @@ main { perspective: 1200px; }
     background: var(--acid); mix-blend-mode: difference; transition: width .2s, height .2s, margin .2s;
 }
 .cursor.big { width: 40px; height: 40px; margin: -20px 0 0 -20px; }
+/* A square ring that trails the dot (position eased in js/main.js) */
+.ring { position: fixed; z-index: 59; pointer-events: none; width: 28px; height: 28px; margin: -14px 0 0 -14px; border: 1px solid var(--acid); opacity: .6; display: none; }
+.has-cursor .ring { display: block; }
 
 @media (max-width: 900px) { .meta { display: none; } }
 
@@ -356,7 +382,8 @@ main { perspective: 1200px; }
 
 @media print {
     .loader, .flash, .cursor, .rail, .menu, .menu-btn, .lang, canvas, .hud, .skip { display: none !important; }
-    .js .reveal, .js .reveal *, .statement .w, .split .w, .hero > * { opacity: 1 !important; transform: none !important; animation: none !important; }
+    .js .reveal, .js .reveal *, .statement .w, .split .w, .hero > *, .hero-name i { opacity: 1 !important; transform: none !important; animation: none !important; clip-path: none !important; }
+    .js .reveal::after, .ring { display: none; }
     .hero { min-height: 0; }
     .card, .contact { padding: 40px var(--gutter); break-inside: avoid; }
     .project a::after { content: " (" attr(href) ")"; position: static; font-size: 9px; }
@@ -368,5 +395,9 @@ main { perspective: 1200px; }
     .loader, .flash { display: none; }
     .js .reveal, .js .reveal :is(.chips li, .jobs li, .project, .wall li), .split .w, .statement .w { opacity: 1; transform: none; }
     .js .hero > :is(.hero-top, .hero-pitch, .hero-cta, .hero-name) { opacity: 1; }
+    .js .hero-name i { transform: none; }
+    .js .reveal .marker { clip-path: none; }
+    .js .reveal::after, .ring { display: none; }
+    .menu a { opacity: 1; transform: none; }
     .menu { transition: none; }
 }
