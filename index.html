@@ -33,12 +33,14 @@
     </nav>
     <button id="lang" class="lang" aria-label="Switch to English">EN</button>
 </header>
+<div class="flash" aria-hidden="true"></div>
+<div class="ticker" aria-hidden="true"><span>Kheir-eddine Mederreg · Data Scientist · Marseille · F1 0.92 · mAP50-95 +37% · ETL → API → CI · Open to work · </span><span>Kheir-eddine Mederreg · Data Scientist · Marseille · F1 0.92 · mAP50-95 +37% · ETL → API → CI · Open to work · </span></div>
 
 <main id="top">
     <section class="hero">
         <div class="hero-text">
             <p class="hey">Hey, <span data-i18n="hero.iam">je suis</span></p>
-            <h1>Kheir-eddine</h1>
+            <h1 data-text="Kheir-eddine">Kheir-eddine</h1>
             <p class="roles">Data Scientist <b>•</b> Machine Learning <b>•</b> <span data-i18n="hero.genai">IA générative</span></p>
             <p class="pitch split" data-i18n="hero.pitch">Je transforme des données brutes en modèles qui tournent en prod. Le reste du temps : Destiny, League of Legends, et du café.</p>
             <div class="buttons">
@@ -55,26 +57,27 @@
             <div class="bubble" data-i18n="hero.bubble">Faisons parler tes données !</div>
         </div>
     </section>
+    <div class="stripe" aria-hidden="true"></div>
 
-    <section id="projects" class="card reveal">
+    <section id="projects" class="card reveal" data-meta="SEC_01 // PROJECTS">
         <h2 class="marker" data-i18n="projects.title">Projets</h2>
         <ul class="projects">
             <li class="project" style="--band: var(--acid)">
-                <p class="stat">F1 0.92</p>
+                <p class="stat" data-text="F1 0.92">F1 0.92</p>
                 <h3 data-i18n="projects.destiny.title">Classifieur sur l'API Destiny</h3>
                 <p data-i18n="projects.destiny.text">Projet de fin d'études : pipeline ETL sur l'API Bungie, Random Forest entraîné sur 392 échantillons, contrôle des fuites de données, servi par une API avec CI.</p>
                 <p class="stack">Python · scikit-learn · FastAPI · GitHub Actions</p>
                 <a href="https://github.com/Mkheir13" data-i18n="projects.code">Voir le code →</a>
             </li>
             <li class="project" style="--band: var(--blue)">
-                <p class="stat">mAP +37%</p>
+                <p class="stat" data-text="mAP +37%">mAP +37%</p>
                 <h3 data-i18n="projects.yolo.title">Détection d'objets YOLOv8</h3>
                 <p data-i18n="projects.yolo.text">Fine-tuning de YOLOv8 sur un jeu de données annoté : +37 % de mAP50-95 par rapport au modèle de base.</p>
                 <p class="stack">PyTorch · YOLOv8 · Python</p>
                 <a href="https://github.com/Mkheir13" data-i18n="projects.code">Voir le code →</a>
             </li>
             <li class="project" style="--band: var(--acid)">
-                <p class="stat">TensorFlow</p>
+                <p class="stat" data-text="TensorFlow">TensorFlow</p>
                 <h3>DrawMatch</h3>
                 <p data-i18n="projects.draw.text">Jeu web multijoueur en temps réel : deux joueurs dessinent, une IA TensorFlow devine. Websockets Django Channels, 345 mots, classement.</p>
                 <p class="stack">Python · Django Channels · TensorFlow · scikit-image</p>
@@ -88,13 +91,13 @@
                 <a href="https://github.com/antaww/Overgraph" data-i18n="projects.code">Voir le code →</a>
             </li>
             <li class="project" style="--band: var(--acid)">
-                <p class="stat">Bungie API</p>
+                <p class="stat" data-text="Bungie API">Bungie API</p>
                 <h3>Destiny Hub</h3>
                 <p data-i18n="projects.hub.text">Plateforme communautaire Destiny 2 : OAuth Bungie, synchronisation du manifest (armes, triomphes), système de builds, guides et profils.</p>
                 <p class="stack">React · TypeScript · Node.js · Supabase</p>
                 <a href="https://github.com/BrayTechOrg/bookish-potato" data-i18n="projects.code">Voir le code →</a>
             </li>
-            <li class="project" style="--band: var(--grey)">
+            <li class="project" style="--band: var(--magenta)">
                 <p class="stat">10 <span data-i18n="projects.mee7.stat">commandes</span></p>
                 <h3>MEE7</h3>
                 <p data-i18n="projects.mee7.text">Bot Discord en équipe : notifications de streams, disponibilités communes via iCal, recommandations de contenu, modération.</p>
@@ -104,7 +107,7 @@
         </ul>
     </section>
 
-    <section id="skills" class="card reveal">
+    <section id="skills" class="card reveal" data-meta="SEC_02 // SKILLS">
         <h2 class="marker" data-i18n="skills.title">Compétences</h2>
         <div class="skill-groups">
             <div class="skill-group">
@@ -151,7 +154,7 @@
         </div>
     </section>
 
-    <section id="parcours" class="card reveal">
+    <section id="parcours" class="card reveal" data-meta="SEC_03 // JOURNEY">
         <h2 class="marker" data-i18n="path.title">Parcours</h2>
         <ol class="timeline">
             <li>
@@ -178,7 +181,7 @@
         <p class="edu"><b>2021 — 2026</b> · <span data-i18n="path.ynov.title">Mastère Expert IA &amp; Data Scientist · Ynov Aix</span> · <span data-i18n="path.ynov.text">Diplômé en 2026, titre RNCP niveau 7.</span></p>
     </section>
 
-    <section id="about" class="card about reveal">
+    <section id="about" class="card about reveal" data-meta="SEC_04 // ABOUT">
         <div class="about-visual">
             <ul class="words" aria-hidden="true">
                 <li>Leadership</li>
@@ -195,9 +198,11 @@
         </div>
     </section>
 </main>
+<div class="stripe" aria-hidden="true"></div>
 
-<footer id="contact" class="card contact reveal">
+<footer id="contact" class="card contact reveal" data-meta="BUILD 2026.10 // LAT 43.2965 // LON 5.3698">
     <canvas id="fx2" class="fx" aria-hidden="true"></canvas>
+    <span class="barcode" aria-hidden="true"></span>
     <h2 class="marker"><span data-i18n="contact.title1">Construisons un truc</span> <em data-i18n="contact.title2">intelligent !</em></h2>
     <ul>
         <li><a href="mailto:kheir.eddine.mederreg@gmail.com">✉ kheir.eddine.mederreg@gmail.com</a></li>
