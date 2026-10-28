@@ -23,7 +23,10 @@
 @font-face { font-family: "Space Mono"; font-weight: 700; font-display: swap; src: url(../fonts/spacemono-700.woff2) format("woff2"); }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: var(--acid) var(--ink); }
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--ink); }
+::-webkit-scrollbar-thumb { background: var(--acid); }
 html, body { overflow-x: hidden; }
 body {
     background: var(--ink);
