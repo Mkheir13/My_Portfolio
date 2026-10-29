@@ -175,7 +175,7 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
 
 /* Sections: full-bleed bands, lots of empty, a block code on each */
 .card { position: relative; padding: 160px var(--gutter); }
-#projects { background: var(--ink-deep); }
+#projects { padding-block: 96px; background: var(--ink-deep); }
 /* Skills on paper: light grain, two acid bands on the bias behind the rows */
 #skills { padding-block: 120px; color: var(--ink); background: var(--grain), linear-gradient(-60deg, transparent 0 34%, var(--acid) 34% 41%, transparent 41% 70%, var(--acid) 70% 73%, transparent 73%), var(--paper); }
 #parcours { background: var(--ink-deep); }
@@ -190,9 +190,9 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
 @keyframes scan { 0% { top: 0; opacity: 1; } 100% { top: 100%; opacity: 0; } }
 
 /* Projects: four columns, the final-year project featured on two; cut-corner plates, 1px borders, a code on each */
-.projects { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; counter-reset: card; }
+.projects { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; counter-reset: card; }
 .project {
-    position: relative; display: grid; align-content: start; gap: 10px; padding: 48px 24px 24px;
+    position: relative; display: grid; align-content: start; gap: 8px; padding: 40px 20px 20px;
     color: var(--white); border: 1px solid rgba(198,255,0,.2); border-top: 6px solid var(--band, var(--acid));
     background: var(--ink);
     /* Machined plate: cut top-right and bottom-left corners, a notch on the right edge */
@@ -202,12 +202,12 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
 .project::before { content: "[P.0" counter(card) "] // PROJECT"; counter-increment: card; position: absolute; top: 16px; left: 24px; color: var(--grey); }
 .project:hover { transform: translateY(-4px); border-color: var(--acid); border-top-color: var(--band, var(--acid)); }
 .featured, .wide { grid-column: span 2; }
-.featured { grid-template-columns: auto 1fr; column-gap: 40px; padding: 48px 32px 32px; }
-.featured .stat { grid-row: 1 / span 4; font-size: 96px; }
-.featured h3 { font-size: 28px; }
-.project .stat { font: 900 40px/1 var(--display); font-stretch: 75%; text-transform: uppercase; color: var(--band, var(--acid)); }
-.project h3 { font-size: 20px; }
-.project p:not(.stat):not(.stack) { max-width: 40ch; color: var(--grey); font: 15px/1.5 Inter, sans-serif; }
+.featured { grid-template-columns: auto 1fr; column-gap: 32px; padding: 40px 28px 28px; }
+.featured .stat { grid-row: 1 / span 4; font-size: 80px; }
+.featured h3 { font-size: 26px; }
+.project .stat { font: 900 36px/1 var(--display); font-stretch: 75%; text-transform: uppercase; color: var(--band, var(--acid)); }
+.project h3 { font-size: 19px; }
+.project p:not(.stat):not(.stack) { max-width: 40ch; color: var(--grey); font: 14px/1.5 Inter, sans-serif; }
 .project .stack { color: var(--white); }
 .project a { margin-top: auto; color: var(--acid); }
 .project a::after { content: ""; position: absolute; inset: 0; }
@@ -297,7 +297,7 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
     .wall { grid-template-columns: repeat(2, 1fr); }
     .wall .void { display: none; }
     .wall li:nth-child(9) { grid-column: 1 / -1; aspect-ratio: 2; }
-    .card, .contact, #skills, #about { padding: 80px 20px; }
+    .card, .contact, #skills, #about, #projects { padding: 80px 20px; }
     .projects, .manifesto, .skill-row { grid-template-columns: 1fr; }
     .project { clip-path: none; }
     .featured, .wide { grid-column: auto; }
@@ -309,7 +309,7 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
     .marker { font-size: 40px; letter-spacing: -1px; margin-bottom: 32px; }
     .contact em { white-space: normal; }
 }
-@media (max-width: 1000px) and (min-width: 761px) { .projects { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 1200px) and (min-width: 761px) { .projects { grid-template-columns: repeat(3, 1fr); } }
 
 @media print {
     .loader, .flash, .cursor, .rail, .menu, .menu-btn, .lang, canvas, .hud, .skip { display: none !important; }
