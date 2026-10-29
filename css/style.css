@@ -100,7 +100,7 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
 }
 .hero > :not(model-viewer):not(.hud) { position: relative; z-index: 2; }
 /* The 3D card fills the hero behind the text; wheel and touch pass through so the page keeps scrolling */
-#card3d { position: absolute; top: 0; bottom: 0; left: 38%; width: 62%; height: 100%; z-index: 0; pointer-events: none; --poster-color: transparent; }
+#card3d { position: absolute; top: 0; bottom: 0; left: 38%; width: 62%; height: 100%; z-index: 0; pointer-events: none; --poster-color: transparent; transition: transform 120ms linear; }
 .hero-top { grid-column: 1; grid-row: 1; }
 .hero-top::after { content: ""; display: block; width: 60px; height: 6px; margin-top: 16px; background: var(--hatch); color: var(--acid); }
 .hey { display: block; margin-bottom: 12px; color: var(--grey); }
@@ -259,10 +259,14 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
 
 /* About as a manifesto: acid column sticky on the left, a big statement that decodes word by word on the right */
 .manifesto { display: grid; grid-template-columns: 1fr 2fr; gap: 48px; align-items: start; }
-/* The poster render, sticky, the job badge pinned over its bottom-left corner */
-.about-visual { position: sticky; z-index: 1; top: calc(var(--nav-h) + 24px); }
-.about-visual img { display: block; width: 100%; height: auto; border: 1px solid var(--ink); }
-.about-visual .looking { position: absolute; left: 16px; bottom: 16px; }
+/* The poster render, sticky; the inner card tilts toward the mouse with a glare that follows it (js/main.js) */
+.about-visual { position: sticky; z-index: 1; top: calc(var(--nav-h) + 24px); perspective: 1200px; }
+.tilt { position: relative; transform-style: preserve-3d; transition: transform 120ms linear; will-change: transform; }
+.tilt img { display: block; width: 100%; height: auto; border: 1px solid var(--ink); }
+.glare { position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity 120ms linear; mix-blend-mode: screen;
+    background: radial-gradient(circle at var(--gx, 50%) var(--gy, 50%), rgba(255,255,255,.45), transparent 55%); }
+.tilt:hover .glare { opacity: 1; }
+.about-visual .looking { position: absolute; left: 16px; bottom: 16px; transform: translateZ(30px); }
 .statement { margin-bottom: 40px; font: 900 clamp(28px, 4.4vw, 72px)/1.08 var(--display); font-stretch: 75%; text-transform: uppercase; text-align: justify; letter-spacing: -.01em; }
 .statement .w { opacity: .22; transition: opacity 100ms steps(2); }
 .statement .w.on { opacity: 1; }
