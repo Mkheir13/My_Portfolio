@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="css/style.css">
     <script defer src="js/main.js"></script>
     <script defer src="js/fx.js"></script>
+    <script type="module" src="https://unpkg.com/@google/model-viewer@4.0.0/dist/model-viewer.min.js"></script>
 </head>
 <body>
 <a class="skip" href="#top" data-i18n="nav.skip">Aller au contenu</a>
@@ -48,7 +49,9 @@
 
 <main id="top">
     <section class="hero">
-        <canvas id="fx" class="fx" aria-hidden="true"></canvas>
+        <model-viewer id="card3d" src="images/kheir016.glb" alt="Carte 3D Kheir / 016" orientation="0deg 90deg 0deg"
+            camera-orbit="-12deg 84deg 110%" field-of-view="26deg" interaction-prompt="none" interpolation-decay="200"
+            exposure="1.1" shadow-intensity="0.8" tone-mapping="aces" loading="eager" reveal="auto"></model-viewer>
         <span class="hud hud-tl" aria-hidden="true"></span><span class="hud hud-tr" aria-hidden="true"></span>
         <span class="hud hud-bl" aria-hidden="true"></span><span class="hud hud-br" aria-hidden="true"></span>
         <p class="readout readout-1" aria-hidden="true"></p>
@@ -220,11 +223,7 @@
     <section id="about" class="card manifesto reveal" data-side="[04] // ABOUT" data-n="04">
         <svg class="cross" style="right:var(--gutter);top:40px" aria-hidden="true"><use href="#cross"/></svg>
         <div class="about-visual">
-            <ul class="words" aria-hidden="true">
-                <li>Leadership</li>
-                <li data-i18n="about.w2">Pédagogie</li>
-                <li data-i18n="about.w3">Esprit critique</li>
-            </ul>
+            <img src="images/kheir_data.webp" width="900" height="1200" alt="Affiche Kheir × Data Science : plaque noire, panneaux de verre, halos verts et cyan" loading="lazy">
             <p class="looking" data-i18n="about.looking">Je recherche un poste de Data Scientist.</p>
         </div>
         <div class="about-copy">

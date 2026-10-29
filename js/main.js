@@ -163,9 +163,19 @@ const sectionObserver = new IntersectionObserver(entries => entries.forEach(e =>
 }), { rootMargin: "-40% 0px -55% 0px" });
 document.querySelectorAll("main section, footer[id]").forEach(s => sectionObserver.observe(s));
 
-// Hero: the scatter fades as the hero scrolls away.
-const fx = document.getElementById("fx");
-addEventListener("scroll", () => { fx.style.opacity = Math.max(0, .6 - scrollY / innerHeight); }, { passive: true });
+// Hero: the 3D card fades as the hero scrolls away, and turns a little toward the mouse.
+const card3d = document.getElementById("card3d");
+if (card3d) {
+    addEventListener("scroll", () => { card3d.style.opacity = Math.max(0, 1 - scrollY / innerHeight); }, { passive: true });
+    if (matchMedia("(hover: hover)").matches && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        const hero = document.querySelector(".hero");
+        hero.addEventListener("mousemove", e => {
+            const r = hero.getBoundingClientRect(), x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
+            card3d.cameraOrbit = `${-12 + x * 24}deg ${84 - y * 14}deg 110%`;
+        });
+        hero.addEventListener("mouseleave", () => { card3d.cameraOrbit = "-12deg 84deg 110%"; });
+    }
+}
 
 // Preloader: counts to 100 in under a second, then slides away.
 const loader = document.querySelector(".loader"), count = loader?.querySelector(".count");
