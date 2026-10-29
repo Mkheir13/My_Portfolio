@@ -194,7 +194,7 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
 .project {
     position: relative; display: grid; align-content: start; gap: 10px; padding: 48px 24px 24px;
     color: var(--white); border: 1px solid rgba(198,255,0,.2); border-top: 6px solid var(--band, var(--acid));
-    background: linear-gradient(180deg, color-mix(in srgb, var(--band, var(--acid)) 18%, transparent), transparent 45%), var(--ink);
+    background: var(--ink);
     /* Machined plate: cut top-right and bottom-left corners, a notch on the right edge */
     clip-path: polygon(0 0, calc(100% - 24px) 0, 100% 24px, 100% 42%, calc(100% - 8px) calc(42% + 8px), calc(100% - 8px) calc(58% - 8px), 100% 58%, 100% 100%, 24px 100%, 0 calc(100% - 24px));
     transition: transform 100ms linear, border-color var(--quick);
