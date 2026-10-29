@@ -25,13 +25,14 @@
 </head>
 <body>
 <a class="skip" href="#top" data-i18n="nav.skip">Aller au contenu</a>
-<div class="loader" aria-hidden="true"><span class="count">0</span>%</div>
+<form class="cmd" id="cmd" hidden autocomplete="off"><label for="cmd-in">&gt;</label><input id="cmd-in" spellcheck="false" placeholder="go projects · lang en · cv · help"><output aria-live="polite"></output></form>
+<div class="loader" aria-hidden="true"><span class="count">0</span>%<pre class="boot"></pre></div>
 <div class="cursor" aria-hidden="true"></div>
 <div class="cursor-xy" aria-hidden="true"></div>
 
 <header class="nav">
     <a href="#top" class="logo">KHEIR<span>.</span></a>
-    <span class="meta">43.2965° N, 5.3698° E · Marseille · <time id="clock">--:--</time> · <span id="where" aria-live="polite">[00] // HOME</span> · <span class="status"><i></i>ONLINE</span></span>
+    <span class="meta">43.2965° N, 5.3698° E · Marseille · <time id="clock">--:--</time> · <span id="where" aria-live="polite">[00] // HOME</span> · <span class="status"><i></i>ONLINE</span> · <kbd class="cmd-hint" title="Ligne de commande">/</kbd></span>
     <button id="menu-btn" class="menu-btn" aria-expanded="false" aria-controls="menu" data-i18n="nav.menu">Menu</button>
     <button id="lang" class="lang" aria-label="Switch to English">EN</button>
 </header>
@@ -95,6 +96,7 @@
         <ul class="projects">
             <li class="project featured" style="--band: var(--acid)">
                 <p class="stat" data-text="DESTINY">Destiny</p>
+                <p class="kpi"><b data-val="0.92" data-dec="2" data-sign="">0.92</b> F1</p>
                 <h3 data-i18n="projects.destiny.title">Classifieur Random Forest · F1 0.92</h3>
                 <p data-i18n="projects.destiny.text">Projet de fin d'études : pipeline ETL sur l'API Bungie, Random Forest entraîné sur 392 échantillons, contrôle des fuites de données, servi par une API avec CI.</p>
                 <p class="stack">Python · scikit-learn · FastAPI · GitHub Actions</p>
@@ -102,6 +104,7 @@
             </li>
             <li class="project" style="--band: var(--blue)">
                 <p class="stat" data-text="ANIVIZ">Aniviz</p>
+                <p class="kpi"><b data-val="37" data-dec="0" data-sign="+">+37</b>&nbsp;% mAP</p>
                 <h3 data-i18n="projects.yolo.title">Détection d'objets · mAP50-95 +37 %</h3>
                 <p data-i18n="projects.yolo.text">Fine-tuning de YOLOv8 sur un jeu de données annoté : +37 % de mAP50-95 par rapport au modèle de base.</p>
                 <p class="stack">PyTorch · YOLOv8 · Python</p>
@@ -109,6 +112,7 @@
             </li>
             <li class="project" style="--band: var(--acid)">
                 <p class="stat" data-text="DRAWMATCH">DrawMatch</p>
+                <p class="kpi"><b data-val="345" data-dec="0" data-sign="">345</b> <span data-i18n="kpi.words">mots</span></p>
                 <h3 data-i18n="projects.draw.title">Jeu multijoueur · IA TensorFlow</h3>
                 <p data-i18n="projects.draw.text">Jeu web multijoueur en temps réel : deux joueurs dessinent, une IA TensorFlow devine. Websockets Django Channels, 345 mots, classement.</p>
                 <p class="stack">Python · Django Channels · TensorFlow · scikit-image</p>
@@ -116,6 +120,7 @@
             </li>
             <li class="project" style="--band: var(--blue)">
                 <p class="stat" data-text="OVERGRAPH">Overgraph</p>
+                <p class="kpi"><b data-val="8" data-dec="0" data-sign="">8</b> pages</p>
                 <h3 data-i18n="projects.over.title">Dashboard Streamlit · 8 pages</h3>
                 <p data-i18n="projects.over.text">Dashboard Streamlit des stats de l'Overwatch League : scrapers, détection d'images pour enrichir les datasets, profils joueurs, équipes et matchs.</p>
                 <p class="stack">Python · Streamlit · pandas · scraping</p>
@@ -123,6 +128,7 @@
             </li>
             <li class="project wide" style="--band: var(--acid)">
                 <p class="stat" data-text="DESTINY HUB">Destiny Hub</p>
+                <p class="kpi"><b data-val="5" data-dec="0" data-sign="">5</b> modules</p>
                 <h3 data-i18n="projects.hub.title">Plateforme Destiny 2 · API Bungie</h3>
                 <p data-i18n="projects.hub.text">Plateforme communautaire Destiny 2 : OAuth Bungie, synchronisation du manifest (armes, triomphes), système de builds, guides et profils.</p>
                 <p class="stack">React · TypeScript · Node.js · Supabase</p>
@@ -130,6 +136,7 @@
             </li>
             <li class="project" style="--band: var(--magenta)">
                 <p class="stat" data-text="MEE7">MEE7</p>
+                <p class="kpi"><b data-val="10" data-dec="0" data-sign="">10</b> <span data-i18n="kpi.cmds">commandes</span></p>
                 <h3 data-i18n="projects.mee7.title">Bot Discord · 10 commandes</h3>
                 <p data-i18n="projects.mee7.text">Bot Discord en équipe : notifications de streams, disponibilités communes via iCal, recommandations de contenu, modération.</p>
                 <p class="stack">Python · discord.py · iCal</p>
@@ -189,12 +196,12 @@
     <section id="parcours" class="card reveal" data-side="[03] // JOURNEY" data-n="03">
         <h2 class="marker" data-i18n="path.title">Parcours</h2>
         <i class="ruler" aria-hidden="true"></i>
-        <ol class="jobs">
+        <ol class="jobs" style="--jp: 0">
             <li>
                 <span class="n">01</span>
                 <div>
                     <h3>Phocéenne Auto</h3>
-                    <p class="role"><span data-i18n="path.phoceenne.role">Développeur web (alternance)</span> · <time>2025 — 2026</time></p>
+                    <p class="role"><span data-i18n="path.phoceenne.role">Développeur web (alternance)</span> · <time>2025 — 2026</time> <i class="bar"></i></p>
                 </div>
                 <p data-i18n="path.phoceenne.text">Site de la concession de A à Z : catalogue avec filtres, prise de rendez-vous en ligne, SEO.</p>
             </li>
@@ -202,7 +209,7 @@
                 <span class="n">02</span>
                 <div>
                     <h3>Place des Finances</h3>
-                    <p class="role"><span data-i18n="path.pdf.role">Data Scientist / Développeur IA (alternance)</span> · <time>2025</time></p>
+                    <p class="role"><span data-i18n="path.pdf.role">Data Scientist / Développeur IA (alternance)</span> · <time>2025</time> <i class="bar"></i></p>
                 </div>
                 <p data-i18n="path.pdf.text">SaaS d'agents vocaux IA avec OpenAI, Deepgram, ElevenLabs et Twilio. Back et front en Symfony.</p>
             </li>
@@ -210,7 +217,7 @@
                 <span class="n">03</span>
                 <div>
                     <h3>Ynov Campus Aix</h3>
-                    <p class="role"><span data-i18n="path.mentor.role">Mentor</span> · <time>2023 — 2025</time></p>
+                    <p class="role"><span data-i18n="path.mentor.role">Mentor</span> · <time>2023 — 2025</time> <i class="bar"></i></p>
                 </div>
                 <p data-i18n="path.mentor.text">Cours, TD et ateliers pour les étudiants de 1re et 2e année.</p>
             </li>
@@ -218,7 +225,7 @@
                 <span class="n">04</span>
                 <div>
                     <h3>B-One</h3>
-                    <p class="role"><span data-i18n="path.bone.role">Chef de projet</span> · <time>2022 — 2023</time></p>
+                    <p class="role"><span data-i18n="path.bone.role">Chef de projet</span> · <time>2022 — 2023</time> <i class="bar"></i></p>
                 </div>
                 <p data-i18n="path.bone.text">Encadrement d'une équipe, site en Go et conception de la base de données.</p>
             </li>
@@ -230,8 +237,9 @@
         <svg class="cross" style="right:var(--gutter);top:40px" aria-hidden="true"><use href="#cross"/></svg>
         <div class="about-visual">
             <div class="tilt">
-                <img src="images/kheir_data.webp" width="900" height="1200" alt="Affiche Kheir × Data Science : plaque noire, panneaux de verre, halos verts et cyan" loading="lazy">
-                <i class="glare" aria-hidden="true"></i>
+                <model-viewer id="data3d" src="images/kheir_data.glb" alt="Affiche 3D Kheir × Data Science : plaque noire, panneaux de verre dépoli, halos verts et cyan" orientation="0deg 90deg 0deg"
+                    camera-orbit="0deg 90deg 105%" field-of-view="22deg" interaction-prompt="none" interpolation-decay="80"
+                    exposure="1" shadow-intensity="0" tone-mapping="aces" loading="lazy" reveal="auto" poster="images/kheir_data.webp"></model-viewer>
                 <p class="looking" data-i18n="about.looking">Je recherche un poste de Data Scientist.</p>
             </div>
         </div>
