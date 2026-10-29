@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="css/style.css">
     <script defer src="js/main.js"></script>
     <script defer src="js/fx.js"></script>
+    <script defer src="js/pipes.js"></script>
 </head>
 <body>
 <a class="skip" href="#top" data-i18n="nav.skip">Aller au contenu</a>
@@ -47,6 +48,15 @@
 </svg>
 
 <main id="top">
+    <svg id="pipes" aria-hidden="true">
+        <defs>
+            <!-- Tube body: dark edges, light centre, like a translucent blue hose lit from above -->
+            <linearGradient id="tube" x1="0" y1="0" x2="0" y2="1" gradientUnits="objectBoundingBox">
+                <stop offset="0" stop-color="#0B1560"/><stop offset=".35" stop-color="#2F3DFF"/><stop offset=".55" stop-color="#5B6BFF"/><stop offset="1" stop-color="#0A124A"/>
+            </linearGradient>
+        </defs>
+        <g id="pipes-layer"></g>
+    </svg>
     <section class="hero">
         <canvas id="fx" class="fx" aria-hidden="true"></canvas>
         <span class="hud hud-tl" aria-hidden="true"></span><span class="hud hud-tr" aria-hidden="true"></span>

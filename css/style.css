@@ -41,7 +41,14 @@ html, body { overflow-x: hidden; }
 body { background: var(--ink); color: var(--white); font: 14px/1.6 var(--mono); }
 a { color: inherit; text-decoration: none; }
 ul, ol { list-style: none; }
-main { counter-reset: section; }
+main { position: relative; counter-reset: section; }
+/* Blue hoses (js/pipes.js): over the section backgrounds, under the content */
+#pipes { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; overflow: visible; }
+#pipes path { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+#pipes .fluid { animation: flow 1.6s linear infinite; }
+@keyframes flow { to { stroke-dashoffset: -80; } }
+.card > :not(.about-visual), .stats > *, .hero > :not(canvas):not(.hud) { position: relative; z-index: 2; }
+.card > .about-visual { z-index: 2; }
 h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch: 75%; text-transform: uppercase; }
 :focus-visible { outline: 2px solid var(--acid); outline-offset: 3px; }
 .skip { position: fixed; top: 8px; left: 8px; z-index: 70; padding: 10px 14px; background: var(--acid); color: var(--ink); font: 700 11px var(--mono); letter-spacing: 2px; text-transform: uppercase; transform: translateY(-200%); }
@@ -98,7 +105,7 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
     display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: auto 1fr auto; row-gap: 24px;
     padding: 48px var(--gutter); background: var(--ink);
 }
-.hero > :not(canvas):not(.hud) { position: relative; z-index: 1; }
+.hero > :not(canvas):not(.hud) { position: relative; z-index: 2; }
 #fx { opacity: .6; }
 .hero-top { grid-column: 1; grid-row: 1; }
 .hero-top::after { content: ""; display: block; width: 60px; height: 6px; margin-top: 16px; background: var(--hatch); color: var(--acid); }
@@ -318,7 +325,7 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
 
 @media (max-width: 760px) {
     :root { --gutter: 20px; }
-    .rail, .card[data-n]::before, .cross, .contact::after, .readout { display: none; }
+    .rail, .card[data-n]::before, .cross, .contact::after, .readout, #pipes { display: none; }
     .hero { grid-template-columns: 1fr; grid-template-rows: auto 1fr auto; padding: 32px 20px; gap: 20px; }
     .hero-top, .hero-cta, .hero-name { grid-column: 1; }
     .hero-cta { grid-row: 2; justify-self: start; justify-content: flex-start; }
@@ -359,5 +366,5 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
     .js .reveal .marker { clip-path: none; }
     .js .reveal::after { display: none; }
     .menu a { opacity: 1; }
-    #where::after, .wall .log::after, .tape span { animation: none; }
+    #where::after, .wall .log::after, .tape span, #pipes .fluid { animation: none; }
 }
