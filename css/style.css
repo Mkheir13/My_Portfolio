@@ -108,21 +108,19 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
 .hero-cta { grid-column: 2; grid-row: 2; justify-self: end; align-self: end; display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 12px; }
 .hero-name { grid-column: 1 / -1; grid-row: 3; align-self: end; margin-left: -.04em; font-size: clamp(3rem, 10vw, 9rem); line-height: .85; letter-spacing: -.04em; }
 .hero-name span { display: block; overflow: hidden; }
-/* Hard offset copies behind each line: blue under the white line, magenta under the acid one */
-.hero-name span:first-child { text-shadow: 6px 6px 0 var(--blue); }
-.hero-name span:last-child { color: var(--acid); text-shadow: 6px 6px 0 var(--magenta); }
+.hero-name span:last-child { color: var(--acid); }
 .hero-name i { display: block; font-style: normal; }
 .js .hero-name i { transform: translateY(110%); transition: transform 200ms steps(4) 150ms; }
 .js .hero-name span:last-child i { transition-delay: 250ms; }
 .ready .hero-name i { transform: none; }
 
-/* Buttons: flat accent with black text, or a thin outline; a hard offset plate underneath that grows on hover */
-.btn { padding: 12px 18px; border: 1px solid var(--acid); box-shadow: 4px 4px 0 var(--white); transition: background var(--quick), color var(--quick), border-color var(--quick), transform var(--quick), box-shadow var(--quick); }
+/* Buttons: flat accent with black text, or a thin outline */
+.btn { padding: 12px 18px; border: 1px solid var(--acid); transition: background var(--quick), color var(--quick), border-color var(--quick); }
 .btn-main { background: var(--acid); color: var(--ink); }
 .btn-main::after { content: "→"; display: inline-block; margin-left: 10px; }
-.btn-outline { color: var(--white); border-color: var(--white); box-shadow: 4px 4px 0 var(--acid); }
-.btn:hover { background: var(--white); color: var(--ink); border-color: var(--white); transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--acid); }
-.btn-main:hover { background: var(--ink); color: var(--acid); border-color: var(--acid); box-shadow: 6px 6px 0 var(--white); }
+.btn-outline { color: var(--white); border-color: var(--white); }
+.btn:hover { background: var(--white); color: var(--ink); border-color: var(--white); }
+.btn-main:hover { background: var(--ink); color: var(--acid); border-color: var(--acid); }
 
 /* HUD corners, registration marks, canvases */
 #fx, #fx2 { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; }
@@ -185,9 +183,7 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
 /* Stats wall: acid plates with a cut corner, numbers that count up, black voids staggered between */
 .stats { position: relative; background: var(--ink); }
 .wall { display: grid; grid-template-columns: repeat(5, 1fr); counter-reset: tile; }
-.wall li { position: relative; aspect-ratio: 1; padding: 24px; display: grid; align-content: end; gap: 8px; color: var(--ink); background: var(--acid); clip-path: polygon(0 0, 100% 0, 100% calc(100% - 28px), calc(100% - 28px) 100%, 0 100%); box-shadow: inset 2px 2px 0 rgba(255,255,255,.55), inset -2px -2px 0 rgba(14,14,14,.25); }
-/* Depth: a hard offset plate under each tile (drop-shadow survives the clip-path, box-shadow would not) */
-.wall li:not(.void) { filter: drop-shadow(10px 10px 0 rgba(255,255,255,.14)); }
+.wall li { position: relative; aspect-ratio: 1; padding: 24px; display: grid; align-content: end; gap: 8px; color: var(--ink); background: var(--acid); clip-path: polygon(0 0, 100% 0, 100% calc(100% - 28px), calc(100% - 28px) 100%, 0 100%); }
 .wall li:not(.void)::before { content: "[S.0" counter(tile) "]"; counter-increment: tile; position: absolute; top: 16px; left: 24px; color: rgba(14,14,14,.6); }
 .wall .void { background: var(--ink); clip-path: none; }
 .wall b { font: 900 clamp(40px, 6.5vw, 120px)/1 var(--display); font-stretch: 75%; font-variant-numeric: tabular-nums; }
@@ -203,8 +199,6 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
 #about { padding-block: 200px; background: var(--grain), var(--acid); color: var(--ink); }
 .marker { position: relative; display: flex; align-items: flex-start; gap: 16px; margin: 0 0 48px -4px; padding-bottom: 16px; font-size: 64px; letter-spacing: -2px; line-height: 1; background: var(--hatch) left bottom / 60px 6px no-repeat; }
 .marker::before { content: "[" counter(section, decimal-leading-zero) "] //"; counter-increment: section; margin-top: 10px; color: var(--grey); font: 700 11px var(--mono); letter-spacing: 2px; }
-.marker { text-shadow: 4px 4px 0 var(--ink-deep); }
-#skills .marker, #about .marker { text-shadow: 4px 4px 0 rgba(14,14,14,.18); }
 .js .reveal .marker { clip-path: inset(0 100% 0 0); transition: clip-path 200ms steps(6) 50ms; }
 .js .reveal.in .marker { clip-path: inset(0 0 0 0); }
 /* A 1px line sweeps the section once it is revealed */
@@ -244,8 +238,7 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
 .skill-row:last-child { border-bottom: 1px solid var(--line-dark); }
 .skill-row h3 { font-size: 40px; letter-spacing: -1px; line-height: 1; }
 .chips { display: flex; flex-wrap: wrap; gap: 8px; }
-.chips li { display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; border: 1px solid var(--ink); color: var(--ink); box-shadow: 3px 3px 0 var(--ink); transition: background var(--quick), color var(--quick), transform var(--quick), box-shadow var(--quick); }
-.chips li:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--ink); }
+.chips li { display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; border: 1px solid var(--ink); color: var(--ink); transition: background var(--quick), color var(--quick); }
 .chips img { width: 16px; height: 16px; }
 .chips li:hover { background: var(--ink); color: var(--acid); }
 .chips li:hover img { filter: invert(1); }
@@ -264,7 +257,7 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
 
 /* About as a manifesto: acid column sticky on the left, a big statement that decodes word by word on the right */
 .manifesto { display: grid; grid-template-columns: 1fr 2fr; gap: 48px; align-items: start; }
-.about-visual { position: sticky; z-index: 1; top: calc(var(--nav-h) + 24px); min-height: 70vh; display: flex; flex-direction: column; justify-content: space-between; align-items: flex-start; gap: 48px; padding: 48px; background: var(--blue); color: var(--white); box-shadow: 14px 14px 0 var(--ink), inset 2px 2px 0 rgba(255,255,255,.35); }
+.about-visual { position: sticky; z-index: 1; top: calc(var(--nav-h) + 24px); min-height: 70vh; display: flex; flex-direction: column; justify-content: space-between; align-items: flex-start; gap: 48px; padding: 48px; background: var(--blue); color: var(--white); }
 .words { font-size: clamp(34px, 3vw, 48px); line-height: 1.05; }
 .statement { margin-bottom: 40px; font: 900 clamp(28px, 4.4vw, 72px)/1.08 var(--display); font-stretch: 75%; text-transform: uppercase; text-align: justify; letter-spacing: -.01em; }
 .statement .w { opacity: .22; transition: opacity 100ms steps(2); }
@@ -280,9 +273,8 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
 .contact .marker::before { display: none; }
 .contact em { padding: 0 .08em; background: var(--acid); color: var(--ink); font-style: normal; white-space: nowrap; }
 .contact ul { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
-.contact a { display: inline-block; padding: 12px 16px; border: 1px solid var(--acid); color: var(--acid); box-shadow: 4px 4px 0 var(--acid); transition: background var(--quick), color var(--quick), transform var(--quick), box-shadow var(--quick); }
-.contact a:hover { background: var(--acid); color: var(--ink); transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--white); }
-.contact .marker { text-shadow: 6px 6px 0 var(--ink-deep); }
+.contact a { display: inline-block; padding: 12px 16px; border: 1px solid var(--acid); color: var(--acid); transition: background var(--quick), color var(--quick); }
+.contact a:hover { background: var(--acid); color: var(--ink); }
 .contact li:last-child { color: var(--grey); }
 .contact::after {
     content: "SN 2026-1029 · MRS"; position: absolute; right: var(--gutter); bottom: 24px; z-index: 1; padding-top: 40px;
@@ -291,10 +283,9 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
 }
 #fx2 { opacity: .18; pointer-events: none; }
 
-/* Scroll reveal (class toggled by js/main.js): a stepped fade while the section swings in from a tilted plane */
-main { perspective: 1200px; }
-.js .reveal { opacity: 0; transform: rotateX(10deg); transform-origin: top center; transition: opacity 150ms steps(3), transform 200ms steps(4); }
-.js .reveal.in { opacity: 1; transform: none; }
+/* Scroll reveal (class toggled by js/main.js): a stepped fade, no slide */
+.js .reveal { opacity: 0; transition: opacity 150ms steps(3); }
+.js .reveal.in { opacity: 1; }
 /* Cascade: chips, rows, cards and tiles appear one after another (--i set in js/main.js) */
 .js .reveal :is(.chips li, .jobs li, .project, .wall li) { opacity: 0; transition: opacity 100ms steps(2); transition-delay: calc(var(--i) * 40ms); }
 .js .reveal.in :is(.chips li, .jobs li, .project, .wall li) { opacity: 1; }
@@ -362,7 +353,7 @@ main { perspective: 1200px; }
     * { transition: none !important; animation: none !important; }
     html { scroll-behavior: auto; }
     .loader, .flash { display: none; }
-    .js .reveal, .js .reveal :is(.chips li, .jobs li, .project, .wall li), .statement .w { opacity: 1; transform: none; }
+    .js .reveal, .js .reveal :is(.chips li, .jobs li, .project, .wall li), .statement .w { opacity: 1; }
     .js .hero > :is(.hero-top, .hero-cta, .hero-name) { opacity: 1; }
     .js .hero-name i { transform: none; }
     .js .reveal .marker { clip-path: none; }
