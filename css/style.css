@@ -13,6 +13,11 @@
     --ink-deep: #2D3538;
     --paper: #E8E6E1;
     /* Fine grain, on the paper and acid surfaces only */
+    --grain-light: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .16 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    --dots: radial-gradient(rgba(255,255,255,.09) 1px, transparent 1.4px);
+    --hairlines: repeating-linear-gradient(35deg, rgba(14,14,14,.07) 0 1px, transparent 1px 4px);
+    --scanlines: repeating-linear-gradient(0deg, transparent 0 3px, rgba(255,255,255,.035) 3px 4px);
+    --fibres: repeating-linear-gradient(90deg, rgba(14,14,14,.035) 0 1px, transparent 1px 7px);
     --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.95' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.13'/%3E%3C/svg%3E");
     --white: #FFFFFF;
     --grey: #8A8A8A;
@@ -96,7 +101,7 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
 .hero {
     position: relative; overflow: hidden; min-height: calc(100vh - var(--nav-h));
     display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: auto 1fr auto; row-gap: 24px;
-    padding: 48px var(--gutter); background: var(--ink);
+    padding: 48px var(--gutter); background: var(--grain-light), var(--scanlines), var(--ink);
 }
 .hero > :not(model-viewer):not(.hud) { position: relative; z-index: 2; }
 /* The 3D card fills the hero behind the text; wheel and touch pass through so the page keeps scrolling */
@@ -183,9 +188,9 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
 }
 
 /* Stats wall: acid plates with a cut corner, numbers that count up, black voids staggered between */
-.stats { position: relative; background: var(--ink); }
+.stats { position: relative; background: var(--grain-light), var(--scanlines), var(--ink); }
 .wall { display: grid; grid-template-columns: repeat(5, 1fr); counter-reset: tile; }
-.wall li { position: relative; aspect-ratio: 1; padding: 24px; display: grid; align-content: end; gap: 8px; color: var(--ink); background: var(--acid); clip-path: polygon(0 0, 100% 0, 100% calc(100% - 28px), calc(100% - 28px) 100%, 0 100%); }
+.wall li { position: relative; aspect-ratio: 1; padding: 24px; display: grid; align-content: end; gap: 8px; color: var(--ink); background: var(--grain), var(--hairlines), var(--acid); clip-path: polygon(0 0, 100% 0, 100% calc(100% - 28px), calc(100% - 28px) 100%, 0 100%); }
 .wall li:not(.void)::before { content: "[S.0" counter(tile) "]"; counter-increment: tile; position: absolute; top: 16px; left: 24px; color: rgba(14,14,14,.6); }
 .wall .void { background: var(--ink); clip-path: none; }
 .wall b { font: 900 clamp(40px, 6.5vw, 120px)/1 var(--display); font-stretch: 75%; font-variant-numeric: tabular-nums; }
@@ -194,11 +199,11 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
 
 /* Sections: full-bleed bands, lots of empty, a block code on each */
 .card { position: relative; padding: 160px var(--gutter); }
-#projects { background: var(--ink-deep); }
+#projects { background: var(--grain-light), var(--dots) 0 0 / 7px 7px, var(--ink-deep); }
 /* Skills on paper: light grain, two acid bands on the bias behind the rows */
-#skills { padding-block: 120px; color: var(--ink); background: var(--grain), linear-gradient(-60deg, transparent 0 34%, var(--acid) 34% 41%, transparent 41% 70%, var(--acid) 70% 73%, transparent 73%), var(--paper); }
-#parcours { background: var(--ink-deep); }
-#about { padding-block: 200px; background: var(--grain), var(--acid); color: var(--ink); }
+#skills { padding-block: 120px; color: var(--ink); background: var(--grain), var(--fibres), linear-gradient(-60deg, transparent 0 34%, var(--acid) 34% 41%, transparent 41% 70%, var(--acid) 70% 73%, transparent 73%), var(--paper); }
+#parcours { background: var(--grain-light), var(--ink-deep); }
+#about { padding-block: 200px; background: var(--grain), var(--hairlines), var(--acid); color: var(--ink); }
 .marker { position: relative; display: flex; align-items: flex-start; gap: 16px; margin: 0 0 48px -4px; padding-bottom: 16px; font-size: 64px; letter-spacing: -2px; line-height: 1; background: var(--hatch) left bottom / 60px 6px no-repeat; }
 .marker::before { content: "[" counter(section, decimal-leading-zero) "] //"; counter-increment: section; margin-top: 10px; color: var(--grey); font: 700 11px var(--mono); letter-spacing: 2px; }
 .js .reveal .marker { clip-path: inset(0 100% 0 0); transition: clip-path 200ms steps(6) 50ms; }
@@ -213,7 +218,7 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
 .project {
     position: relative; display: grid; align-content: start; gap: 10px; padding: 48px 24px 24px;
     color: var(--white); border: 1px solid rgba(198,255,0,.2); border-top: 6px solid var(--band, var(--acid));
-    background: linear-gradient(180deg, color-mix(in srgb, var(--band, var(--acid)) 18%, transparent), transparent 45%), var(--ink);
+    background: linear-gradient(180deg, color-mix(in srgb, var(--band, var(--acid)) 18%, transparent), transparent 45%), var(--grain-light), var(--ink);
     /* Machined plate: cut top-right and bottom-left corners, a notch on the right edge */
     clip-path: polygon(0 0, calc(100% - 24px) 0, 100% 24px, 100% 42%, calc(100% - 8px) calc(42% + 8px), calc(100% - 8px) calc(58% - 8px), 100% 58%, 100% 100%, 24px 100%, 0 calc(100% - 24px));
     transition: transform 100ms linear, border-color var(--quick);
@@ -270,7 +275,7 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
 .looking { display: inline-block; padding: 4px 10px; background: var(--acid); color: var(--ink); }
 
 /* Contact as the finale: the title at the hero's scale, links as buttons, a barcode and serial number */
-.contact { position: relative; overflow: hidden; padding: 160px var(--gutter) 120px; display: grid; gap: 48px; background: var(--ink); color: var(--white); border-top: 1px solid var(--line); }
+.contact { position: relative; overflow: hidden; padding: 160px var(--gutter) 120px; display: grid; gap: 48px; background: var(--grain-light), var(--scanlines), var(--ink); color: var(--white); border-top: 1px solid var(--line); }
 .contact > :not(canvas) { position: relative; z-index: 1; }
 .contact .marker { display: block; margin: 0 0 0 -.04em; font-size: clamp(3rem, 9.5vw, 9rem); line-height: .9; letter-spacing: -.04em; }
 .contact .marker::before { display: none; }
