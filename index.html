@@ -14,6 +14,8 @@
     <meta property="og:image:height" content="630">
     <meta name="twitter:card" content="summary_large_image">
     <link rel="icon" href="images/favicon.ico">
+    <link rel="icon" type="image/png" sizes="256x256" href="images/favicon.png">
+    <link rel="apple-touch-icon" href="images/favicon.png">
     <link rel="preload" href="fonts/archivo-900-cond.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="fonts/jetbrainsmono-var.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="stylesheet" href="css/style.css">
@@ -52,7 +54,7 @@
         <model-viewer id="card3d" src="images/kheir016.glb" alt="Carte 3D Kheir / 016" orientation="0deg 90deg 0deg"
             camera-orbit="-12deg 84deg 110%" field-of-view="26deg" interaction-prompt="none" interpolation-decay="200"
             auto-rotate auto-rotate-delay="0" rotation-per-second="14deg"
-            exposure="1.1" shadow-intensity="0.8" tone-mapping="aces" loading="eager" reveal="auto"></model-viewer>
+            exposure="1.1" shadow-intensity="0.8" tone-mapping="aces" loading="eager" reveal="auto" poster="images/kheir016_poster.webp"></model-viewer>
         <span class="hud hud-tl" aria-hidden="true"></span><span class="hud hud-tr" aria-hidden="true"></span>
         <span class="hud hud-bl" aria-hidden="true"></span><span class="hud hud-br" aria-hidden="true"></span>
         <p class="readout readout-1" aria-hidden="true"></p>
@@ -68,6 +70,7 @@
             <a class="btn btn-main" href="images/cv-kheir-eddine-mederreg.pdf" download data-i18n="hero.cv">Télécharger mon CV</a>
             <a class="btn btn-outline" href="#contact" data-i18n="hero.contact">Me contacter ↗</a>
         </div>
+        <p class="pedestal" aria-hidden="true"><i class="bar"></i>KHEIR / 016 · GLTF · 278 KB</p>
         <h1 class="hero-name"><span><i>Kheir-eddine</i></span><span><i>Mederreg</i></span></h1>
     </section>
 
@@ -76,19 +79,20 @@
             <li><b data-count="6">0</b><span data-i18n="stats.projects">projets</span></li>
             <li class="void" aria-hidden="true"><pre class="log"></pre></li>
             <li><b data-count="2">0</b><span data-i18n="stats.mentor">ans de mentorat</span></li>
-            <li class="void" aria-hidden="true"></li>
+            <li class="void" aria-hidden="true"><div class="cm"><i style="--i:0" class="on"></i><i style="--i:1"></i><i style="--i:2"></i><i style="--i:3"></i><i style="--i:4"></i><i style="--i:5" class="on"></i><i style="--i:6"></i><i style="--i:7"></i><i style="--i:8"></i><i style="--i:9"></i><i style="--i:10" class="on"></i><i style="--i:11"></i><i style="--i:12"></i><i style="--i:13"></i><i style="--i:14"></i><i style="--i:15" class="on"></i></div><span class="tag">CONFUSION 4x4</span></li>
             <li><b><em>F1</em> <i data-count="0.92">0</i></b><span data-i18n="stats.f1">meilleur modèle</span></li>
             <li class="void" aria-hidden="true"></li>
             <li><b>+<i data-count="37">0</i>%</b><span>mAP50-95</span></li>
-            <li class="void" aria-hidden="true"></li>
+            <li class="void" aria-hidden="true"><svg class="loss" viewBox="0 0 100 40" preserveAspectRatio="none"><path class="grid" d="M0 10H100M0 20H100M0 30H100"/><polyline class="curve" points="0,6 10,14 20,20 30,24 40,27 50,30 60,32 70,33 80,34 90,35 100,35"/></svg><span class="tag">LOSS / EPOCH</span></li>
             <li><b data-count="4">0</b><span data-i18n="stats.companies">entreprises</span></li>
-            <li class="void" aria-hidden="true"></li>
+            <li class="void" aria-hidden="true"><i class="bar big"></i><span class="tag">SN 2026-1029</span></li>
         </ul>
     </section>
 
     <section id="projects" class="card reveal" data-side="[01] // PROJECTS" data-n="01">
         <svg class="cross" style="right:var(--gutter);top:40px" aria-hidden="true"><use href="#cross"/></svg>
         <h2 class="marker" data-i18n="projects.title">Projets</h2>
+        <i class="ruler" aria-hidden="true"></i>
         <ul class="projects">
             <li class="project featured" style="--band: var(--acid)">
                 <p class="stat" data-text="DESTINY">Destiny</p>
@@ -137,6 +141,7 @@
 
     <section id="skills" class="card reveal" data-side="[02] // SKILLS" data-n="02">
         <h2 class="marker" data-i18n="skills.title">Compétences</h2>
+        <i class="ruler" aria-hidden="true"></i>
         <div class="skill-rows">
             <div class="skill-row">
                 <h3>Machine learning</h3>
@@ -184,6 +189,7 @@
 
     <section id="parcours" class="card reveal" data-side="[03] // JOURNEY" data-n="03">
         <h2 class="marker" data-i18n="path.title">Parcours</h2>
+        <i class="ruler" aria-hidden="true"></i>
         <ol class="jobs">
             <li>
                 <span class="n">01</span>
@@ -218,7 +224,7 @@
                 <p data-i18n="path.bone.text">Encadrement d'une équipe, site en Go et conception de la base de données.</p>
             </li>
         </ol>
-        <p class="edu"><b>2021 — 2026</b> · <span data-i18n="path.ynov.title">Mastère Expert IA &amp; Data Scientist · Ynov Aix</span> · <span data-i18n="path.ynov.text">Diplômé en 2026, titre RNCP niveau 7.</span></p>
+        <p class="edu"><b>2021 — 2026</b> · <span data-i18n="path.ynov.title">Mastère Expert IA &amp; Data Scientist · Ynov Aix</span> · <span data-i18n="path.ynov.text">Diplômé en 2026, titre RNCP niveau 7.</span> <i class="bar"></i></p>
     </section>
 
     <section id="about" class="card manifesto reveal" data-side="[04] // ABOUT" data-n="04">
@@ -232,6 +238,7 @@
         </div>
         <div class="about-copy">
             <h2 class="marker" data-i18n="about.title">À propos</h2>
+        <i class="ruler" aria-hidden="true"></i>
             <p class="statement" data-i18n="about.p2">J'aime les projets complets : collecter et nettoyer les données, entraîner un modèle, puis le mettre en production avec une API, de la CI et du monitoring. Mon projet de fin d'études tourne sur l'API de Destiny, et j'ai codé un tracker de stats League of Legends parce que je voulais savoir pourquoi je perdais.</p>
             <p data-i18n="about.p1">Je suis Kheir-eddine, Data Scientist basé à Marseille et diplômé du Mastère Expert IA &amp; Data Scientist d'Ynov.</p>
             <p data-i18n="about.p3">Deux ans de mentorat à Ynov m'ont appris à expliquer simplement ce qui est complexe. Fan de l'esthétique Bungie, d'où ce site.</p>
@@ -243,6 +250,7 @@
     <canvas id="fx2" class="fx" aria-hidden="true"></canvas>
     <svg class="cross" style="right:var(--gutter);top:40px" aria-hidden="true"><use href="#cross"/></svg>
     <h2 class="marker"><span data-i18n="contact.title1">Construisons un truc</span> <em data-i18n="contact.title2">intelligent !</em></h2>
+        <i class="ruler" aria-hidden="true"></i>
     <ul>
         <li><a href="mailto:kheir.eddine.mederreg@gmail.com">✉ kheir.eddine.mederreg@gmail.com</a></li>
         <li><a href="https://github.com/Mkheir13">⌥ github.com/Mkheir13</a></li>

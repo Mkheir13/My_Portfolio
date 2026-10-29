@@ -105,13 +105,15 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
 }
 .hero > :not(model-viewer):not(.hud) { position: relative; z-index: 2; }
 /* The 3D card fills the hero behind the text; wheel and touch pass through so the page keeps scrolling */
-#card3d { position: absolute; top: 0; bottom: 0; left: 38%; width: 62%; height: 100%; z-index: 0; pointer-events: none; --poster-color: transparent; transition: transform 120ms linear; }
+#card3d { position: absolute; top: 0; bottom: 14%; left: 42%; width: 58%; height: 86%; z-index: 0; pointer-events: none; --poster-color: transparent; transition: transform 120ms linear; }
 .hero-top { grid-column: 1; grid-row: 1; }
 .hero-top::after { content: ""; display: block; width: 60px; height: 6px; margin-top: 16px; background: var(--hatch); color: var(--acid); }
 .hey { display: block; margin-bottom: 12px; color: var(--grey); }
 .roles { display: inline-block; padding: 8px 12px; border: 1px solid var(--white); color: var(--white); }
 .roles b { color: var(--acid); }
-.hero-cta { grid-column: 2; grid-row: 2; justify-self: end; align-self: end; display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 12px; }
+.hero-cta { grid-column: 1; grid-row: 2; justify-self: start; align-self: start; display: flex; flex-wrap: wrap; gap: 12px; margin-top: 8px; }
+/* Pedestal under the 3D card: a short acid line and its label */
+.pedestal { grid-column: 2; grid-row: 2; align-self: end; justify-self: center; margin-right: -8%; padding-top: 10px; border-top: 2px solid var(--acid); display: flex; align-items: center; gap: 12px; color: var(--grey); }
 .hero-name { grid-column: 1 / -1; grid-row: 3; align-self: end; margin-left: -.04em; font-size: clamp(3rem, 10vw, 9rem); line-height: .85; letter-spacing: -.04em; }
 .hero-name span { display: block; overflow: hidden; }
 .hero-name span:last-child { color: var(--acid); }
@@ -153,7 +155,7 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
 @keyframes draw { to { stroke-dashoffset: 0; } }
 
 /* Training log ticking inside one of the stats wall's black tiles (js/main.js) */
-.wall .log { align-self: start; margin: 0; font: 400 10px/1.8 var(--mono); letter-spacing: 1px; color: var(--acid); opacity: .75; white-space: pre; }
+.wall .log { align-self: end; margin: 0; font: 400 10px/1.7 var(--mono); letter-spacing: 1px; color: var(--acid); opacity: .75; white-space: pre; overflow: hidden; }
 .wall .log::after { content: "_"; animation: blink 1s steps(2) infinite; }
 
 /* Glitch on card hover: two clipped copies of the stat, offset, three stepped frames */
@@ -201,7 +203,7 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
 .card { position: relative; padding: 160px var(--gutter); }
 #projects { background: var(--grain-light), var(--dots) 0 0 / 7px 7px, var(--ink-deep); }
 /* Skills on paper: light grain, two acid bands on the bias behind the rows */
-#skills { padding-block: 120px; color: var(--ink); background: linear-gradient(-60deg, transparent 0 34%, var(--acid) 34% 41%, transparent 41% 70%, var(--acid) 70% 73%, transparent 73%), var(--paper); }
+#skills { padding-block: 120px; color: var(--ink); background: linear-gradient(-60deg, transparent 0 27%, var(--acid) 27% 30%, transparent 30% 58%, var(--acid) 58% 61.5%, transparent 61.5%), var(--paper); }
 #parcours { background: var(--grain-light), var(--ink-deep); }
 #about { padding-block: 200px; background: var(--grain), var(--hairlines), var(--acid); color: var(--ink); }
 .marker { position: relative; display: flex; align-items: flex-start; gap: 16px; margin: 0 0 48px -4px; padding-bottom: 16px; font-size: 64px; letter-spacing: -2px; line-height: 1; background: var(--hatch) left bottom / 60px 6px no-repeat; }
@@ -267,12 +269,12 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
     background: radial-gradient(circle at var(--gx, 50%) var(--gy, 50%), rgba(255,255,255,.45), transparent 55%); }
 .tilt:hover .glare { opacity: 1; }
 .about-visual .looking { position: absolute; left: 16px; bottom: 16px; transform: translateZ(30px); }
-.statement { margin-bottom: 40px; font: 900 clamp(28px, 4.4vw, 72px)/1.08 var(--display); font-stretch: 75%; text-transform: uppercase; text-align: justify; letter-spacing: -.01em; }
+.statement { margin-bottom: 40px; font: 900 clamp(28px, 3.6vw, 56px)/1.08 var(--display); font-stretch: 75%; text-transform: uppercase; text-align: justify; letter-spacing: -.01em; }
 .statement .w { opacity: .22; transition: opacity 100ms steps(2); }
 .statement .w.on { opacity: 1; }
 .about-copy p:not(.statement) { max-width: 60ch; margin-bottom: 12px; font: 15px/1.6 Inter, sans-serif; color: var(--ink-deep); }
 #about .marker::before { color: var(--ink-deep); }
-.looking { display: inline-block; padding: 4px 10px; background: var(--acid); color: var(--ink); }
+.looking { display: inline-block; padding: 4px 10px; background: var(--magenta); color: var(--ink); }
 
 /* Contact as the finale: the title at the hero's scale, links as buttons, a barcode and serial number */
 .contact { position: relative; overflow: hidden; padding: 160px var(--gutter) 120px; display: grid; gap: 48px; background: var(--grain-light), var(--scanlines), var(--ink); color: var(--white); border-top: 1px solid var(--line); }
@@ -368,5 +370,30 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
     .js .reveal .marker { clip-path: none; }
     .js .reveal::after { display: none; }
     .menu a { opacity: 1; }
-    #where::after, .wall .log::after, .tape span { animation: none; }
+    #where::after, .wall .log::after, .cm i, .loss .curve, .bar.big::after, .tape span { animation: none; }
 }
+
+/* Sober futurist furniture: barcodes, tick rulers, project pictos, data tiles */
+.bar { display: inline-block; width: 72px; height: 18px; vertical-align: middle; opacity: .7;
+    background: repeating-linear-gradient(90deg, currentColor 0 2px, transparent 2px 4px, currentColor 4px 7px, transparent 7px 9px, currentColor 9px 10px, transparent 10px 14px); }
+.bar.big { position: relative; width: 100%; height: 100%; color: var(--acid); opacity: .85; }
+/* A scan line sweeps the barcode */
+.bar.big::after { content: ""; position: absolute; top: -4px; bottom: -4px; left: 0; width: 2px; background: var(--white); animation: scanbar 2s linear infinite; }
+@keyframes scanbar { to { left: 100%; } }
+.ruler { display: block; width: 160px; height: 8px; margin: -36px 0 40px; opacity: .5;
+    background: repeating-linear-gradient(90deg, currentColor 0 1px, transparent 1px 8px) bottom / 100% 4px no-repeat, repeating-linear-gradient(90deg, currentColor 0 1px, transparent 1px 40px) bottom / 100% 8px no-repeat; }
+.wall .void { display: grid; grid-template-rows: 1fr auto; gap: 12px; padding: 20px; color: var(--acid); overflow: hidden; }
+.wall .tag { font: 700 10px var(--mono); letter-spacing: 2px; color: var(--grey); }
+.cm { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 1fr; gap: 4px; }
+.cm i { background: rgba(255,255,255,.08); animation: cell 4s steps(1) infinite; animation-delay: calc(var(--i) * -250ms); }
+.cm i.on { animation-name: cell-on; }
+@keyframes cell { 0%, 100% { background: rgba(255,255,255,.08); } 25% { background: rgba(198,255,0,.3); } 50% { background: rgba(255,255,255,.14); } 75% { background: rgba(198,255,0,.18); } }
+@keyframes cell-on { 0%, 100% { background: var(--acid); } 50% { background: rgba(198,255,0,.55); } }
+.loss { width: 100%; height: 100%; }
+.loss polyline { fill: none; vector-effect: non-scaling-stroke; }
+.loss .grid { fill: none; stroke: rgba(255,255,255,.12); stroke-width: 1; vector-effect: non-scaling-stroke; }
+.loss .curve { stroke: var(--acid); stroke-width: 2; stroke-dasharray: 400; animation: draw 3s linear infinite; }
+@keyframes draw { 0% { stroke-dashoffset: 400; } 70%, 100% { stroke-dashoffset: 0; } }
+.edu .bar { color: var(--grey); width: 56px; height: 12px; }
+.pedestal .bar { color: var(--acid); }
+@media (max-width: 760px) { .pedestal, .ruler { display: none; } #card3d { left: 0; width: 100%; height: 100%; bottom: 0; } }
