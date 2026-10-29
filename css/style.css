@@ -7,8 +7,13 @@
    one fluo accent (acid) for CTAs, active state and focus. No gradients, no soft shadows, no glass. */
 :root {
     --acid: #C6FF00;
+    --blue: #2F3DFF;
+    --magenta: #FF2BD6;
     --ink: #0E0E0E;
+    --ink-deep: #2D3538;
     --paper: #E8E6E1;
+    /* Fine grain, on the paper and acid surfaces only */
+    --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.95' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.13'/%3E%3C/svg%3E");
     --white: #FFFFFF;
     --grey: #8A8A8A;
     --line: rgba(255,255,255,.14);
@@ -68,7 +73,7 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
 .menu {
     position: fixed; inset: 0; z-index: 30; counter-reset: menu;
     display: grid; align-content: center; gap: 0; padding: var(--nav-h) var(--gutter) 0;
-    background: var(--ink); background-image: var(--grid12); background-size: calc(100% - 2 * var(--gutter)) 100%; background-position: var(--gutter) 0; background-repeat: no-repeat;
+    background: var(--ink);
     transform: translateY(-100%); visibility: hidden; transition: transform var(--snap), visibility 0s 150ms;
 }
 .menu-open .menu { transform: none; visibility: visible; transition: transform var(--snap), visibility 0s; }
@@ -92,7 +97,6 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
     position: relative; overflow: hidden; min-height: calc(100vh - var(--nav-h));
     display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: auto 1fr auto; row-gap: 24px;
     padding: 48px var(--gutter); background: var(--ink);
-    background-image: var(--grid12); background-size: calc(100% - 2 * var(--gutter)) 100%; background-position: var(--gutter) 0; background-repeat: no-repeat;
 }
 .hero > :not(canvas):not(.hud) { position: relative; z-index: 1; }
 #fx { opacity: .6; }
@@ -171,10 +175,11 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
 
 /* Sections: full-bleed bands, lots of empty, a block code on each */
 .card { position: relative; padding: 160px var(--gutter); }
-#projects { background: var(--ink); border-top: 1px solid var(--line); }
-#skills { padding-block: 120px; color: var(--ink); background: var(--paper); background-image: repeating-linear-gradient(90deg, var(--line-dark) 0 1px, transparent 1px calc(100% / 12)); background-size: calc(100% - 2 * var(--gutter)) 100%; background-position: var(--gutter) 0; background-repeat: no-repeat; }
-#parcours { background: var(--ink); border-top: 1px solid var(--line); }
-#about { padding-block: 200px; background: var(--ink); border-top: 1px solid var(--line); }
+#projects { background: var(--ink-deep); }
+/* Skills on paper: light grain, two acid bands on the bias behind the rows */
+#skills { padding-block: 120px; color: var(--ink); background: var(--grain), linear-gradient(-60deg, transparent 0 34%, var(--acid) 34% 41%, transparent 41% 70%, var(--acid) 70% 73%, transparent 73%), var(--paper); }
+#parcours { background: var(--ink-deep); }
+#about { padding-block: 200px; background: var(--grain), var(--acid); color: var(--ink); }
 .marker { position: relative; display: flex; align-items: flex-start; gap: 16px; margin: 0 0 48px -4px; padding-bottom: 16px; font-size: 64px; letter-spacing: -2px; line-height: 1; background: var(--hatch) left bottom / 60px 6px no-repeat; }
 .marker::before { content: "[" counter(section, decimal-leading-zero) "] //"; counter-increment: section; margin-top: 10px; color: var(--grey); font: 700 11px var(--mono); letter-spacing: 2px; }
 .js .reveal .marker { clip-path: inset(0 100% 0 0); transition: clip-path 200ms steps(6) 50ms; }
@@ -188,17 +193,19 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
 .projects { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; counter-reset: card; }
 .project {
     position: relative; display: grid; align-content: start; gap: 10px; padding: 48px 24px 24px;
-    color: var(--white); border: 1px solid var(--line); border-top: 4px solid var(--acid); background: var(--ink);
-    clip-path: polygon(0 0, calc(100% - 24px) 0, 100% 24px, 100% 100%, 24px 100%, 0 calc(100% - 24px));
+    color: var(--white); border: 1px solid rgba(198,255,0,.2); border-top: 6px solid var(--band, var(--acid));
+    background: linear-gradient(180deg, color-mix(in srgb, var(--band, var(--acid)) 18%, transparent), transparent 45%), var(--ink);
+    /* Machined plate: cut top-right and bottom-left corners, a notch on the right edge */
+    clip-path: polygon(0 0, calc(100% - 24px) 0, 100% 24px, 100% 42%, calc(100% - 8px) calc(42% + 8px), calc(100% - 8px) calc(58% - 8px), 100% 58%, 100% 100%, 24px 100%, 0 calc(100% - 24px));
     transition: transform 100ms linear, border-color var(--quick);
 }
 .project::before { content: "[P.0" counter(card) "] // PROJECT"; counter-increment: card; position: absolute; top: 16px; left: 24px; color: var(--grey); }
-.project:hover { transform: translateY(-4px); border-color: var(--acid); }
+.project:hover { transform: translateY(-4px); border-color: var(--acid); border-top-color: var(--band, var(--acid)); }
 .featured, .wide { grid-column: span 2; }
 .featured { grid-template-columns: auto 1fr; column-gap: 40px; padding: 48px 32px 32px; }
 .featured .stat { grid-row: 1 / span 4; font-size: 96px; }
 .featured h3 { font-size: 28px; }
-.project .stat { font: 900 40px/1 var(--display); font-stretch: 75%; text-transform: uppercase; color: var(--acid); }
+.project .stat { font: 900 40px/1 var(--display); font-stretch: 75%; text-transform: uppercase; color: var(--band, var(--acid)); }
 .project h3 { font-size: 20px; }
 .project p:not(.stat):not(.stack) { max-width: 40ch; color: var(--grey); font: 15px/1.5 Inter, sans-serif; }
 .project .stack { color: var(--white); }
@@ -219,7 +226,7 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
 /* Journey: a numbered, ruled list, education on a single line below */
 .jobs li { position: relative; z-index: 1; display: grid; grid-template-columns: 80px 1fr 1.4fr; gap: 24px; align-items: start; padding: 32px 0; border-top: 1px solid var(--line); }
 .jobs li:last-child { border-bottom: 1px solid var(--line); }
-.jobs .n { color: var(--grey); }
+.jobs .n { color: var(--blue); }
 .jobs h3 { font-size: 40px; letter-spacing: -1px; line-height: 1; transition: color var(--quick); }
 .jobs li:hover h3 { color: var(--acid); }
 .jobs .role { margin-top: 10px; color: var(--acid); }
@@ -229,13 +236,14 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
 
 /* About as a manifesto: acid column sticky on the left, a big statement that decodes word by word on the right */
 .manifesto { display: grid; grid-template-columns: 1fr 2fr; gap: 48px; align-items: start; }
-.about-visual { position: sticky; z-index: 1; top: calc(var(--nav-h) + 24px); min-height: 70vh; display: flex; flex-direction: column; justify-content: space-between; align-items: flex-start; gap: 48px; padding: 48px; background: var(--acid); color: var(--ink); }
+.about-visual { position: sticky; z-index: 1; top: calc(var(--nav-h) + 24px); min-height: 70vh; display: flex; flex-direction: column; justify-content: space-between; align-items: flex-start; gap: 48px; padding: 48px; background: var(--blue); color: var(--white); }
 .words { font-size: clamp(34px, 3vw, 48px); line-height: 1.05; }
 .statement { margin-bottom: 40px; font: 900 clamp(28px, 4.4vw, 72px)/1.08 var(--display); font-stretch: 75%; text-transform: uppercase; text-align: justify; letter-spacing: -.01em; }
-.statement .w { opacity: .18; transition: opacity 100ms steps(2); }
+.statement .w { opacity: .22; transition: opacity 100ms steps(2); }
 .statement .w.on { opacity: 1; }
-.about-copy p:not(.statement) { max-width: 60ch; margin-bottom: 12px; font: 15px/1.6 Inter, sans-serif; color: var(--grey); }
-.looking { display: inline-block; padding: 4px 10px; background: var(--ink); color: var(--acid); }
+.about-copy p:not(.statement) { max-width: 60ch; margin-bottom: 12px; font: 15px/1.6 Inter, sans-serif; color: var(--ink-deep); }
+#about .marker::before { color: var(--ink-deep); }
+.looking { display: inline-block; padding: 4px 10px; background: var(--acid); color: var(--ink); }
 
 /* Contact as the finale: the title at the hero's scale, links as buttons, a barcode and serial number */
 .contact { position: relative; overflow: hidden; padding: 160px var(--gutter) 120px; display: grid; gap: 48px; background: var(--ink); color: var(--white); border-top: 1px solid var(--line); }
