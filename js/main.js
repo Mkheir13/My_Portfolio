@@ -23,7 +23,6 @@ const EN = {
     "projects.over.text": "Streamlit dashboard of Overwatch League stats: scrapers, image detection to enrich the datasets, player, team and match profiles.",
     "projects.hub.text": "Destiny 2 community platform: Bungie OAuth, manifest sync (weapons, triumphs), build system, guides and profiles.",
     "projects.mee7.stat": "commands",
-    "projects.case": "Case study →",
     "kpi.words": "words",
     "kpi.cmds": "commands",
     "projects.mee7.text": "Team-built Discord bot: stream notifications, shared availability from iCal, content recommendations, moderation.",
