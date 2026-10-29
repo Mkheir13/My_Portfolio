@@ -23,6 +23,7 @@ const EN = {
     "projects.over.text": "Streamlit dashboard of Overwatch League stats: scrapers, image detection to enrich the datasets, player, team and match profiles.",
     "projects.hub.text": "Destiny 2 community platform: Bungie OAuth, manifest sync (weapons, triumphs), build system, guides and profiles.",
     "projects.mee7.stat": "commands",
+    "projects.case": "Case study →",
     "kpi.words": "words",
     "kpi.cmds": "commands",
     "projects.mee7.text": "Team-built Discord bot: stream notifications, shared availability from iCal, content recommendations, moderation.",
@@ -81,6 +82,14 @@ document.getElementById("lang").addEventListener("click", () =>
 
 // Reveal cards as they scroll into view (hidden only when JS runs, so content never stays invisible).
 document.documentElement.classList.add("js");
+
+// Wide screens: zoom the page so the layout is always that of a 1536px-wide laptop, whatever the screen or browser zoom.
+const fit = () => {
+    const z = innerWidth > 1536 ? innerWidth / 1536 : 1;
+    document.documentElement.style.zoom = z === 1 ? "" : z.toFixed(4);
+    document.documentElement.style.setProperty("--z", z.toFixed(4));
+};
+fit(); addEventListener("resize", fit);
 const io = new IntersectionObserver(entries => entries.forEach(e => {
     if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
 }), { threshold: .15 });
@@ -181,15 +190,16 @@ if (card3d) {
 }
 
 // About poster: a real 3D card; the camera orbits a little toward the mouse (±16° yaw, ±10° pitch)
-const data3d = document.getElementById("data3d");
-if (data3d && matchMedia("(hover: hover)").matches && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    const box = data3d.parentElement;
-    box.addEventListener("mousemove", e => {
-        const r = box.getBoundingClientRect(), x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
-        data3d.cameraOrbit = `${(x * 32).toFixed(1)}deg ${(90 - y * 20).toFixed(1)}deg 105%`;
+// Same for the lanyard badges, driven by their section.
+if (matchMedia("(hover: hover)").matches && !matchMedia("(prefers-reduced-motion: reduce)").matches)
+    document.querySelectorAll("#data3d, .badge").forEach(mv => {
+        const box = mv.classList.contains("badge") ? mv.closest("section, footer") : mv.parentElement;
+        box.addEventListener("mousemove", e => {
+            const r = box.getBoundingClientRect(), x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
+            mv.cameraOrbit = `${(x * 32).toFixed(1)}deg ${(90 - y * 20).toFixed(1)}deg 105%`;
+        });
+        box.addEventListener("mouseleave", () => { mv.cameraOrbit = "0deg 90deg 105%"; });
     });
-    box.addEventListener("mouseleave", () => { data3d.cameraOrbit = "0deg 90deg 105%"; });
-}
 
 // Preloader: a boot log and a counter, about 900ms, then it slides away.
 const loader = document.querySelector(".loader"), count = loader?.querySelector(".count"), boot = loader?.querySelector(".boot");
@@ -242,6 +252,18 @@ document.querySelectorAll(".project .kpi b").forEach(b => {
         const t = setInterval(() => { k++; b.textContent = sign + (v * k / 8).toFixed(d); if (k >= 8) clearInterval(t); }, 50);
     });
 });
+
+// GitHub live tile: repo count, stars, last push, top languages, from the public API (60 req/h unauthenticated).
+const gh = document.querySelector(".wall .gh");
+if (gh) fetch("https://api.github.com/users/Mkheir13/repos?per_page=100&sort=pushed").then(r => r.ok ? r.json() : Promise.reject()).then(repos => {
+    const set = (k, v) => gh.querySelector(`[data-g="${k}"]`).textContent = v;
+    set("repos", repos.length);
+    set("stars", repos.reduce((n, r) => n + r.stargazers_count, 0));
+    const h = Math.round((Date.now() - new Date(repos[0].pushed_at)) / 36e5);
+    set("push", h < 1 ? "< 1 h" : h < 48 ? `il y a ${h} h` : `il y a ${Math.round(h / 24)} j`);
+    const langs = {}; repos.forEach(r => { if (r.language) langs[r.language] = (langs[r.language] || 0) + 1; });
+    set("langs", Object.entries(langs).sort((a, b) => b[1] - a[1]).slice(0, 3).map(([l]) => l).join(" · "));
+}).catch(() => {});
 
 // Parcours: the timeline marker follows the viewport's middle down the list.
 const jobs = document.querySelector(".jobs");
