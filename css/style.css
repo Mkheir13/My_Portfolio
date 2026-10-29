@@ -28,8 +28,6 @@
 @font-face { font-family: "Space Mono"; font-weight: 700; font-display: swap; src: url(../fonts/spacemono-700.woff2) format("woff2"); }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
-/* Film grain over the whole page */
-body::after { content: ""; position: fixed; inset: 0; z-index: 40; pointer-events: none; background: var(--grain); opacity: .5; }
 html { scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: var(--acid) var(--ink); }
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: var(--ink); }
@@ -110,23 +108,24 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
 }
 /* Gutter fragments: centred on the gutter, bleeding off the edge, acid on dark sections and ink on light ones.
    `translate` is driven by js/main.js for a slight parallax; `transform` only centres them. */
-.orn { position: absolute; z-index: 0; pointer-events: none; color: var(--acid); opacity: .9; overflow: visible; filter: drop-shadow(0 24px 36px rgba(0,0,0,.55)); }
+.orn { position: absolute; z-index: 0; pointer-events: none; color: var(--acid); opacity: .9; overflow: visible; will-change: transform; }
 .orn-l { left: calc(var(--gutter) / 2); transform: translateX(-50%); }
 .orn-r { right: calc(var(--gutter) / 2); transform: translateX(50%); }
-#skills .orn, #about .orn { color: var(--ink); filter: drop-shadow(0 18px 28px rgba(0,0,0,.35)); }
+#skills .orn, #about .orn { color: var(--ink); }
 .hero > svg.orn, .contact > svg.orn { position: absolute; z-index: 0; }
-/* Depth of field: far fragments are blurred and dim, near ones sit over the content edge, slightly soft */
-.orn.far { filter: blur(3px) drop-shadow(0 10px 20px rgba(0,0,0,.4)); opacity: .45; }
-.orn.near { z-index: 2; filter: blur(.6px) drop-shadow(0 40px 50px rgba(0,0,0,.7)); }
+/* Depth: far fragments are dim, near ones sit over the content edge with a long shadow (the only filter, kept cheap) */
+.orn.far { opacity: .4; }
+.orn.near { z-index: 2; filter: drop-shadow(0 30px 30px rgba(0,0,0,.6)); }
 .hero > svg.orn.near, .contact > svg.orn.near { z-index: 2; }
-/* Colour haze: a huge blurred ellipse, no shadow, blended into the section */
-.orn.haze { filter: none; opacity: .28; mix-blend-mode: screen; z-index: 0; }
+/* Colour haze: a huge soft ellipse blended into the section */
+.orn.haze { opacity: .28; mix-blend-mode: screen; z-index: 0; }
 #skills .orn.haze, #about .orn.haze { mix-blend-mode: multiply; opacity: .18; }
-/* Slow organic float, on top of the scroll parallax */
-.orn use { animation: float 11s ease-in-out infinite alternate; transform-box: fill-box; transform-origin: center; }
-.orn-r use { animation-duration: 14s; animation-delay: -5s; }
-.orn.haze use { animation-duration: 20s; }
-@keyframes float { from { transform: translate(0, -6px) rotate(-1.5deg); } to { transform: translate(0, 8px) rotate(1.5deg); } }
+/* Slow organic float on the element itself (composited), on top of the scroll parallax carried by `translate` */
+.orn-l { animation: float-l 11s ease-in-out infinite alternate; }
+.orn-r { animation: float-r 14s ease-in-out -5s infinite alternate; }
+.orn.haze { animation-duration: 20s; }
+@keyframes float-l { from { transform: translate(-50%, -6px) rotate(-1.5deg); } to { transform: translate(-50%, 8px) rotate(1.5deg); } }
+@keyframes float-r { from { transform: translate(50%, -6px) rotate(1.5deg); } to { transform: translate(50%, 8px) rotate(-1.5deg); } }
 /* Registration marks */
 .cross { position: absolute; width: 18px; height: 18px; color: currentColor; opacity: .55; pointer-events: none; z-index: 1; }
 .hero .cross { color: var(--acid); }
@@ -139,10 +138,8 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
     font: 700 11px var(--mono); letter-spacing: 2px; text-transform: uppercase;
 }
 .roles b { color: var(--blue); }
-/* Frosted glass panels over the 3D scatter */
-.hero-pitch { grid-column: 2; justify-self: end; max-width: 40ch; padding: 20px 24px; text-align: right; font: clamp(15px, 1.1vw, 18px)/1.5 Inter, sans-serif; }
-.hero-pitch, .hero-cta { background: rgba(242,242,236,.05); border: 1px solid rgba(242,242,236,.22); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
-.hero-cta { grid-column: 2; grid-row: 2; justify-self: end; align-self: end; display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 12px; padding: 12px; }
+/* Buttons on a frosted panel over the 3D scatter */
+.hero-cta { grid-column: 2; grid-row: 2; justify-self: end; align-self: end; display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 12px; padding: 12px; background: rgba(242,242,236,.05); border: 1px solid rgba(242,242,236,.22); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
 /* 14.3vw: "KHEIR-EDDINE" spans the content width (90vw); capped once the content stops growing at 1600px */
 .hero-name { grid-column: 1 / -1; grid-row: 3; align-self: end; margin-left: -.04em; font-size: clamp(48px, 11vw, 200px); line-height: .85; letter-spacing: -.04em; }
 .hero-name span { display: block; overflow: hidden; }
@@ -205,7 +202,6 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
 }
 .wall .void { background: var(--ink); clip-path: none; }
 .wall li:not(.void) { box-shadow: inset 0 1px 0 rgba(255,255,255,.35), inset 0 -30px 40px -30px rgba(0,0,0,.25); }
-.wall { filter: drop-shadow(0 20px 30px rgba(0,0,0,.5)); }
 .wall b { font: 900 clamp(40px, 6.5vw, 120px)/1 var(--display); font-stretch: 75%; font-variant-numeric: tabular-nums; }
 .wall b em, .wall b i { font-style: normal; }
 .wall b em { font-size: .5em; }
@@ -283,7 +279,6 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
     box-shadow: inset 0 1px 0 rgba(255,255,255,.1), inset 0 -40px 60px -40px rgba(0,0,0,.6);
     transition: transform .25s, border-color .2s;
 }
-.projects > li { filter: drop-shadow(0 30px 30px rgba(0,0,0,.45)); }
 .project:hover { transform: translateY(-6px); }
 .featured, .wide { grid-column: span 2; }
 /* Featured card: the stat takes the left column, everything else stacks on the right */
@@ -373,9 +368,8 @@ main { perspective: 1200px; }
 .js .reveal.in .project { transition: opacity .4s, transform .2s, box-shadow .2s; }
 
 /* Intro: hero content rises in once the preloader is done (needs .js, skipped under reduced motion) */
-.js .hero > :is(.hero-top, .hero-pitch, .hero-cta, .hero-name) { animation: rise .7s cubic-bezier(.2,.8,.2,1) both; animation-play-state: paused; }
-.ready .hero > :is(.hero-top, .hero-pitch, .hero-cta, .hero-name) { animation-play-state: running; }
-.js .hero-pitch { animation-delay: .1s; }
+.js .hero > :is(.hero-top, .hero-cta, .hero-name) { animation: rise .7s cubic-bezier(.2,.8,.2,1) both; animation-play-state: paused; }
+.ready .hero > :is(.hero-top, .hero-cta, .hero-name) { animation-play-state: running; }
 .js .hero-cta { animation-delay: .2s; }
 .js .hero-name { animation-delay: .3s; }
 @keyframes rise { from { opacity: 0; transform: translateY(24px); } }
@@ -409,13 +403,11 @@ main { perspective: 1200px; }
 @media (max-width: 760px) {
     :root { --gutter: 20px; }
     .rail, .card[data-n]::before, .stats::after, .contact::after, .cross { display: none; }
-    .hero-pitch { max-width: none; justify-self: stretch; }
     .project { clip-path: none; }
-    .hero { grid-template-columns: 1fr; grid-template-rows: auto auto 1fr auto; padding: 32px 20px; gap: 20px; }
-    .hero-top, .hero-pitch, .hero-cta, .hero-name { grid-column: 1; }
-    .hero-pitch { grid-row: 2; text-align: left; font-size: 16px; }
-    .hero-cta { grid-row: 3; justify-self: start; justify-content: flex-start; }
-    .hero-name { grid-row: 4; font-size: clamp(48px, 15vw, 72px); }
+    .hero { grid-template-columns: 1fr; grid-template-rows: auto 1fr auto; padding: 32px 20px; gap: 20px; }
+    .hero-top, .hero-cta, .hero-name { grid-column: 1; }
+    .hero-cta { grid-row: 2; justify-self: start; justify-content: flex-start; }
+    .hero-name { grid-row: 3; font-size: clamp(48px, 15vw, 72px); }
     .wall { grid-template-columns: repeat(2, 1fr); }
     .wall .void { display: none; }
     .wall li:nth-child(9) { grid-column: 1 / -1; aspect-ratio: 2; }
@@ -452,12 +444,11 @@ main { perspective: 1200px; }
     html { scroll-behavior: auto; }
     .loader, .flash { display: none; }
     .js .reveal, .js .reveal :is(.chips li, .jobs li, .project, .wall li), .split .w, .statement .w { opacity: 1; transform: none; }
-    .js .hero > :is(.hero-top, .hero-pitch, .hero-cta, .hero-name) { opacity: 1; }
+    .js .hero > :is(.hero-top, .hero-cta, .hero-name) { opacity: 1; }
     .js .hero-name i { transform: none; }
     .js .reveal .marker { clip-path: none; }
     .js .reveal::after, .ring { display: none; }
-    .orn { translate: none !important; }
-    .orn use { animation: none; }
+    .orn { translate: none !important; animation: none; }
     .menu a { opacity: 1; transform: none; }
     .menu { transition: none; }
 }
