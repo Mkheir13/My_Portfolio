@@ -25,8 +25,9 @@
     --line-dark: rgba(14,14,14,.18);
     --display: Unbounded, Impact, sans-serif;
     --mono: "JetBrains Mono", monospace;
-    /* Side gutter: 5% of the viewport, content grows with the screen up to 1600px */
-    --gutter: max(5vw, calc((100vw - 1600px) / 2));
+    /* Side gutter: 5% of the viewport */
+    --gutter: 5vw;
+    --z: 1;
     --nav-h: 66px;
     /* 60px hatch mark //// in the current text colour */
     --hatch: repeating-linear-gradient(-45deg, currentColor 0 2px, transparent 2px 6px);
@@ -99,7 +100,7 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; text-transfo
 
 /* Hero: full viewport on the 12-column grid, 3D scatter behind, the name huge at the bottom */
 .hero {
-    position: relative; overflow: hidden; min-height: calc(100vh - var(--nav-h));
+    position: relative; overflow: hidden; min-height: calc(100vh / var(--z) - var(--nav-h));
     display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: auto 1fr auto; row-gap: 24px;
     padding: 48px var(--gutter); background: var(--grain-light), var(--scanlines), var(--ink);
 }
@@ -262,14 +263,11 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; text-transfo
 
 /* About as a manifesto: acid column sticky on the left, a big statement that decodes word by word on the right */
 .manifesto { display: grid; grid-template-columns: 1fr 2fr; gap: 48px; align-items: start; }
-/* The poster render, sticky; the inner card tilts toward the mouse with a glare that follows it (js/main.js) */
+/* The poster as a 3D card, sticky; the camera orbits toward the mouse (js/main.js) */
 .about-visual { position: sticky; z-index: 1; top: calc(var(--nav-h) + 24px); perspective: 1200px; }
-.tilt { position: relative; transform-style: preserve-3d; transition: transform 120ms linear; will-change: transform; }
-.tilt img { display: block; width: 100%; height: auto; border: 1px solid var(--ink); }
-.glare { position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity 120ms linear; mix-blend-mode: screen;
-    background: radial-gradient(circle at var(--gx, 50%) var(--gy, 50%), rgba(255,255,255,.45), transparent 55%); }
-.tilt:hover .glare { opacity: 1; }
-.about-visual .looking { position: absolute; left: 16px; bottom: 16px; transform: translateZ(30px); }
+.tilt { position: relative; }
+#data3d { display: block; width: 100%; height: auto; aspect-ratio: 66 / 86; background: transparent; --poster-color: transparent; }
+.about-visual .looking { position: absolute; left: 16px; bottom: 16px; }
 .statement { margin-bottom: 40px; font: 900 clamp(20px, 2.5vw, 38px)/1.12 var(--display); text-transform: uppercase; text-align: justify; letter-spacing: -.01em; }
 .statement .w { opacity: .22; transition: opacity 100ms steps(2); }
 .statement .w.on { opacity: 1; }
@@ -334,7 +332,9 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; text-transfo
     .hero { grid-template-columns: 1fr; grid-template-rows: auto 1fr auto; padding: 32px 20px; gap: 20px; }
     .hero-top, .hero-cta, .hero-name { grid-column: 1; }
     .hero-cta { grid-row: 2; justify-self: start; justify-content: flex-start; }
-    .hero-name { grid-row: 3; font-size: clamp(48px, 15vw, 72px); }
+    .hero-name { grid-row: 3; font-size: clamp(30px, 10.5vw, 48px); }
+    .roles, .hey { white-space: normal; }
+    .statement { text-align: left; }
     .wall { grid-template-columns: repeat(2, 1fr); }
     .wall .void { display: none; }
     .wall li:nth-child(9) { grid-column: 1 / -1; aspect-ratio: 2; }
@@ -406,21 +406,47 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; text-transfo
 /* Status dot in the header */
 .status i { display: inline-block; width: 6px; height: 6px; margin-right: 6px; background: var(--acid); vertical-align: middle; animation: blink 1.4s steps(2) infinite; }
 /* Lock-on: reticle corners appear on the hovered project card */
-.project::after { content: ""; position: absolute; inset: 6px; pointer-events: none; opacity: 0; transition: opacity var(--quick);
+.project::after, .jobs li::after { content: ""; position: absolute; inset: 6px; pointer-events: none; opacity: 0; transition: opacity var(--quick);
     background: linear-gradient(var(--acid), var(--acid)) top left / 14px 1px no-repeat, linear-gradient(var(--acid), var(--acid)) top left / 1px 14px no-repeat,
                 linear-gradient(var(--acid), var(--acid)) bottom right / 14px 1px no-repeat, linear-gradient(var(--acid), var(--acid)) bottom right / 1px 14px no-repeat; }
-.project:hover::after { opacity: 1; }
+.project:hover::after, .jobs li:hover::after { opacity: 1; }
 .wall .log { align-self: end; }
 @media (prefers-reduced-motion: reduce) { .status i { animation: none; } }
 
 /* open-design / industrial brutalist: ASCII framing, halftone on the poster, compartment lines */
 .wall .tag::before, .pedestal::before { content: "// "; color: rgba(255,255,255,.35); }
 .readout-1::before { content: "> "; }
-/* 1-bit halftone screen over the poster: a dot grid multiplied onto the image, stronger contrast underneath */
-.tilt img { filter: contrast(1.15) saturate(1.05); }
-.tilt::after { content: ""; position: absolute; inset: 0; pointer-events: none; mix-blend-mode: multiply; opacity: .3;
-    background: radial-gradient(rgba(14,14,14,.9) .7px, transparent 1.1px) 0 0 / 4px 4px; }
-.tilt .looking { z-index: 1; }
 /* Projects and stats read as one machined panel: cards flush, hover lifts the card out of the panel */
 .projects > li { background: var(--ink); }
 .project:hover { transform: translateY(-4px); z-index: 1; }
+
+/* Wide screens lay out like a 1536px laptop: the page is zoomed so the effective viewport stays near that width
+   (vw resolves against the zoomed viewport, vh and pointer coordinates do not: --z corrects those) */
+@media (min-width: 1700px) { :root { zoom: 1.12; --z: 1.12; } }
+@media (min-width: 1900px) { :root { zoom: 1.25; --z: 1.25; } }
+@media (min-width: 2200px) { :root { zoom: 1.45; --z: 1.45; } }
+@media (min-width: 2500px) { :root { zoom: 1.66; --z: 1.66; } }
+@media (min-width: 3000px) { :root { zoom: 2.2; --z: 2.2; } }
+
+/* Boot log under the preloader counter */
+.boot { position: absolute; left: var(--gutter); bottom: 32px; margin: 0; font: 700 11px/1.7 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--grey); }
+.boot b { color: var(--acid); font-weight: 700; }
+/* Command line: "/" opens it, Enter runs, Escape closes */
+.cmd { position: fixed; left: var(--gutter); bottom: 24px; z-index: 40; display: grid; grid-template-columns: auto 1fr; column-gap: 10px; align-items: center; width: min(520px, calc(100vw - 2 * var(--gutter))); padding: 10px 14px; border: 1px solid var(--acid); background: var(--ink); font: 700 12px/1.4 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--acid);
+    clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px)); }
+.cmd[hidden] { display: none; }
+.cmd input { width: 100%; border: 0; background: transparent; color: var(--white); font: inherit; letter-spacing: inherit; text-transform: inherit; caret-color: var(--acid); outline: none; }
+.cmd input::placeholder { color: var(--grey); }
+.cmd output { grid-column: 1 / -1; color: var(--grey); }
+.cmd output:empty { display: none; }
+.cmd-hint { padding: 0 5px; border: 1px solid var(--line); color: var(--grey); font: inherit; }
+/* Project key number: counts up on hover (js/main.js) */
+.project .kpi { white-space: nowrap; font: 700 11px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--grey); }
+.project .kpi b { display: inline-block; min-width: 3ch; margin-right: 4px; font: 900 22px/1 var(--display); color: var(--white); font-variant-numeric: tabular-nums; }
+.featured .kpi b { font-size: 32px; }
+/* Parcours: barcode dates, a timeline the marker travels down on scroll (js/main.js sets --jp) */
+.jobs .bar { width: 48px; height: 10px; margin-left: 6px; color: var(--grey); vertical-align: -1px; }
+.jobs { position: relative; }
+.jobs::before { content: ""; position: absolute; left: 52px; top: 0; bottom: 0; width: 1px; background: var(--line); }
+.jobs::after { content: ""; position: absolute; left: 49px; top: calc(var(--jp) * 100%); width: 7px; height: 7px; background: var(--acid); transition: top 150ms steps(3); }
+@media (max-width: 760px) { .jobs::before, .jobs::after, .cmd-hint { display: none; } .cmd { left: 12px; width: calc(100vw - 24px); } .boot { left: 20px; } }

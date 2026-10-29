@@ -23,6 +23,8 @@ const EN = {
     "projects.over.text": "Streamlit dashboard of Overwatch League stats: scrapers, image detection to enrich the datasets, player, team and match profiles.",
     "projects.hub.text": "Destiny 2 community platform: Bungie OAuth, manifest sync (weapons, triumphs), build system, guides and profiles.",
     "projects.mee7.stat": "commands",
+    "kpi.words": "words",
+    "kpi.cmds": "commands",
     "projects.mee7.text": "Team-built Discord bot: stream notifications, shared availability from iCal, content recommendations, moderation.",
     "nav.path": "Journey",
     "nav.about": "About",
@@ -178,25 +180,74 @@ if (card3d) {
     }
 }
 
-// About poster: tilts toward the mouse (±14°), slight lift, a glare spot that follows the pointer.
-const tilt = document.querySelector(".tilt");
-if (tilt && matchMedia("(hover: hover)").matches && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    tilt.addEventListener("mousemove", e => {
-        const r = tilt.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
-        tilt.style.transform = `rotateY(${((x - .5) * 28).toFixed(1)}deg) rotateX(${((.5 - y) * 28).toFixed(1)}deg) scale(1.03)`;
-        tilt.style.setProperty("--gx", `${(x * 100).toFixed(1)}%`); tilt.style.setProperty("--gy", `${(y * 100).toFixed(1)}%`);
+// About poster: a real 3D card; the camera orbits a little toward the mouse (±16° yaw, ±10° pitch)
+const data3d = document.getElementById("data3d");
+if (data3d && matchMedia("(hover: hover)").matches && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    const box = data3d.parentElement;
+    box.addEventListener("mousemove", e => {
+        const r = box.getBoundingClientRect(), x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
+        data3d.cameraOrbit = `${(x * 32).toFixed(1)}deg ${(90 - y * 20).toFixed(1)}deg 105%`;
     });
-    tilt.addEventListener("mouseleave", () => { tilt.style.transform = ""; });
+    box.addEventListener("mouseleave", () => { data3d.cameraOrbit = "0deg 90deg 105%"; });
 }
 
-// Preloader: counts to 100 in under a second, then slides away.
-const loader = document.querySelector(".loader"), count = loader?.querySelector(".count");
+// Preloader: a boot log and a counter, about 900ms, then it slides away.
+const loader = document.querySelector(".loader"), count = loader?.querySelector(".count"), boot = loader?.querySelector(".boot");
 if (loader) {
-    let n = 0;
+    const lines = ["> boot kheir.016", "> fonts ......... <b>ok</b>", "> kheir016.glb .. <b>278 kb</b>", "> cuda .......... <b>ok</b>", "> classes ....... <b>16</b>", "> weights ....... <b>val_acc 0.941</b>", "> <b>ready</b>"];
+    let n = 0, i = 0;
+    const done = () => { if (n >= 100 && i >= lines.length) { loader.classList.add("done"); document.documentElement.classList.add("ready"); } };
     const tick = setInterval(() => {
-        n = Math.min(100, n + 12 + Math.random() * 12); count.textContent = Math.floor(n);
-        if (n >= 100) { clearInterval(tick); loader.classList.add("done"); document.documentElement.classList.add("ready"); }
-    }, 40);
+        n = Math.min(100, n + 6 + Math.random() * 8); count.textContent = Math.floor(n);
+        if (n >= 100) { clearInterval(tick); done(); }
+    }, 50);
+    const log = setInterval(() => {
+        boot.insertAdjacentHTML("beforeend", lines[i++] + "\n");
+        if (i >= lines.length) { clearInterval(log); done(); }
+    }, 110);
+}
+
+// Command line: "/" opens it. go <section> · lang fr|en · cv · mail · github · help
+const cmd = document.getElementById("cmd"), cmdIn = document.getElementById("cmd-in"), cmdOut = cmd?.querySelector("output");
+if (cmd) {
+    const sections = ["home", "stats", "projects", "skills", "parcours", "about", "contact"];
+    const run = line => {
+        const [verb, arg] = line.trim().toLowerCase().split(/\s+/);
+        const go = id => { const el = document.getElementById(id === "home" ? "top" : id) || document.querySelector(id === "home" ? ".hero" : "#" + id); if (el) { el.scrollIntoView(); return "> " + id; } return "> ?" + id; };
+        if (!verb) return "";
+        if (verb === "help") return "> " + ["go <section>", "lang fr|en", "cv", "mail", "github"].join(" · ") + " · " + sections.join(" ");
+        if (verb === "go" && arg) return go(arg);
+        if (sections.includes(verb)) return go(verb);
+        if (verb === "lang" && (arg === "fr" || arg === "en")) { setLang(arg); return "> lang " + arg; }
+        if (verb === "cv") { location.href = document.querySelector(".btn-main").href; return "> cv"; }
+        if (verb === "mail") { location.href = document.querySelector('a[href^="mailto:"]').href; return "> mail"; }
+        if (verb === "github") { open("https://github.com/Mkheir13", "_blank", "noopener"); return "> github"; }
+        return "> ? " + verb + " — help";
+    };
+    const show = on => { cmd.hidden = !on; if (on) { cmdIn.value = ""; cmdOut.textContent = ""; cmdIn.focus(); } };
+    addEventListener("keydown", e => {
+        const typing = /INPUT|TEXTAREA/.test(e.target.tagName);
+        if (e.key === "/" && !typing) { e.preventDefault(); show(true); }
+        else if (e.key === "Escape" && !cmd.hidden) show(false);
+    });
+    cmd.addEventListener("submit", e => { e.preventDefault(); cmdOut.textContent = run(cmdIn.value); cmdIn.select(); });
+    document.querySelector(".cmd-hint")?.addEventListener("click", () => show(cmd.hidden));
+}
+
+// Project key numbers count up from 0 on hover, 400ms in 8 steps.
+document.querySelectorAll(".project .kpi b").forEach(b => {
+    const v = parseFloat(b.dataset.val), d = +b.dataset.dec, sign = b.dataset.sign;
+    b.closest(".project").addEventListener("mouseenter", () => {
+        let k = 0;
+        const t = setInterval(() => { k++; b.textContent = sign + (v * k / 8).toFixed(d); if (k >= 8) clearInterval(t); }, 50);
+    });
+});
+
+// Parcours: the timeline marker follows the viewport's middle down the list.
+const jobs = document.querySelector(".jobs");
+if (jobs) {
+    const track = () => { const r = jobs.getBoundingClientRect(); jobs.style.setProperty("--jp", Math.min(1, Math.max(0, (innerHeight / 2 - r.top) / r.height)).toFixed(3)); };
+    track(); addEventListener("scroll", track, { passive: true });
 }
 
 // Scroll progress, read by the gutter rails' marker.
@@ -236,7 +287,9 @@ if (cursor && matchMedia("(hover: hover)").matches) {
     document.documentElement.classList.add("has-cursor");
     const xy = document.querySelector(".cursor-xy");
     addEventListener("mousemove", e => {
-        cursor.style.left = xy.style.left = e.clientX + "px"; cursor.style.top = xy.style.top = e.clientY + "px";
+        // CSS zoom on wide screens: clientX/Y are unzoomed viewport px, style lengths are zoomed
+        const z = parseFloat(getComputedStyle(document.documentElement).zoom) || 1;
+        cursor.style.left = xy.style.left = e.clientX / z + "px"; cursor.style.top = xy.style.top = e.clientY / z + "px";
         xy.textContent = `X ${String(e.clientX).padStart(4, "0")} Y ${String(e.clientY).padStart(4, "0")}`;
     });
     document.querySelectorAll("a, button, .chips li, .project, .wall li").forEach(el => {
