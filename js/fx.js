@@ -4,7 +4,8 @@
 // Skipped under prefers-reduced-motion and on phones (a 60 fps canvas behind the hero costs battery for little).
 if (!matchMedia("(prefers-reduced-motion: reduce)").matches && !matchMedia("(max-width: 760px)").matches) document.querySelectorAll("canvas.fx").forEach(canvas => {
     const ctx = canvas.getContext("2d");
-    const COLORS = ["#C6FF00", "#FFFFFF", "#8A8A8A"];
+    const acid = () => getComputedStyle(document.documentElement).getPropertyValue("--acid").trim() || "#C6FF00";
+    const COLORS = [acid(), "#FFFFFF", "#8A8A8A"];
     let w, h, t = 0, mx = 0, my = 0;
     const resize = () => { w = canvas.width = canvas.offsetWidth; h = canvas.height = canvas.offsetHeight; };
     resize(); addEventListener("resize", resize);
@@ -36,7 +37,7 @@ if (!matchMedia("(prefers-reduced-motion: reduce)").matches && !matchMedia("(max
 
         // Bounding cube and axes
         const C = CUBE.map(proj);
-        ctx.strokeStyle = "#C6FF00"; ctx.globalAlpha = .25; ctx.lineWidth = 1;
+        ctx.strokeStyle = COLORS[0] = acid(); ctx.globalAlpha = .25; ctx.lineWidth = 1;
         EDGES.forEach(([i, j]) => { ctx.beginPath(); ctx.moveTo(C[i][0], C[i][1]); ctx.lineTo(C[j][0], C[j][1]); ctx.stroke(); });
         ctx.globalAlpha = .5; ctx.strokeStyle = "#8A8A8A";
         [[1,0,0],[0,1,0],[0,0,1]].forEach(ax => { const o = proj([-1,-1,-1]), e = proj(ax.map(v => v * 2 - 1).map((v,i)=> ax[i]? 1 : -1)); ctx.beginPath(); ctx.moveTo(o[0], o[1]); ctx.lineTo(e[0], e[1]); ctx.stroke(); });
