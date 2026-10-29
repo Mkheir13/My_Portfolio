@@ -356,5 +356,4 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
     .js .reveal::after { display: none; }
     .menu a { opacity: 1; }
     #where::after, .wall .log::after, .tape span { animation: none; }
-    .spark polyline { stroke-dashoffset: 0; }
 }
