@@ -10,9 +10,13 @@ const EN = {
     "nav.skills": "Skills",
     "projects.title": "Projects",
     "projects.code": "View code →",
-    "projects.destiny.title": "Classifier on the Destiny API",
+    "projects.destiny.title": "Random Forest classifier · F1 0.92",
     "projects.destiny.text": "Final-year project: ETL pipeline on the Bungie API, Random Forest trained on 392 samples, data-leak checks, served by an API with CI.",
-    "projects.yolo.title": "YOLOv8 object detection",
+    "projects.yolo.title": "Object detection · mAP50-95 +37%",
+    "projects.draw.title": "Multiplayer game · TensorFlow AI",
+    "projects.over.title": "Streamlit dashboard · 8 pages",
+    "projects.hub.title": "Destiny 2 platform · Bungie API",
+    "projects.mee7.title": "Discord bot · 10 commands",
     "projects.yolo.text": "Fine-tuned YOLOv8 on an annotated dataset: +37% mAP50-95 over the base model.",
     "projects.draw.text": "Real-time multiplayer web game: two players draw, a TensorFlow AI guesses. Django Channels websockets, 345 words, leaderboard.",
     "projects.over.stat": "pages",
@@ -178,6 +182,20 @@ const setProgress = () => document.documentElement.style.setProperty("--progress
     (scrollY / (document.documentElement.scrollHeight - innerHeight) || 0).toFixed(4));
 setProgress(); addEventListener("scroll", setProgress, { passive: true });
 
+// Training log: one line every 900ms in a black tile of the stats wall, loss going down, last six lines kept.
+const log = document.querySelector(".wall .log");
+if (log && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    let epoch = 1, lines = [];
+    setInterval(() => {
+        const loss = (0.9 * Math.exp(-epoch / 7) + 0.02 + Math.random() * .01).toFixed(4);
+        const acc = (0.99 - 0.6 * Math.exp(-epoch / 6) + Math.random() * .005).toFixed(3);
+        lines.push(`ep ${String(epoch).padStart(2, "0")}  loss ${loss}  acc ${acc}`);
+        if (lines.length > 6) lines.shift();
+        log.textContent = lines.join("\n");
+        epoch = epoch % 20 + 1;
+    }, 900);
+}
+
 // Local time in Marseille, in the header.
 const clock = document.getElementById("clock");
 const showTime = () => clock.textContent = new Date().toLocaleTimeString("fr-FR", { timeZone: "Europe/Paris", hour: "2-digit", minute: "2-digit" });
@@ -194,7 +212,11 @@ document.getElementById("lang").addEventListener("click", splitWords);
 const cursor = document.querySelector(".cursor");
 if (cursor && matchMedia("(hover: hover)").matches) {
     document.documentElement.classList.add("has-cursor");
-    addEventListener("mousemove", e => { cursor.style.left = e.clientX + "px"; cursor.style.top = e.clientY + "px"; });
+    const xy = document.querySelector(".cursor-xy");
+    addEventListener("mousemove", e => {
+        cursor.style.left = xy.style.left = e.clientX + "px"; cursor.style.top = xy.style.top = e.clientY + "px";
+        xy.textContent = `X ${String(e.clientX).padStart(4, "0")} Y ${String(e.clientY).padStart(4, "0")}`;
+    });
     document.querySelectorAll("a, button, .chips li, .project, .wall li").forEach(el => {
         el.addEventListener("mouseenter", () => cursor.classList.add("big"));
         el.addEventListener("mouseleave", () => cursor.classList.remove("big"));

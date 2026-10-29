@@ -131,6 +131,23 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
 .hud-br { bottom: 14px; right: 14px; border-left: 0; border-top: 0; }
 .cross { position: absolute; width: 18px; height: 18px; color: currentColor; opacity: .55; pointer-events: none; z-index: 1; }
 .hero .cross { color: var(--acid); }
+/* Data readouts: typewriter lines (js/fx.js) and a slow tape of training metrics along the bottom */
+.readout { position: absolute; top: 46%; z-index: 1; font: 700 10px/1 var(--mono); letter-spacing: 2px; color: var(--acid); opacity: .8; }
+.readout-1 { right: var(--gutter); }
+.readout-2 { left: var(--gutter); }
+.tape { position: absolute; left: 0; right: 0; bottom: 0; z-index: 1; overflow: hidden; white-space: nowrap; border-top: 1px solid var(--line); padding: 6px 0; font: 700 10px/1 var(--mono); letter-spacing: 2px; text-transform: uppercase; color: var(--grey); }
+.tape span { display: inline-block; animation: tape 60s linear infinite; }
+@keyframes tape { to { transform: translateX(-100%); } }
+
+/* Sparkline in each project card, drawn in the band colour when the card appears */
+.spark { width: 100%; height: 24px; overflow: visible; }
+.spark polyline { fill: none; stroke: var(--band, var(--acid)); stroke-width: 1.5; stroke-dasharray: 200; stroke-dashoffset: 200; }
+.reveal.in .spark polyline { animation: draw 600ms steps(12) forwards; animation-delay: calc(var(--i) * 40ms + 100ms); }
+@keyframes draw { to { stroke-dashoffset: 0; } }
+
+/* Training log ticking inside one of the stats wall's black tiles (js/main.js) */
+.wall .log { align-self: start; margin: 0; font: 400 10px/1.8 var(--mono); letter-spacing: 1px; color: var(--acid); opacity: .75; white-space: pre; }
+.wall .log::after { content: "_"; animation: blink 1s steps(2) infinite; }
 
 /* Glitch on card hover: two clipped copies of the stat, offset, three stepped frames */
 .stat[data-text] { position: relative; }
@@ -280,16 +297,24 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
 .loader.done { transform: translateY(-100%); visibility: hidden; pointer-events: none; transition: transform 200ms steps(4), visibility 0s 200ms; }
 .loader .count { font-variant-numeric: tabular-nums; }
 
-/* Custom cursor: a square dot that grows over links */
+/* Custom cursor: a reticle (dot, ring, four ticks) with live coordinates beside it; the ring spins over links */
 .has-cursor, .has-cursor a, .has-cursor button { cursor: none; }
-.cursor { position: fixed; z-index: 60; pointer-events: none; width: 10px; height: 10px; margin: -5px 0 0 -5px; background: var(--acid); mix-blend-mode: difference; transition: width var(--quick), height var(--quick), margin var(--quick); }
-.cursor.big { width: 40px; height: 40px; margin: -20px 0 0 -20px; }
+.cursor { position: fixed; z-index: 60; pointer-events: none; width: 6px; height: 6px; margin: -3px 0 0 -3px; background: var(--acid); mix-blend-mode: difference; }
+.cursor::before { content: ""; position: absolute; inset: -14px; border: 1px solid var(--acid); transition: inset var(--quick), transform 300ms linear; }
+.cursor::after { content: ""; position: absolute; inset: -22px; background:
+    linear-gradient(var(--acid), var(--acid)) top center / 1px 8px no-repeat,
+    linear-gradient(var(--acid), var(--acid)) bottom center / 1px 8px no-repeat,
+    linear-gradient(var(--acid), var(--acid)) left center / 8px 1px no-repeat,
+    linear-gradient(var(--acid), var(--acid)) right center / 8px 1px no-repeat; }
+.cursor.big::before { inset: -22px; transform: rotate(45deg); }
+.cursor-xy { position: fixed; z-index: 60; pointer-events: none; margin: 18px 0 0 22px; font: 700 9px/1 var(--mono); letter-spacing: 2px; color: var(--acid); mix-blend-mode: difference; display: none; }
+.has-cursor .cursor-xy { display: block; }
 
 @media (max-width: 900px) { .meta { display: none; } }
 
 @media (max-width: 760px) {
     :root { --gutter: 20px; }
-    .rail, .card[data-n]::before, .cross, .contact::after { display: none; }
+    .rail, .card[data-n]::before, .cross, .contact::after, .readout { display: none; }
     .hero { grid-template-columns: 1fr; grid-template-rows: auto 1fr auto; padding: 32px 20px; gap: 20px; }
     .hero-top, .hero-cta, .hero-name { grid-column: 1; }
     .hero-cta { grid-row: 2; justify-self: start; justify-content: flex-start; }
@@ -330,5 +355,6 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
     .js .reveal .marker { clip-path: none; }
     .js .reveal::after { display: none; }
     .menu a { opacity: 1; }
-    #where::after { animation: none; }
+    #where::after, .wall .log::after, .tape span { animation: none; }
+    .spark polyline { stroke-dashoffset: 0; }
 }
