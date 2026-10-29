@@ -201,7 +201,7 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
 .card { position: relative; padding: 160px var(--gutter); }
 #projects { background: var(--grain-light), var(--dots) 0 0 / 7px 7px, var(--ink-deep); }
 /* Skills on paper: light grain, two acid bands on the bias behind the rows */
-#skills { padding-block: 120px; color: var(--ink); background: var(--grain), var(--fibres), linear-gradient(-60deg, transparent 0 34%, var(--acid) 34% 41%, transparent 41% 70%, var(--acid) 70% 73%, transparent 73%), var(--paper); }
+#skills { padding-block: 120px; color: var(--ink); background: linear-gradient(-60deg, transparent 0 34%, var(--acid) 34% 41%, transparent 41% 70%, var(--acid) 70% 73%, transparent 73%), var(--paper); }
 #parcours { background: var(--grain-light), var(--ink-deep); }
 #about { padding-block: 200px; background: var(--grain), var(--hairlines), var(--acid); color: var(--ink); }
 .marker { position: relative; display: flex; align-items: flex-start; gap: 16px; margin: 0 0 48px -4px; padding-bottom: 16px; font-size: 64px; letter-spacing: -2px; line-height: 1; background: var(--hatch) left bottom / 60px 6px no-repeat; }
