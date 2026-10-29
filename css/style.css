@@ -45,8 +45,10 @@ main { position: relative; counter-reset: section; }
 /* Blue hoses (js/pipes.js): over the section backgrounds, under the content */
 #pipes { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; overflow: visible; }
 #pipes path { fill: none; stroke-linecap: round; stroke-linejoin: round; }
-#pipes .fluid { animation: flow 1.6s linear infinite; }
-@keyframes flow { to { stroke-dashoffset: -80; } }
+#pipes .fluid { animation: flow 3s linear infinite; }
+#pipes .bubbles { animation: flow 1.1s linear infinite; }
+#pipes .back { animation-direction: reverse; }
+@keyframes flow { to { stroke-dashoffset: -300; } }
 .card > :not(.about-visual), .stats > *, .hero > :not(canvas):not(.hud) { position: relative; z-index: 2; }
 .card > .about-visual { z-index: 2; }
 h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch: 75%; text-transform: uppercase; }
@@ -366,5 +368,5 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
     .js .reveal .marker { clip-path: none; }
     .js .reveal::after { display: none; }
     .menu a { opacity: 1; }
-    #where::after, .wall .log::after, .tape span, #pipes .fluid { animation: none; }
+    #where::after, .wall .log::after, .tape span, #pipes .fluid, #pipes .bubbles { animation: none; }
 }
