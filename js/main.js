@@ -212,7 +212,7 @@ if (log && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
         const loss = (0.9 * Math.exp(-epoch / 7) + 0.02 + Math.random() * .01).toFixed(4);
         const acc = (0.99 - 0.6 * Math.exp(-epoch / 6) + Math.random() * .005).toFixed(3);
         lines.push(`ep ${String(epoch).padStart(2, "0")}  loss ${loss}  acc ${acc}`);
-        if (lines.length > 9) lines.shift();
+        if (lines.length > 24) lines.shift();
         log.textContent = lines.join("\n");
         epoch = epoch % 20 + 1;
     }, 900);

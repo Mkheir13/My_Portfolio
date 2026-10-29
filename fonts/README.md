@@ -4,7 +4,7 @@ Sous-ensembles latin servis par Google Fonts, hébergés ici pour éviter la req
 
 | Fichier | Famille | Graisse | Licence |
 |---|---|---|---|
-| `archivo-900-cond.woff2` | Archivo (Omnibus-Type) | 900, chasse 75 % | SIL Open Font License 1.1 |
+| `unbounded-900.woff2` | Unbounded (Oleg Zhuravlev, Google Fonts) | 900 | SIL Open Font License 1.1 |
 | `inter-var.woff2` | Inter (Rasmus Andersson) | variable 400–700 | SIL Open Font License 1.1 |
 | `jetbrainsmono-var.woff2` | JetBrains Mono (JetBrains) | variable 400–700 | SIL Open Font License 1.1 |
 
