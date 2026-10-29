@@ -103,7 +103,27 @@ addEventListener("keydown", e => {
     if (e.shiftKey && document.activeElement === menuBtn) { e.preventDefault(); last.focus(); }
     else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); menuBtn.focus(); }
 });
-menuLinks.forEach(a => a.addEventListener("click", () => setMenu(false)));
+// A menu link closes the menu and replays the flash sweep, like a page transition.
+const flash = document.querySelector(".flash");
+menuLinks.forEach(a => a.addEventListener("click", () => {
+    setMenu(false);
+    flash.classList.remove("go"); void flash.offsetWidth; flash.classList.add("go");
+}));
+
+// Text scramble: random A-Z0-9 glyphs settle into the real text over ~400ms.
+const GLYPHS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/_";
+const scramble = (el, text) => {
+    if (el.scrambling) return;
+    el.scrambling = true;
+    const t0 = performance.now(), n = text.length;
+    const step = now => {
+        const p = Math.min(1, (now - t0) / 400), fixed = Math.floor(p * n);
+        el.textContent = text.slice(0, fixed) + [...text.slice(fixed)].map(c => c === " " ? " " : GLYPHS[Math.random() * GLYPHS.length | 0]).join("");
+        if (p < 1) requestAnimationFrame(step); else el.scrambling = false;
+    };
+    requestAnimationFrame(step);
+};
+menuLinks.forEach(a => a.addEventListener("mouseenter", () => scramble(a, a.textContent)));
 
 // Stat tiles count up to their value the first time they scroll into view.
 const counters = new IntersectionObserver(entries => entries.forEach(e => {
@@ -129,13 +149,36 @@ const splitStatement = () => document.querySelectorAll(".statement").forEach(el 
 splitStatement();
 document.getElementById("lang").addEventListener("click", splitStatement);
 
-// Highlight the menu link of the section on screen.
-const links = [...document.querySelectorAll(".menu a")];
+// Highlight the menu link of the section on screen and name it in the header.
+const links = [...document.querySelectorAll(".menu a")], where = document.getElementById("where");
 const sectionObserver = new IntersectionObserver(entries => entries.forEach(e => {
     if (!e.isIntersecting) return;
     links.forEach(a => a.classList.toggle("active", a.getAttribute("href") === "#" + e.target.id));
+    const label = e.target.dataset.side || "SEC_00 // HOME";
+    if (where.textContent !== label) scramble(where, label);
 }), { rootMargin: "-40% 0px -55% 0px" });
-document.querySelectorAll("main section[id], footer[id]").forEach(s => sectionObserver.observe(s));
+document.querySelectorAll("main section, footer[id]").forEach(s => sectionObserver.observe(s));
+
+// Hero: the scatter fades and the name drifts up at a quarter of the scroll speed.
+// Gutter fragments drift at their own data-p fraction of their section's scroll.
+const fx = document.getElementById("fx"), heroName = document.querySelector(".hero-name");
+const orns = [...document.querySelectorAll(".orn[data-p]")].map(el => ({ el, p: parseFloat(el.dataset.p), box: el.parentElement }));
+const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+let ticking = false;
+addEventListener("scroll", () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => {
+        ticking = false;
+        fx.style.opacity = Math.max(0, .7 - scrollY / innerHeight);
+        if (scrollY < innerHeight) heroName.style.translate = `0 ${-scrollY * .25}px`;
+        if (reduced) return;
+        orns.forEach(({ el, p, box }) => {
+            const top = box.getBoundingClientRect().top;
+            if (top < innerHeight && top > -box.offsetHeight) el.style.translate = `0 ${(innerHeight - top) * -p}px`;
+        });
+    });
+}, { passive: true });
 
 // Preloader: counts to 100 in under a second, then slides away.
 const loader = document.querySelector(".loader"), count = loader?.querySelector(".count");
@@ -168,7 +211,12 @@ document.getElementById("lang").addEventListener("click", splitWords);
 const cursor = document.querySelector(".cursor");
 if (cursor && matchMedia("(hover: hover)").matches) {
     document.documentElement.classList.add("has-cursor");
-    addEventListener("mousemove", e => { cursor.style.left = e.clientX + "px"; cursor.style.top = e.clientY + "px"; });
+    const ring = document.querySelector(".ring");
+    let mx = 0, my = 0, rx = 0, ry = 0;
+    addEventListener("mousemove", e => { mx = e.clientX; my = e.clientY; cursor.style.left = mx + "px"; cursor.style.top = my + "px"; });
+    // The ring eases toward the dot (12% of the gap per frame)
+    const follow = () => { rx += (mx - rx) * .12; ry += (my - ry) * .12; ring.style.left = rx + "px"; ring.style.top = ry + "px"; requestAnimationFrame(follow); };
+    follow();
     document.querySelectorAll("a, button, .chips li, .project, .wall li").forEach(el => {
         el.addEventListener("mouseenter", () => cursor.classList.add("big"));
         el.addEventListener("mouseleave", () => cursor.classList.remove("big"));

@@ -24,10 +24,11 @@
 <a class="skip" href="#top" data-i18n="nav.skip">Aller au contenu</a>
 <div class="loader" aria-hidden="true"><span class="count">0</span>%</div>
 <div class="cursor" aria-hidden="true"></div>
+<div class="ring" aria-hidden="true"></div>
 
 <header class="nav">
     <a href="#top" class="logo">KHEIR<span>.</span></a>
-    <span class="meta">43.2965° N, 5.3698° E · Marseille · <time id="clock">--:--</time></span>
+    <span class="meta">43.2965° N, 5.3698° E · Marseille · <time id="clock">--:--</time> · <span id="where" aria-live="polite">SEC_00 // HOME</span></span>
     <button id="menu-btn" class="menu-btn" aria-expanded="false" aria-controls="menu" data-i18n="nav.menu">Menu</button>
     <button id="lang" class="lang" aria-label="Switch to English">EN</button>
 </header>
@@ -41,24 +42,67 @@
 <div class="flash" aria-hidden="true"></div>
 <div class="rail rail-l" aria-hidden="true"></div>
 <div class="rail rail-r" aria-hidden="true"></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="cross" viewBox="0 0 20 20"><circle cx="10" cy="10" r="6" fill="none" stroke="currentColor" stroke-width="1"/><path d="M10 0v6M10 14v6M0 10h6M14 10h6" stroke="currentColor" stroke-width="1"/></symbol>
+    <!-- Gutter fragments, all drawn in currentColor so each section picks its own ink -->
+    <!-- Cold brushed steel for the plates: a diagonal gradient with hairlines, acid rim -->
+    <linearGradient id="steel" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#5A6168"/><stop offset=".35" stop-color="#23282C"/><stop offset=".6" stop-color="#3C4349"/><stop offset="1" stop-color="#0F1113"/></linearGradient>
+    <pattern id="brush" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(35)"><rect width="4" height="1" fill="#fff" fill-opacity=".06"/></pattern>
+    <symbol id="frag-plate" viewBox="0 0 220 320">
+        <path fill="url(#steel)" fill-rule="evenodd" stroke="#23282C" stroke-width="22" stroke-linejoin="round" d="M30 30H150L200 80V150L160 190L200 230V290H40L12 262V160L50 122L12 84V30Z M60 70H130V130H60Z M70 220L150 190L162 214L82 244Z"/>
+        <path fill="url(#brush)" fill-rule="evenodd" d="M30 30H150L200 80V150L160 190L200 230V290H40L12 262V160L50 122L12 84V30Z M60 70H130V130H60Z M70 220L150 190L162 214L82 244Z"/>
+        <path fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" d="M30 30H150L200 80V150L160 190L200 230V290H40L12 262V160L50 122L12 84V30Z"/>
+    </symbol>
+    <symbol id="frag-bars" viewBox="0 0 200 420"><g fill="currentColor" transform="skewX(-28)"><rect x="110" y="0" width="54" height="420"/><rect x="190" y="0" width="22" height="420"/><rect x="236" y="0" width="80" height="420"/></g></symbol>
+    <symbol id="frag-ring" viewBox="0 0 160 160"><circle cx="80" cy="80" r="62" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="80" cy="80" r="40" fill="url(#orb)"/><circle cx="132" cy="28" r="5" fill="currentColor"/><path d="M80 4v14M80 142v14M4 80h14M142 80h14" stroke="currentColor" stroke-width="1.5"/></symbol>
+    <!-- Organic 3D blob: edge displaced by static noise, shaded by an off-centre radial gradient, specular highlight on top -->
+    <filter id="wobble" x="-20%" y="-20%" width="140%" height="140%">
+        <feTurbulence type="fractalNoise" baseFrequency=".014" numOctaves="2" seed="3" result="n"/>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="28" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <filter id="haze" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="28"/></filter>
+    <radialGradient id="orb" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#F4FFB0"/><stop offset=".3" stop-color="#C6FF00"/><stop offset=".75" stop-color="#6E8A00"/><stop offset="1" stop-color="#1E2600"/></radialGradient>
+    <radialGradient id="orb-blue" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#B8BEFF"/><stop offset=".3" stop-color="#2F3DFF"/><stop offset=".75" stop-color="#141C8A"/><stop offset="1" stop-color="#05071F"/></radialGradient>
+    <radialGradient id="orb-magenta" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#FFC4F2"/><stop offset=".3" stop-color="#FF2BD6"/><stop offset=".75" stop-color="#8A1273"/><stop offset="1" stop-color="#20051B"/></radialGradient>
+    <radialGradient id="orb-ink" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#6B737A"/><stop offset=".3" stop-color="#2D3538"/><stop offset=".8" stop-color="#0B0B0B"/></radialGradient>
+    <radialGradient id="spec" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#fff" stop-opacity=".9"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+    <symbol id="frag-blob" viewBox="0 0 300 300">
+        <g filter="url(#wobble)">
+            <path fill="url(#orb)" d="M150 28c52-6 96 22 116 66s8 98-28 132-96 44-142 22S14 170 26 118 98 34 150 28Z"/>
+        </g>
+        <ellipse cx="112" cy="96" rx="42" ry="26" fill="url(#spec)" transform="rotate(-25 112 96)"/>
+    </symbol>
+    <symbol id="frag-blob-blue" viewBox="0 0 300 300"><g filter="url(#wobble)"><path fill="url(#orb-blue)" d="M140 24c58-4 110 30 122 82s-18 104-66 130-110 20-146-18S6 118 36 72 82 28 140 24Z"/></g><ellipse cx="108" cy="92" rx="40" ry="24" fill="url(#spec)" transform="rotate(-25 108 92)"/></symbol>
+    <symbol id="frag-blob-magenta" viewBox="0 0 300 300"><g filter="url(#wobble)"><path fill="url(#orb-magenta)" d="M160 30c46 2 92 36 108 84s-4 102-48 126-104 14-140-26S18 126 46 80 114 28 160 30Z"/></g><ellipse cx="116" cy="98" rx="40" ry="24" fill="url(#spec)" transform="rotate(-25 116 98)"/></symbol>
+    <symbol id="frag-blob-ink" viewBox="0 0 300 300"><g filter="url(#wobble)"><path fill="url(#orb-ink)" d="M150 28c52-6 96 22 116 66s8 98-28 132-96 44-142 22S14 170 26 118 98 34 150 28Z"/></g><ellipse cx="112" cy="96" rx="42" ry="26" fill="url(#spec)" opacity=".5" transform="rotate(-25 112 96)"/></symbol>
+    <symbol id="frag-haze" viewBox="0 0 300 300"><ellipse cx="150" cy="150" rx="120" ry="90" fill="currentColor" filter="url(#haze)"/></symbol>
+</svg>
 
 <main id="top">
     <section class="hero">
         <canvas id="fx" class="fx" aria-hidden="true"></canvas>
         <span class="hud hud-tl" aria-hidden="true"></span><span class="hud hud-tr" aria-hidden="true"></span>
         <span class="hud hud-bl" aria-hidden="true"></span><span class="hud hud-br" aria-hidden="true"></span>
+        <svg class="cross" style="left:38%;top:22%" aria-hidden="true"><use href="#cross"/></svg>
+        <svg class="cross" style="right:12%;top:58%" aria-hidden="true"><use href="#cross"/></svg>
+        <svg class="orn orn-r haze" style="top:-10%;width:520px;height:520px;color:var(--blue)" data-p=".05" aria-hidden="true"><use href="#frag-haze"/></svg>
+        <svg class="orn orn-l haze" style="bottom:-20%;width:600px;height:600px" data-p=".04" aria-hidden="true"><use href="#frag-haze"/></svg>
+        <svg class="orn orn-r" style="top:6%;width:200px;height:420px" data-p=".12" aria-hidden="true"><use href="#frag-bars"/></svg>
+        <svg class="orn orn-l" style="top:14%;width:260px;height:260px" data-p=".06" aria-hidden="true"><use href="#frag-blob"/></svg>
+        <svg class="orn orn-l near" style="top:56%;width:150px;height:150px" data-p=".2" aria-hidden="true"><use href="#frag-ring"/></svg>
         <div class="hero-top">
             <p class="roles">Data Scientist <b>•</b> Machine Learning <b>•</b> <span data-i18n="hero.genai">IA générative</span></p>
         </div>
-        <p class="hero-pitch split" data-i18n="hero.pitch">Je transforme des données brutes en modèles qui tournent en prod. Le reste du temps : Destiny, League of Legends, et du café.</p>
         <div class="hero-cta">
             <a class="btn btn-main" href="images/cv-kheir-eddine-mederreg.pdf" download data-i18n="hero.cv">Télécharger mon CV</a>
             <a class="btn btn-outline" href="#contact" data-i18n="hero.contact">Me contacter ↗</a>
         </div>
-        <h1 class="hero-name"><span>Kheir-eddine</span><span>Mederreg</span></h1>
+        <h1 class="hero-name"><span><i>Kheir-eddine</i></span><span><i>Mederreg</i></span></h1>
     </section>
 
     <section id="stats" class="stats reveal" aria-label="Chiffres">
+        <svg class="orn orn-l near" style="top:-40px;width:200px;height:290px" data-p=".1" aria-hidden="true"><use href="#frag-plate"/></svg>
+        <svg class="orn orn-r far" style="top:20%;width:260px;height:260px" data-p=".18" aria-hidden="true"><use href="#frag-blob-blue"/></svg>
         <ul class="wall">
             <li><b data-count="6">0</b><span data-i18n="stats.projects">projets</span></li>
             <li class="void" aria-hidden="true"></li>
@@ -73,7 +117,12 @@
         </ul>
     </section>
 
-    <section id="projects" class="card reveal" data-side="SEC_01 // PROJECTS">
+    <section id="projects" class="card reveal" data-side="SEC_01 // PROJECTS" data-n="01">
+        <svg class="cross" style="right:var(--gutter);top:40px" aria-hidden="true"><use href="#cross"/></svg>
+        <svg class="orn orn-r haze" style="top:40%;width:560px;height:560px" data-p=".04" aria-hidden="true"><use href="#frag-haze"/></svg>
+        <svg class="orn orn-r near" style="top:30%;width:220px;height:320px" data-p=".14" aria-hidden="true"><use href="#frag-plate"/></svg>
+        <svg class="orn orn-l far" style="bottom:60px;width:180px;height:380px" data-p=".08" aria-hidden="true"><use href="#frag-bars"/></svg>
+        <svg class="orn orn-l" style="top:30%;width:240px;height:240px" data-p=".1" aria-hidden="true"><use href="#frag-blob-blue"/></svg>
         <h2 class="marker" data-i18n="projects.title">Projets</h2>
         <ul class="projects">
             <li class="project featured" style="--band: var(--acid)">
@@ -121,7 +170,10 @@
         </ul>
     </section>
 
-    <section id="skills" class="card reveal" data-side="SEC_02 // SKILLS">
+    <section id="skills" class="card reveal" data-side="SEC_02 // SKILLS" data-n="02">
+        <svg class="orn orn-l" style="bottom:-30px;width:200px;height:290px" data-p=".12" aria-hidden="true"><use href="#frag-plate"/></svg>
+        <svg class="orn orn-r" style="top:80px;width:150px;height:150px" data-p=".2" aria-hidden="true"><use href="#frag-ring"/></svg>
+        <svg class="orn orn-r near" style="top:50%;width:220px;height:220px" data-p=".12" aria-hidden="true"><use href="#frag-blob-ink"/></svg>
         <h2 class="marker" data-i18n="skills.title">Compétences</h2>
         <div class="skill-rows">
             <div class="skill-row">
@@ -168,7 +220,11 @@
         </div>
     </section>
 
-    <section id="parcours" class="card reveal" data-side="SEC_03 // JOURNEY">
+    <section id="parcours" class="card reveal" data-side="SEC_03 // JOURNEY" data-n="03">
+        <svg class="orn orn-l haze" style="top:10%;width:520px;height:520px;color:var(--blue)" data-p=".04" aria-hidden="true"><use href="#frag-haze"/></svg>
+        <svg class="orn orn-r far" style="top:10%;width:200px;height:420px" data-p=".1" aria-hidden="true"><use href="#frag-bars"/></svg>
+        <svg class="orn orn-l near" style="bottom:120px;width:140px;height:140px" data-p=".22" aria-hidden="true"><use href="#frag-ring"/></svg>
+        <svg class="orn orn-l" style="top:40%;width:220px;height:220px" data-p=".08" aria-hidden="true"><use href="#frag-blob"/></svg>
         <h2 class="marker" data-i18n="path.title">Parcours</h2>
         <ol class="jobs">
             <li>
@@ -207,7 +263,10 @@
         <p class="edu"><b>2021 — 2026</b> · <span data-i18n="path.ynov.title">Mastère Expert IA &amp; Data Scientist · Ynov Aix</span> · <span data-i18n="path.ynov.text">Diplômé en 2026, titre RNCP niveau 7.</span></p>
     </section>
 
-    <section id="about" class="card manifesto reveal" data-side="SEC_04 // ABOUT">
+    <section id="about" class="card manifesto reveal" data-side="SEC_04 // ABOUT" data-n="04">
+        <svg class="cross" style="right:var(--gutter);top:40px" aria-hidden="true"><use href="#cross"/></svg>
+        <svg class="orn orn-l near" style="top:45%;width:220px;height:320px" data-p=".14" aria-hidden="true"><use href="#frag-plate"/></svg>
+        <svg class="orn orn-r near" style="top:55%;width:260px;height:260px" data-p=".06" aria-hidden="true"><use href="#frag-blob-blue"/></svg>
         <div class="about-visual">
             <ul class="words" aria-hidden="true">
                 <li>Leadership</li>
@@ -225,8 +284,12 @@
     </section>
 </main>
 
-<footer id="contact" class="card contact reveal" data-side="SEC_05 // CONTACT">
+<footer id="contact" class="card contact reveal" data-side="SEC_05 // CONTACT" data-n="05">
     <canvas id="fx2" class="fx" aria-hidden="true"></canvas>
+    <svg class="cross" style="right:var(--gutter);top:40px" aria-hidden="true"><use href="#cross"/></svg>
+    <svg class="orn orn-l haze" style="top:-10%;width:600px;height:600px" data-p=".03" aria-hidden="true"><use href="#frag-haze"/></svg>
+    <svg class="orn orn-r near" style="bottom:-20px;width:220px;height:320px" data-p=".1" aria-hidden="true"><use href="#frag-plate"/></svg>
+    <svg class="orn orn-r far" style="top:10%;width:240px;height:240px" data-p=".07" aria-hidden="true"><use href="#frag-blob-magenta"/></svg>
     <h2 class="marker"><span data-i18n="contact.title1">Construisons un truc</span> <em data-i18n="contact.title2">intelligent !</em></h2>
     <ul>
         <li><a href="mailto:kheir.eddine.mederreg@gmail.com">✉ kheir.eddine.mederreg@gmail.com</a></li>
