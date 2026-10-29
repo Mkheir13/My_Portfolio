@@ -10,9 +10,13 @@ const EN = {
     "nav.skills": "Skills",
     "projects.title": "Projects",
     "projects.code": "View code →",
-    "projects.destiny.title": "Classifier on the Destiny API",
+    "projects.destiny.title": "Random Forest classifier · F1 0.92",
     "projects.destiny.text": "Final-year project: ETL pipeline on the Bungie API, Random Forest trained on 392 samples, data-leak checks, served by an API with CI.",
-    "projects.yolo.title": "YOLOv8 object detection",
+    "projects.yolo.title": "Object detection · mAP50-95 +37%",
+    "projects.draw.title": "Multiplayer game · TensorFlow AI",
+    "projects.over.title": "Streamlit dashboard · 8 pages",
+    "projects.hub.title": "Destiny 2 platform · Bungie API",
+    "projects.mee7.title": "Discord bot · 10 commands",
     "projects.yolo.text": "Fine-tuned YOLOv8 on an annotated dataset: +37% mAP50-95 over the base model.",
     "projects.draw.text": "Real-time multiplayer web game: two players draw, a TensorFlow AI guesses. Django Channels websockets, 345 words, leaderboard.",
     "projects.over.stat": "pages",
@@ -131,8 +135,8 @@ const counters = new IntersectionObserver(entries => entries.forEach(e => {
     counters.unobserve(e.target);
     const el = e.target, target = parseFloat(el.dataset.count), decimals = (el.dataset.count.split(".")[1] || "").length, t0 = performance.now();
     const step = now => {
-        const p = Math.min(1, (now - t0) / 1200);
-        el.textContent = (target * (1 - Math.pow(1 - p, 3))).toFixed(decimals);
+        const p = Math.min(1, (now - t0) / 600);
+        el.textContent = (target * p).toFixed(decimals);
         if (p < 1) requestAnimationFrame(step);
     };
     requestAnimationFrame(step);
@@ -154,38 +158,43 @@ const links = [...document.querySelectorAll(".menu a")], where = document.getEle
 const sectionObserver = new IntersectionObserver(entries => entries.forEach(e => {
     if (!e.isIntersecting) return;
     links.forEach(a => a.classList.toggle("active", a.getAttribute("href") === "#" + e.target.id));
-    const label = e.target.dataset.side || "SEC_00 // HOME";
+    const label = e.target.dataset.side || "[00] // HOME";
     if (where.textContent !== label) scramble(where, label);
 }), { rootMargin: "-40% 0px -55% 0px" });
 document.querySelectorAll("main section, footer[id]").forEach(s => sectionObserver.observe(s));
 
-// Hero: the scatter fades and the name drifts up at a quarter of the scroll speed.
-// Gutter fragments drift at their own data-p fraction of their section's scroll.
-const fx = document.getElementById("fx"), heroName = document.querySelector(".hero-name");
-const orns = [...document.querySelectorAll(".orn[data-p]")].map(el => ({ el, p: parseFloat(el.dataset.p), box: el.parentElement }));
-const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
-let ticking = false;
-addEventListener("scroll", () => {
-    if (ticking) return;
-    ticking = true;
-    requestAnimationFrame(() => {
-        ticking = false;
-        fx.style.opacity = Math.max(0, .7 - scrollY / innerHeight);
-        if (scrollY < innerHeight) heroName.style.translate = `0 ${-scrollY * .25}px`;
-        if (reduced) return;
-        orns.forEach(({ el, p, box }) => {
-            const top = box.getBoundingClientRect().top;
-            if (top < innerHeight && top > -box.offsetHeight) el.style.translate = `0 ${(innerHeight - top) * -p}px`;
+// Hero: the 3D card fades as the hero scrolls away, and turns a little toward the mouse.
+const card3d = document.getElementById("card3d");
+if (card3d) {
+    addEventListener("scroll", () => { card3d.style.opacity = Math.max(0, 1 - scrollY / innerHeight); }, { passive: true });
+    // The model spins on its own (auto-rotate); the mouse tilts the whole viewer on top of that
+    if (matchMedia("(hover: hover)").matches && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        const hero = document.querySelector(".hero");
+        hero.addEventListener("mousemove", e => {
+            const r = hero.getBoundingClientRect(), x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
+            card3d.style.transform = `perspective(1200px) rotateY(${(x * 14).toFixed(1)}deg) rotateX(${(-y * 10).toFixed(1)}deg)`;
         });
+        hero.addEventListener("mouseleave", () => { card3d.style.transform = ""; });
+    }
+}
+
+// About poster: tilts toward the mouse (±14°), slight lift, a glare spot that follows the pointer.
+const tilt = document.querySelector(".tilt");
+if (tilt && matchMedia("(hover: hover)").matches && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    tilt.addEventListener("mousemove", e => {
+        const r = tilt.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+        tilt.style.transform = `rotateY(${((x - .5) * 28).toFixed(1)}deg) rotateX(${((.5 - y) * 28).toFixed(1)}deg) scale(1.03)`;
+        tilt.style.setProperty("--gx", `${(x * 100).toFixed(1)}%`); tilt.style.setProperty("--gy", `${(y * 100).toFixed(1)}%`);
     });
-}, { passive: true });
+    tilt.addEventListener("mouseleave", () => { tilt.style.transform = ""; });
+}
 
 // Preloader: counts to 100 in under a second, then slides away.
 const loader = document.querySelector(".loader"), count = loader?.querySelector(".count");
 if (loader) {
     let n = 0;
     const tick = setInterval(() => {
-        n = Math.min(100, n + 8 + Math.random() * 10); count.textContent = Math.floor(n);
+        n = Math.min(100, n + 12 + Math.random() * 12); count.textContent = Math.floor(n);
         if (n >= 100) { clearInterval(tick); loader.classList.add("done"); document.documentElement.classList.add("ready"); }
     }, 40);
 }
@@ -194,6 +203,31 @@ if (loader) {
 const setProgress = () => document.documentElement.style.setProperty("--progress",
     (scrollY / (document.documentElement.scrollHeight - innerHeight) || 0).toFixed(4));
 setProgress(); addEventListener("scroll", setProgress, { passive: true });
+
+// Project cards tilt toward the mouse (±8°), back flat on leave. Desktop only.
+if (matchMedia("(hover: hover)").matches && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    document.querySelectorAll(".project").forEach(card => {
+        card.addEventListener("mousemove", e => {
+            const r = card.getBoundingClientRect(), x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
+            card.style.transform = `perspective(900px) rotateX(${(-y * 8).toFixed(1)}deg) rotateY(${(x * 8).toFixed(1)}deg) translateY(-4px)`;
+        });
+        card.addEventListener("mouseleave", () => { card.style.transform = ""; });
+    });
+}
+
+// Training log: one line every 900ms in a black tile of the stats wall, loss going down, last six lines kept.
+const log = document.querySelector(".wall .log");
+if (log && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    let epoch = 1, lines = [];
+    setInterval(() => {
+        const loss = (0.9 * Math.exp(-epoch / 7) + 0.02 + Math.random() * .01).toFixed(4);
+        const acc = (0.99 - 0.6 * Math.exp(-epoch / 6) + Math.random() * .005).toFixed(3);
+        lines.push(`ep ${String(epoch).padStart(2, "0")}  loss ${loss}  acc ${acc}`);
+        if (lines.length > 6) lines.shift();
+        log.textContent = lines.join("\n");
+        epoch = epoch % 20 + 1;
+    }, 900);
+}
 
 // Local time in Marseille, in the header.
 const clock = document.getElementById("clock");
@@ -211,12 +245,11 @@ document.getElementById("lang").addEventListener("click", splitWords);
 const cursor = document.querySelector(".cursor");
 if (cursor && matchMedia("(hover: hover)").matches) {
     document.documentElement.classList.add("has-cursor");
-    const ring = document.querySelector(".ring");
-    let mx = 0, my = 0, rx = 0, ry = 0;
-    addEventListener("mousemove", e => { mx = e.clientX; my = e.clientY; cursor.style.left = mx + "px"; cursor.style.top = my + "px"; });
-    // The ring eases toward the dot (12% of the gap per frame)
-    const follow = () => { rx += (mx - rx) * .12; ry += (my - ry) * .12; ring.style.left = rx + "px"; ring.style.top = ry + "px"; requestAnimationFrame(follow); };
-    follow();
+    const xy = document.querySelector(".cursor-xy");
+    addEventListener("mousemove", e => {
+        cursor.style.left = xy.style.left = e.clientX + "px"; cursor.style.top = xy.style.top = e.clientY + "px";
+        xy.textContent = `X ${String(e.clientX).padStart(4, "0")} Y ${String(e.clientY).padStart(4, "0")}`;
+    });
     document.querySelectorAll("a, button, .chips li, .project, .wall li").forEach(el => {
         el.addEventListener("mouseenter", () => cursor.classList.add("big"));
         el.addEventListener("mouseleave", () => cursor.classList.remove("big"));
