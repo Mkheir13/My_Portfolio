@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1000 1300" font-family="'Space Mono', monospace">
+  <defs>
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" stitchTiles="stitch"/>
+      <feColorMatrix values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .18 0"/>
+    </filter>
+    <filter id="blur" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="14"/></filter>
+    <pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)">
+      <rect width="2" height="6" fill="currentColor"/>
+    </pattern>
+    <symbol id="cross" viewBox="0 0 20 20">
+      <circle cx="10" cy="10" r="6" fill="none" stroke="currentColor" stroke-width="1.2"/>
+      <path d="M10 0v6M10 14v6M0 10h6M14 10h6" stroke="currentColor" stroke-width="1.2"/>
+    </symbol>
+    <!-- Frosted panels: the scene is drawn again, blurred, through each panel's shape -->
+    <clipPath id="p1"><polygon points="60,420 560,420 700,560 200,560"/></clipPath>
+    <clipPath id="p2"><polygon points="430,1000 980,1000 980,1140 570,1140"/></clipPath>
+  </defs>
+
+  <!-- Paper and acid bands on the bias -->
+  <g id="scene">
+    <rect width="1000" height="1300" fill="#E9E9E4"/>
+    <g transform="rotate(-28 500 650)" fill="#C6FF00">
+      <rect x="120" y="-400" width="150" height="2200"/>
+      <rect x="420" y="-400" width="60" height="2200"/>
+      <rect x="640" y="-400" width="220" height="2200"/>
+    </g>
+    <polygon points="-40,1300 260,980 360,980 60,1300" fill="#C6FF00"/>
+    <rect width="1000" height="1300" filter="url(#grain)"/>
+
+    <!-- Machined plate with a window and a slanted slot (stroke rounds every corner) -->
+    <path fill="#0B0B0B" fill-rule="evenodd" stroke="#0B0B0B" stroke-width="36" stroke-linejoin="round"
+      d="M220 120 H800 L900 220 V540 L770 670 L900 800 V1160 L820 1240 H320 L180 1100 V900 L290 790 L180 680 V160 Z
+         M300 240 H680 V520 H300 Z
+         M340 900 L720 760 L770 850 L390 990 Z"/>
+    <!-- Acid inlay on one edge of the plate -->
+    <path d="M900 800 V1160 L820 1240 H760 L840 1160 V840 Z" fill="#C6FF00"/>
+  </g>
+
+  <!-- Frosted glass panels -->
+  <g clip-path="url(#p1)"><use xlink:href="#scene" filter="url(#blur)"/><rect width="1000" height="1300" fill="#fff" opacity=".28"/></g>
+  <polygon points="60,420 560,420 700,560 200,560" fill="none" stroke="#fff" stroke-opacity=".7"/>
+  <g clip-path="url(#p2)"><use xlink:href="#scene" filter="url(#blur)"/><rect width="1000" height="1300" fill="#fff" opacity=".28"/></g>
+  <polygon points="430,1000 980,1000 980,1140 570,1140" fill="none" stroke="#fff" stroke-opacity=".7"/>
+
+  <!-- Circles -->
+  <circle cx="860" cy="620" r="70" fill="#C6FF00"/>
+  <circle cx="860" cy="620" r="70" fill="none" stroke="#0B0B0B" stroke-width="2"/>
+  <circle cx="250" cy="1060" r="48" fill="none" stroke="#0B0B0B" stroke-width="1.5"/>
+  <circle cx="560" cy="300" r="8" fill="#2F3DFF"/>
+
+  <!-- Diagonal line with dots -->
+  <line x1="40" y1="1240" x2="980" y2="300" stroke="#0B0B0B" stroke-width="1.5"/>
+  <circle cx="40" cy="1240" r="6" fill="#0B0B0B"/>
+  <circle cx="510" cy="770" r="6" fill="#0B0B0B"/>
+  <circle cx="980" cy="300" r="6" fill="#0B0B0B"/>
+
+  <!-- Registration marks -->
+  <g color="#0B0B0B">
+    <use xlink:href="#cross" x="60" y="60" width="26" height="26"/>
+    <use xlink:href="#cross" x="930" y="1230" width="26" height="26"/>
+    <use xlink:href="#cross" x="700" y="1180" width="26" height="26"/>
+  </g>
+  <g color="#F2F2EC">
+    <use xlink:href="#cross" x="820" y="300" width="26" height="26"/>
+    <use xlink:href="#cross" x="240" y="700" width="26" height="26"/>
+  </g>
+
+  <!-- Hatch marks -->
+  <rect x="200" y="600" width="12" height="160" fill="url(#hatch)" color="#F2F2EC"/>
+  <rect x="640" y="1180" width="140" height="10" fill="url(#hatch)" color="#0B0B0B"/>
+
+  <!-- Labels -->
+  <text transform="translate(560 720) rotate(-90)" fill="#F2F2EC" font-size="64" font-weight="700" letter-spacing="-2">N°.01</text>
+  <text x="620" y="1205" fill="#F2F2EC" font-size="13" font-weight="700" letter-spacing="2">43.2965° N, 5.3698° E</text>
+  <text x="620" y="1228" fill="#F2F2EC" font-size="13" font-weight="700" letter-spacing="2">© 2026 · MARSEILLE</text>
+  <text x="60" y="1270" fill="#0B0B0B" font-size="12" font-weight="700" letter-spacing="3">KHEIR. ✕ DATA</text>
+  <text x="40" y="100" fill="#0B0B0B" font-size="12" font-weight="700" letter-spacing="3" transform="rotate(90 40 100)">SEC_00 // PLATE</text>
+</svg>

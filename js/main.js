@@ -160,10 +160,18 @@ const sectionObserver = new IntersectionObserver(entries => entries.forEach(e =>
 document.querySelectorAll("main section, footer[id]").forEach(s => sectionObserver.observe(s));
 
 // Hero: the scatter fades and the name drifts up at a quarter of the scroll speed.
+// Gutter fragments drift at their own data-p fraction of their section's scroll.
 const fx = document.getElementById("fx"), heroName = document.querySelector(".hero-name");
+const orns = [...document.querySelectorAll(".orn[data-p]")].map(el => ({ el, p: parseFloat(el.dataset.p), box: el.parentElement }));
+const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
 addEventListener("scroll", () => {
     fx.style.opacity = Math.max(0, .7 - scrollY / innerHeight);
     if (scrollY < innerHeight) heroName.style.translate = `0 ${-scrollY * .25}px`;
+    if (reduced) return;
+    orns.forEach(({ el, p, box }) => {
+        const top = box.getBoundingClientRect().top;
+        if (top < innerHeight && top > -box.offsetHeight) el.style.translate = `0 ${(innerHeight - top) * -p}px`;
+    });
 }, { passive: true });
 
 // Preloader: counts to 100 in under a second, then slides away.
