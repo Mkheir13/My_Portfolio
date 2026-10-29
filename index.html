@@ -24,6 +24,7 @@
 <a class="skip" href="#top" data-i18n="nav.skip">Aller au contenu</a>
 <div class="loader" aria-hidden="true"><span class="count">0</span>%</div>
 <div class="cursor" aria-hidden="true"></div>
+<div class="cursor-xy" aria-hidden="true"></div>
 
 <header class="nav">
     <a href="#top" class="logo">KHEIR<span>.</span></a>
@@ -50,6 +51,9 @@
         <canvas id="fx" class="fx" aria-hidden="true"></canvas>
         <span class="hud hud-tl" aria-hidden="true"></span><span class="hud hud-tr" aria-hidden="true"></span>
         <span class="hud hud-bl" aria-hidden="true"></span><span class="hud hud-br" aria-hidden="true"></span>
+        <p class="readout readout-1" aria-hidden="true"></p>
+        <p class="readout readout-2" aria-hidden="true"></p>
+        <div class="tape" aria-hidden="true"><span>epoch 12/20 · loss 0.0213 · val_acc 0.941 · f1 0.92 · lr 3e-4 · batch 64 · auc 0.97 · rmse 0.084 · precision 0.93 · recall 0.90 · map50-95 +37 % · samples 392 · leak_check PASSED · </span><span>epoch 12/20 · loss 0.0213 · val_acc 0.941 · f1 0.92 · lr 3e-4 · batch 64 · auc 0.97 · rmse 0.084 · precision 0.93 · recall 0.90 · map50-95 +37 % · samples 392 · leak_check PASSED · </span></div>
         <svg class="cross" style="left:38%;top:22%" aria-hidden="true"><use href="#cross"/></svg>
         <svg class="cross" style="right:12%;top:58%" aria-hidden="true"><use href="#cross"/></svg>
         <div class="hero-top">
@@ -66,7 +70,7 @@
     <section id="stats" class="stats reveal" aria-label="Chiffres">
         <ul class="wall">
             <li><b data-count="6">0</b><span data-i18n="stats.projects">projets</span></li>
-            <li class="void" aria-hidden="true"></li>
+            <li class="void" aria-hidden="true"><pre class="log"></pre></li>
             <li><b data-count="2">0</b><span data-i18n="stats.mentor">ans de mentorat</span></li>
             <li class="void" aria-hidden="true"></li>
             <li><b><em>F1</em> <i data-count="0.92">0</i></b><span data-i18n="stats.f1">meilleur modèle</span></li>
@@ -83,43 +87,49 @@
         <h2 class="marker" data-i18n="projects.title">Projets</h2>
         <ul class="projects">
             <li class="project featured" style="--band: var(--acid)">
-                <p class="stat" data-text="F1 0.92">F1 0.92</p>
-                <h3 data-i18n="projects.destiny.title">Classifieur sur l'API Destiny</h3>
+                <p class="stat" data-text="DESTINY">Destiny</p>
+                <h3 data-i18n="projects.destiny.title">Classifieur Random Forest · F1 0.92</h3>
+                <svg class="spark" viewBox="0 0 100 24" preserveAspectRatio="none" aria-hidden="true"><polyline points="4,20 18,16 30,19 44,10 58,12 72,6 86,8 100,3"/></svg>
                 <p data-i18n="projects.destiny.text">Projet de fin d'études : pipeline ETL sur l'API Bungie, Random Forest entraîné sur 392 échantillons, contrôle des fuites de données, servi par une API avec CI.</p>
                 <p class="stack">Python · scikit-learn · FastAPI · GitHub Actions</p>
                 <a href="https://github.com/Mkheir13" data-i18n="projects.code">Voir le code →</a>
             </li>
             <li class="project" style="--band: var(--blue)">
-                <p class="stat" data-text="mAP +37%">mAP +37%</p>
-                <h3 data-i18n="projects.yolo.title">Détection d'objets YOLOv8</h3>
+                <p class="stat" data-text="YOLOV8">YOLOv8</p>
+                <h3 data-i18n="projects.yolo.title">Détection d'objets · mAP50-95 +37 %</h3>
+                <svg class="spark" viewBox="0 0 100 24" preserveAspectRatio="none" aria-hidden="true"><polyline points="4,22 18,18 30,20 44,14 58,15 72,9 86,10 100,4"/></svg>
                 <p data-i18n="projects.yolo.text">Fine-tuning de YOLOv8 sur un jeu de données annoté : +37 % de mAP50-95 par rapport au modèle de base.</p>
                 <p class="stack">PyTorch · YOLOv8 · Python</p>
                 <a href="https://github.com/Mkheir13" data-i18n="projects.code">Voir le code →</a>
             </li>
             <li class="project" style="--band: var(--acid)">
-                <p class="stat" data-text="TensorFlow">TensorFlow</p>
-                <h3>DrawMatch</h3>
+                <p class="stat" data-text="DRAWMATCH">DrawMatch</p>
+                <h3 data-i18n="projects.draw.title">Jeu multijoueur · IA TensorFlow</h3>
+                <svg class="spark" viewBox="0 0 100 24" preserveAspectRatio="none" aria-hidden="true"><polyline points="4,12 18,20 30,8 44,16 58,6 72,14 86,4 100,10"/></svg>
                 <p data-i18n="projects.draw.text">Jeu web multijoueur en temps réel : deux joueurs dessinent, une IA TensorFlow devine. Websockets Django Channels, 345 mots, classement.</p>
                 <p class="stack">Python · Django Channels · TensorFlow · scikit-image</p>
                 <a href="https://github.com/antaww/DrawMatch" data-i18n="projects.code">Voir le code →</a>
             </li>
             <li class="project" style="--band: var(--blue)">
-                <p class="stat">8 <span data-i18n="projects.over.stat">pages</span></p>
-                <h3>Overgraph</h3>
+                <p class="stat" data-text="OVERGRAPH">Overgraph</p>
+                <h3 data-i18n="projects.over.title">Dashboard Streamlit · 8 pages</h3>
+                <svg class="spark" viewBox="0 0 100 24" preserveAspectRatio="none" aria-hidden="true"><polyline points="4,20 18,14 30,16 44,8 58,12 72,6 86,9 100,2"/></svg>
                 <p data-i18n="projects.over.text">Dashboard Streamlit des stats de l'Overwatch League : scrapers, détection d'images pour enrichir les datasets, profils joueurs, équipes et matchs.</p>
                 <p class="stack">Python · Streamlit · pandas · scraping</p>
                 <a href="https://github.com/antaww/Overgraph" data-i18n="projects.code">Voir le code →</a>
             </li>
             <li class="project wide" style="--band: var(--acid)">
-                <p class="stat" data-text="Bungie API">Bungie API</p>
-                <h3>Destiny Hub</h3>
+                <p class="stat" data-text="DESTINY HUB">Destiny Hub</p>
+                <h3 data-i18n="projects.hub.title">Plateforme Destiny 2 · API Bungie</h3>
+                <svg class="spark" viewBox="0 0 100 24" preserveAspectRatio="none" aria-hidden="true"><polyline points="4,18 18,19 30,12 44,14 58,8 72,10 86,5 100,6"/></svg>
                 <p data-i18n="projects.hub.text">Plateforme communautaire Destiny 2 : OAuth Bungie, synchronisation du manifest (armes, triomphes), système de builds, guides et profils.</p>
                 <p class="stack">React · TypeScript · Node.js · Supabase</p>
                 <a href="https://github.com/BrayTechOrg/bookish-potato" data-i18n="projects.code">Voir le code →</a>
             </li>
             <li class="project" style="--band: var(--magenta)">
-                <p class="stat">10 <span data-i18n="projects.mee7.stat">commandes</span></p>
-                <h3>MEE7</h3>
+                <p class="stat" data-text="MEE7">MEE7</p>
+                <h3 data-i18n="projects.mee7.title">Bot Discord · 10 commandes</h3>
+                <svg class="spark" viewBox="0 0 100 24" preserveAspectRatio="none" aria-hidden="true"><polyline points="4,16 18,12 30,18 44,10 58,14 72,8 86,11 100,4"/></svg>
                 <p data-i18n="projects.mee7.text">Bot Discord en équipe : notifications de streams, disponibilités communes via iCal, recommandations de contenu, modération.</p>
                 <p class="stack">Python · discord.py · iCal</p>
                 <a href="https://github.com/antaww/MEE7" data-i18n="projects.code">Voir le code →</a>
@@ -239,7 +249,6 @@
     <ul>
         <li><a href="mailto:kheir.eddine.mederreg@gmail.com">✉ kheir.eddine.mederreg@gmail.com</a></li>
         <li><a href="https://github.com/Mkheir13">⌥ github.com/Mkheir13</a></li>
-        <li><a href="https://www.linkedin.com/in/kheir-eddine-mederreg">⌥ linkedin.com/in/kheir-eddine-mederreg</a></li>
         <li data-i18n="contact.avail">⌖ Disponible · Marseille ou remote</li>
     </ul>
 </footer>

@@ -58,7 +58,7 @@ if (!matchMedia("(prefers-reduced-motion: reduce)").matches && !matchMedia("(max
 });
 
 // HUD readouts: typewriter lines that rewrite themselves every few seconds.
-const LINES = ["MODEL: RANDOM_FOREST", "F1: 0.92", "SAMPLES: 392", "LEAK_CHECK: PASSED", "mAP50-95: +37%", "PIPELINE: ETL → API → CI"];
+const LINES = ["MODEL: RANDOM_FOREST", "F1: 0.92", "SAMPLES: 392", "LEAK_CHECK: PASSED", "mAP50-95: +37%", "PIPELINE: ETL → API → CI", "CLUSTERS: 3 · K-MEANS", "CV: 5-FOLD · SEED 42"];
 document.querySelectorAll(".readout").forEach((el, n) => {
     let i = n * 3, timer;
     const type = () => {
