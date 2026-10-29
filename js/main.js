@@ -204,17 +204,6 @@ const setProgress = () => document.documentElement.style.setProperty("--progress
     (scrollY / (document.documentElement.scrollHeight - innerHeight) || 0).toFixed(4));
 setProgress(); addEventListener("scroll", setProgress, { passive: true });
 
-// Project cards tilt toward the mouse (±8°), back flat on leave. Desktop only.
-if (matchMedia("(hover: hover)").matches && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    document.querySelectorAll(".project").forEach(card => {
-        card.addEventListener("mousemove", e => {
-            const r = card.getBoundingClientRect(), x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
-            card.style.transform = `perspective(900px) rotateX(${(-y * 8).toFixed(1)}deg) rotateY(${(x * 8).toFixed(1)}deg) translateY(-4px)`;
-        });
-        card.addEventListener("mouseleave", () => { card.style.transform = ""; });
-    });
-}
-
 // Training log: one line every 900ms in a black tile of the stats wall, loss going down, last six lines kept.
 const log = document.querySelector(".wall .log");
 if (log && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
