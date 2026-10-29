@@ -12,7 +12,7 @@
     --display: Archivo, Impact, sans-serif;
     --mono: "Space Mono", monospace;
     /* Side gutter: 5% of the viewport, content grows with the screen up to 1600px */
-    --gutter: max(7vw, calc((100vw - 1600px) / 2));
+    --gutter: max(5vw, calc((100vw - 1600px) / 2));
     --nav-h: 66px;
     --paper: #E9E9E4;
     /* Fine film grain (SVG noise), layered over the acid and paper surfaces only */
@@ -106,26 +106,6 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
         linear-gradient(-32deg, transparent calc(50% - .5px), rgba(242,242,236,.22) 50%, transparent calc(50% + .5px)),
         linear-gradient(-32deg, transparent calc(28% - .5px), rgba(198,255,0,.25) 28%, transparent calc(28% + .5px));
 }
-/* Gutter fragments: centred on the gutter, bleeding off the edge, acid on dark sections and ink on light ones.
-   `translate` is driven by js/main.js for a slight parallax; `transform` only centres them. */
-.orn { position: absolute; z-index: 0; pointer-events: none; color: var(--acid); opacity: .9; overflow: visible; will-change: transform; }
-.orn-l { left: calc(var(--gutter) / 2); transform: translateX(-50%); }
-.orn-r { right: calc(var(--gutter) / 2); transform: translateX(50%); }
-#skills .orn, #about .orn { color: var(--ink); }
-.hero > svg.orn, .contact > svg.orn { position: absolute; z-index: 0; }
-/* Depth: far fragments are dim, near ones sit over the content edge with a long shadow (the only filter, kept cheap) */
-.orn.far { opacity: .4; }
-.orn.near { z-index: 2; filter: drop-shadow(0 30px 30px rgba(0,0,0,.6)); }
-.hero > svg.orn.near, .contact > svg.orn.near { z-index: 2; }
-/* Colour haze: a huge soft ellipse blended into the section */
-.orn.haze { opacity: .28; mix-blend-mode: screen; z-index: 0; }
-#skills .orn.haze, #about .orn.haze { mix-blend-mode: multiply; opacity: .18; }
-/* Slow organic float on the element itself (composited), on top of the scroll parallax carried by `translate` */
-.orn-l { animation: float-l 11s ease-in-out infinite alternate; }
-.orn-r { animation: float-r 14s ease-in-out -5s infinite alternate; }
-.orn.haze { animation-duration: 20s; }
-@keyframes float-l { from { transform: translate(-50%, -6px) rotate(-1.5deg); } to { transform: translate(-50%, 8px) rotate(1.5deg); } }
-@keyframes float-r { from { transform: translate(50%, -6px) rotate(1.5deg); } to { transform: translate(50%, 8px) rotate(-1.5deg); } }
 /* Registration marks */
 .cross { position: absolute; width: 18px; height: 18px; color: currentColor; opacity: .55; pointer-events: none; z-index: 1; }
 .hero .cross { color: var(--acid); }
@@ -428,7 +408,6 @@ main { perspective: 1200px; }
 @media (max-width: 1000px) and (min-width: 761px) {
     .projects { grid-template-columns: repeat(2, 1fr); }
 }
-@media (max-width: 1000px) { .orn { display: none; } }
 
 @media print {
     .loader, .flash, .cursor, .rail, .menu, .menu-btn, .lang, canvas, .hud, .skip { display: none !important; }
@@ -448,7 +427,6 @@ main { perspective: 1200px; }
     .js .hero-name i { transform: none; }
     .js .reveal .marker { clip-path: none; }
     .js .reveal::after, .ring { display: none; }
-    .orn { translate: none !important; animation: none; }
     .menu a { opacity: 1; transform: none; }
     .menu { transition: none; }
 }
