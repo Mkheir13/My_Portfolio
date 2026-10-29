@@ -51,6 +51,7 @@
     <section class="hero">
         <model-viewer id="card3d" src="images/kheir016.glb" alt="Carte 3D Kheir / 016" orientation="0deg 90deg 0deg"
             camera-orbit="-12deg 84deg 110%" field-of-view="26deg" interaction-prompt="none" interpolation-decay="200"
+            auto-rotate auto-rotate-delay="0" rotation-per-second="14deg"
             exposure="1.1" shadow-intensity="0.8" tone-mapping="aces" loading="eager" reveal="auto"></model-viewer>
         <span class="hud hud-tl" aria-hidden="true"></span><span class="hud hud-tr" aria-hidden="true"></span>
         <span class="hud hud-bl" aria-hidden="true"></span><span class="hud hud-br" aria-hidden="true"></span>
@@ -223,8 +224,11 @@
     <section id="about" class="card manifesto reveal" data-side="[04] // ABOUT" data-n="04">
         <svg class="cross" style="right:var(--gutter);top:40px" aria-hidden="true"><use href="#cross"/></svg>
         <div class="about-visual">
-            <img src="images/kheir_data.webp" width="900" height="1200" alt="Affiche Kheir × Data Science : plaque noire, panneaux de verre, halos verts et cyan" loading="lazy">
-            <p class="looking" data-i18n="about.looking">Je recherche un poste de Data Scientist.</p>
+            <div class="tilt">
+                <img src="images/kheir_data.webp" width="900" height="1200" alt="Affiche Kheir × Data Science : plaque noire, panneaux de verre, halos verts et cyan" loading="lazy">
+                <i class="glare" aria-hidden="true"></i>
+                <p class="looking" data-i18n="about.looking">Je recherche un poste de Data Scientist.</p>
+            </div>
         </div>
         <div class="about-copy">
             <h2 class="marker" data-i18n="about.title">À propos</h2>

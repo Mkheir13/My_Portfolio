@@ -167,14 +167,26 @@ document.querySelectorAll("main section, footer[id]").forEach(s => sectionObserv
 const card3d = document.getElementById("card3d");
 if (card3d) {
     addEventListener("scroll", () => { card3d.style.opacity = Math.max(0, 1 - scrollY / innerHeight); }, { passive: true });
+    // The model spins on its own (auto-rotate); the mouse tilts the whole viewer on top of that
     if (matchMedia("(hover: hover)").matches && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
         const hero = document.querySelector(".hero");
         hero.addEventListener("mousemove", e => {
             const r = hero.getBoundingClientRect(), x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
-            card3d.cameraOrbit = `${-12 + x * 24}deg ${84 - y * 14}deg 110%`;
+            card3d.style.transform = `perspective(1200px) rotateY(${(x * 14).toFixed(1)}deg) rotateX(${(-y * 10).toFixed(1)}deg)`;
         });
-        hero.addEventListener("mouseleave", () => { card3d.cameraOrbit = "-12deg 84deg 110%"; });
+        hero.addEventListener("mouseleave", () => { card3d.style.transform = ""; });
     }
+}
+
+// About poster: tilts toward the mouse (±14°), slight lift, a glare spot that follows the pointer.
+const tilt = document.querySelector(".tilt");
+if (tilt && matchMedia("(hover: hover)").matches && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    tilt.addEventListener("mousemove", e => {
+        const r = tilt.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+        tilt.style.transform = `rotateY(${((x - .5) * 28).toFixed(1)}deg) rotateX(${((.5 - y) * 28).toFixed(1)}deg) scale(1.03)`;
+        tilt.style.setProperty("--gx", `${(x * 100).toFixed(1)}%`); tilt.style.setProperty("--gy", `${(y * 100).toFixed(1)}%`);
+    });
+    tilt.addEventListener("mouseleave", () => { tilt.style.transform = ""; });
 }
 
 // Preloader: counts to 100 in under a second, then slides away.
