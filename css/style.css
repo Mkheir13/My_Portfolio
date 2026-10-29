@@ -12,6 +12,7 @@
     --ink: #0E0E0E;
     --ink-deep: #2D3538;
     --paper: #E8E6E1;
+    /* Alternative palettes, switched with the "palette" command (data-palette on <html>) */
     /* Fine grain, on the paper and acid surfaces only */
     --grain-light: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .16 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     --dots: radial-gradient(rgba(255,255,255,.09) 1px, transparent 1.4px);
@@ -50,6 +51,8 @@ ul, ol { list-style: none; }
 main { counter-reset: section; }
 h1, h2, h3, .words { font-family: var(--display); font-weight: 900; text-transform: uppercase; }
 :focus-visible { outline: 2px solid var(--acid); outline-offset: 3px; }
+.cmd input:focus-visible { outline: none; }
+#skills :focus-visible, #about :focus-visible { outline-color: var(--ink); }
 .skip { position: fixed; top: 8px; left: 8px; z-index: 70; padding: 10px 14px; background: var(--acid); color: var(--ink); font: 700 11px var(--mono); letter-spacing: 2px; text-transform: uppercase; transform: translateY(-200%); }
 .skip:focus { transform: none; }
 
@@ -132,7 +135,7 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; text-transfo
 .btn-main:hover { background: var(--ink); color: var(--acid); border-color: var(--acid); }
 
 /* HUD corners, registration marks, canvases */
-#fx, #fx2 { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; }
+#fx2 { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; }
 .hud { position: absolute; width: 22px; height: 22px; border: 1px solid var(--acid); z-index: 1; }
 .hud-tl { top: 14px; left: 14px; border-right: 0; border-bottom: 0; }
 .hud-tr { top: 14px; right: 14px; border-left: 0; border-bottom: 0; }
@@ -143,17 +146,12 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; text-transfo
 /* Data readouts: typewriter lines (js/fx.js) and a slow tape of training metrics along the bottom */
 .readout { position: absolute; top: 46%; z-index: 1; font: 700 10px/1 var(--mono); letter-spacing: 2px; color: var(--acid); opacity: .8; }
 .readout-1 { right: var(--gutter); }
-.readout-2 { left: var(--gutter); }
 .hero > p.readout, .hero > div.tape { position: absolute; }
 .tape { position: absolute; left: 0; right: 0; bottom: 0; z-index: 1; overflow: hidden; white-space: nowrap; border-top: 1px solid var(--line); padding: 6px 0; font: 700 10px/1 var(--mono); letter-spacing: 2px; text-transform: uppercase; color: var(--grey); }
 .tape span { display: inline-block; animation: tape 60s linear infinite; }
 @keyframes tape { to { transform: translateX(-100%); } }
 
 /* Sparkline in each project card, drawn in the band colour when the card appears */
-.spark { width: 100%; height: 24px; overflow: visible; }
-.spark polyline { fill: none; stroke: var(--band, var(--acid)); stroke-width: 1.5; stroke-dasharray: 200; stroke-dashoffset: 200; }
-.reveal.in .spark polyline { animation: draw 600ms steps(12) forwards; animation-delay: calc(var(--i) * 40ms + 100ms); }
-@keyframes draw { to { stroke-dashoffset: 0; } }
 
 /* Training log ticking inside one of the stats wall's black tiles (js/main.js) */
 .wall .log { align-self: end; margin: 0; font: 400 10px/1.7 var(--mono); letter-spacing: 1px; color: var(--acid); opacity: .75; white-space: pre; overflow: hidden; }
@@ -192,7 +190,7 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; text-transfo
 
 /* Stats wall: acid plates with a cut corner, numbers that count up, black voids staggered between */
 .stats { position: relative; background: var(--grain-light), var(--scanlines), var(--ink); }
-.wall { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 1px; background: rgba(198,255,0,.35); counter-reset: tile; }
+.wall { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 1px; background: rgb(from var(--acid) r g b /.35); counter-reset: tile; }
 .wall li { position: relative; aspect-ratio: 1; padding: 24px; display: grid; align-content: end; gap: 8px; color: var(--ink); background: var(--grain), var(--hairlines), var(--acid); clip-path: polygon(0 0, 100% 0, 100% calc(100% - 28px), calc(100% - 28px) 100%, 0 100%); }
 .wall li:not(.void)::before { content: "[S.0" counter(tile) "]"; counter-increment: tile; position: absolute; top: 16px; left: 24px; color: rgba(14,14,14,.6); }
 .wall .void { background: var(--ink); clip-path: none; }
@@ -220,7 +218,7 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; text-transfo
 .projects { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; counter-reset: card; }
 .project {
     position: relative; display: grid; align-content: start; gap: 10px; padding: 48px 24px 24px;
-    color: var(--white); border: 1px solid rgba(198,255,0,.2); border-top: 6px solid var(--band, var(--acid));
+    color: var(--white); border: 1px solid rgb(from var(--acid) r g b /.2); border-top: 6px solid var(--band, var(--acid));
     background: var(--grain-light), var(--ink);
     /* Machined plate: cut top-right and bottom-left corners, a notch on the right edge */
     clip-path: polygon(0 0, calc(100% - 24px) 0, 100% 24px, 100% 42%, calc(100% - 8px) calc(42% + 8px), calc(100% - 8px) calc(58% - 8px), 100% 58%, 100% 100%, 24px 100%, 0 calc(100% - 24px));
@@ -236,7 +234,10 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; text-transfo
 .project h3 { font-size: 14px; }
 .project p:not(.stat):not(.stack) { max-width: 40ch; color: var(--grey); font: 15px/1.5 Inter, sans-serif; }
 .project .stack { color: var(--white); }
-.project a { margin-top: auto; color: var(--acid); }
+.project a { margin-top: auto; color: var(--acid); text-underline-offset: 4px; }
+.project a:hover { text-decoration: underline; }
+.cmd-hint { cursor: pointer; transition: color var(--quick), border-color var(--quick); }
+.cmd-hint:hover { color: var(--acid); border-color: var(--acid); }
 .project a::after { content: ""; position: absolute; inset: 0; }
 
 /* Skills on paper: one ruled row per category, big category name on the left, chips on the right */
@@ -353,7 +354,7 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; text-transfo
 @media (max-width: 1000px) and (min-width: 761px) { .projects { grid-template-columns: repeat(2, 1fr); } }
 
 @media print {
-    .loader, .flash, .cursor, .rail, .menu, .menu-btn, .lang, canvas, .hud, .skip { display: none !important; }
+    .loader, .flash, .cursor, .rail, .menu, .menu-btn, .lang, canvas, .hud, .skip, .badge, .cmd, .cmd-hint, .cursor-xy { display: none !important; }
     .js .reveal, .js .reveal *, .statement .w, .hero > *, .hero-name i { opacity: 1 !important; transform: none !important; animation: none !important; clip-path: none !important; }
     .js .reveal::after { display: none; }
     .hero { min-height: 0; }
@@ -388,10 +389,10 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; text-transfo
 .cm { display: grid; grid-template-columns: repeat(16, 1fr); grid-auto-rows: 1fr; gap: 1px; }
 .cm i { background: rgba(255,255,255,.05); }
 .cm i.low { background: rgba(255,255,255,.12); animation: cell 6s steps(1) infinite; animation-delay: calc(var(--i) * -37ms); }
-.cm i.mid { background: rgba(198,255,0,.35); animation: cell 5s steps(1) infinite; animation-delay: calc(var(--i) * -53ms); }
+.cm i.mid { background: rgb(from var(--acid) r g b /.35); animation: cell 5s steps(1) infinite; animation-delay: calc(var(--i) * -53ms); }
 .cm i.on { animation-name: cell-on; }
 @keyframes cell { 0%, 100% { opacity: 1; } 30% { opacity: .35; } 60% { opacity: .8; } }
-@keyframes cell-on { 0%, 100% { background: var(--acid); } 50% { background: rgba(198,255,0,.55); } }
+@keyframes cell-on { 0%, 100% { background: var(--acid); } 50% { background: rgb(from var(--acid) r g b /.55); } }
 .loss { width: 100%; height: 100%; }
 .loss polyline { fill: none; vector-effect: non-scaling-stroke; }
 .loss .grid { fill: none; stroke: rgba(255,255,255,.12); stroke-width: 1; vector-effect: non-scaling-stroke; }
@@ -458,7 +459,7 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; text-transfo
 .case { max-width: 960px; margin: 0 auto; padding: calc(var(--nav-h) + 64px) var(--gutter) 96px; }
 .case-head h1 { margin: 8px 0 16px; font-size: clamp(2.4rem, 7vw, 5.5rem); line-height: .95; letter-spacing: -.03em; }
 .case-sub { max-width: 60ch; margin: 0 0 32px; font: 17px/1.5 Inter, sans-serif; color: var(--grey); }
-.kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; margin: 0 0 80px; padding: 0; list-style: none; background: rgba(198,255,0,.35); }
+.kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; margin: 0 0 80px; padding: 0; list-style: none; background: rgb(from var(--acid) r g b /.35); }
 .kpis li { padding: 20px 18px; background: var(--grain), var(--hairlines), var(--acid); color: var(--ink); clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 0 100%); }
 .kpis b { display: block; font: 900 clamp(26px, 3.4vw, 40px)/1 var(--display); font-variant-numeric: tabular-nums; }
 .kpis b em { font-style: normal; font-size: .5em; }
@@ -476,10 +477,10 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; text-transfo
 .cs-table { width: 100%; margin: 0 0 24px; border-collapse: collapse; font: 700 12px/1.4 var(--mono); letter-spacing: .04em; }
 .cs-table th { padding: 8px 12px; text-align: left; color: var(--grey); text-transform: uppercase; border-bottom: 1px solid var(--acid); }
 .cs-table td { padding: 10px 12px; border-bottom: 1px solid var(--line); font-variant-numeric: tabular-nums; }
-.cs-table .hi td { color: var(--acid); background: rgba(198,255,0,.06); }
+.cs-table .hi td { color: var(--acid); background: rgb(from var(--acid) r g b /.06); }
 .cmx { display: grid; grid-template-columns: 84px repeat(6, 1fr); gap: 2px; max-width: 640px; margin: 0 0 8px; font: 700 10px/1 var(--mono); letter-spacing: .04em; text-transform: uppercase; }
 .cmx i { display: flex; align-items: center; padding: 6px; color: var(--grey); font-style: normal; }
-.cmx b { display: grid; place-items: center; aspect-ratio: 1; background: rgba(198,255,0, calc(.06 + var(--a) * .9)); color: rgb(from var(--ink) r g b / calc(.3 + var(--a))); font: 900 14px var(--display); }
+.cmx b { display: grid; place-items: center; aspect-ratio: 1; background: rgb(from var(--acid) r g b / calc(.06 + var(--a) * .9)); color: rgb(from var(--ink) r g b / calc(.3 + var(--a))); font: 900 14px var(--display); }
 .cmx b.d { outline: 1px solid var(--acid); outline-offset: -1px; }
 .cs-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin: 32px 0 24px; }
 .bars { margin: 0; padding: 0; list-style: none; font: 700 11px/1.3 var(--mono); letter-spacing: .06em; }
@@ -489,7 +490,7 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; text-transfo
 .bars b { text-align: right; color: var(--white); font-variant-numeric: tabular-nums; }
 .case-foot { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; padding-top: 48px; border-top: 1px solid var(--acid); }
 .case-foot .tag { margin-left: auto; font: 700 10px var(--mono); letter-spacing: 2px; color: var(--grey); }
-@media (max-width: 760px) { .kpis { grid-template-columns: 1fr 1fr; } .cs-cols { grid-template-columns: 1fr; } .cmx { grid-template-columns: 64px repeat(6, 1fr); } .bars li { grid-template-columns: 110px 1fr 44px; } .case-body .nav .meta { display: none; } }
+@media (max-width: 760px) { .kpis { grid-template-columns: 1fr 1fr; } .cs-table { display: block; overflow-x: auto; white-space: nowrap; } .cs-cols { grid-template-columns: 1fr; } .cmx { grid-template-columns: 52px repeat(6, minmax(0, 1fr)); font-size: 7px; letter-spacing: 0; } .cmx i { padding: 4px 2px; overflow: hidden; } .cmx b { font-size: 11px; } .bars li { grid-template-columns: 110px 1fr 44px; } .case-body .nav .meta { display: none; } }
 
 /* Lanyard badges (badges.blend): hang from the top edge of a section at the right, sway, turn toward the mouse (js/main.js) */
 .badge { position: absolute; right: calc(var(--gutter) + 40px); top: 0; z-index: 3; width: 300px; height: 600px; pointer-events: none; background: transparent; --poster-color: transparent;
@@ -503,7 +504,7 @@ body { overflow-x: clip; }
 #badge-kheir::before { height: 400px; }
 @keyframes sway { 0%, 100% { rotate: -8.5deg; } 50% { rotate: -5.5deg; } }
 @media (max-width: 1000px) { .badge { display: none; } }
-@media (prefers-reduced-motion: reduce) { .badge { animation: none; } }
+@media (prefers-reduced-motion: reduce) { .badge { animation: none; rotate: -7deg; } #badge-kheir { rotate: 90deg; } .jobs::after { transition: none; } }
 
 /* Under the wide-screen zoom a viewer's canvas is rendered at CSS size then upscaled: give it the physical size and zoom it back down */
 /* always on: with --z = 1 these are identities */
@@ -514,3 +515,9 @@ body { overflow-x: clip; }
     #badge-data { top: calc(-260px * var(--z)); }
     .badge::before { left: calc(50% - 11px * var(--z)); width: calc(22px * var(--z)); height: calc(700px * var(--z)); }
     #badge-kheir::before { height: calc(400px * var(--z)); }
+
+/* Palettes: one neutral + one fluo each. The 3D assets stay acid green, so the fluo is the only thing that moves. */
+[data-palette="ember"] { --acid: #FF5A1F; --blue: #2F3DFF; --magenta: #00E5FF; --ink: #0B0B0C; --ink-deep: #26282E; --paper: #EFE9DF; }
+[data-palette="cyan"] { --acid: #00F0FF; --blue: #5B6CFF; --magenta: #FF2BD6; --ink: #07090C; --ink-deep: #1B2630; --paper: #E6ECEE; }
+[data-palette="safety"] { --acid: #FFE600; --blue: #2F3DFF; --magenta: #FF2BD6; --ink: #0E0E0E; --ink-deep: #2A2A2A; --paper: #EDEBE4; }
+[data-palette="mint"] { --acid: #7CFFB2; --blue: #3B5BFF; --magenta: #FF5FA2; --ink: #0A0F0D; --ink-deep: #1F2A26; --paper: #E7EDE8; }

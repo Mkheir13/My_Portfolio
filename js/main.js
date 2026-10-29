@@ -82,6 +82,10 @@ document.getElementById("lang").addEventListener("click", () =>
 
 // Reveal cards as they scroll into view (hidden only when JS runs, so content never stays invisible).
 document.documentElement.classList.add("js");
+{   // palette from ?palette= or the last choice
+    const p = new URLSearchParams(location.search).get("palette") || (() => { try { return localStorage.getItem("palette"); } catch { return null; } })();
+    if (p && p !== "acid") document.documentElement.dataset.palette = p;
+}
 
 // Wide screens: zoom the page so the layout is always that of a 1536px-wide laptop, whatever the screen or browser zoom.
 const fit = () => {
@@ -177,6 +181,7 @@ document.querySelectorAll("main section, footer[id]").forEach(s => sectionObserv
 // Hero: the 3D card fades as the hero scrolls away, and turns a little toward the mouse.
 const card3d = document.getElementById("card3d");
 if (card3d) {
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) card3d.removeAttribute("auto-rotate");
     addEventListener("scroll", () => { card3d.style.opacity = Math.max(0, 1 - scrollY / innerHeight); }, { passive: true });
     // The model spins on its own (auto-rotate); the mouse tilts the whole viewer on top of that
     if (matchMedia("(hover: hover)").matches && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
@@ -221,14 +226,17 @@ if (loader) {
 const cmd = document.getElementById("cmd"), cmdIn = document.getElementById("cmd-in"), cmdOut = cmd?.querySelector("output");
 if (cmd) {
     const sections = ["home", "stats", "projects", "skills", "parcours", "about", "contact"];
+    const palettes = ["acid", "ember", "cyan", "safety", "mint"];
+    const setPalette = p => { document.documentElement.dataset.palette = p === "acid" ? "" : p; try { localStorage.setItem("palette", p); } catch {} };
     const run = line => {
         const [verb, arg] = line.trim().toLowerCase().split(/\s+/);
         const go = id => { const el = document.getElementById(id === "home" ? "top" : id) || document.querySelector(id === "home" ? ".hero" : "#" + id); if (el) { el.scrollIntoView(); return "> " + id; } return "> ?" + id; };
         if (!verb) return "";
-        if (verb === "help") return "> " + ["go <section>", "lang fr|en", "cv", "mail", "github"].join(" · ") + " · " + sections.join(" ");
+        if (verb === "help") return "> " + ["go <section>", "lang fr|en", "palette <name>", "cv", "mail", "github"].join(" · ") + " · " + sections.join(" ");
         if (verb === "go" && arg) return go(arg);
         if (sections.includes(verb)) return go(verb);
         if (verb === "lang" && (arg === "fr" || arg === "en")) { setLang(arg); return "> lang " + arg; }
+        if (verb === "palette") { if (palettes.includes(arg)) { setPalette(arg); return "> palette " + arg; } return "> palette " + palettes.join(" | "); }
         if (verb === "cv") { location.href = document.querySelector(".btn-main").href; return "> cv"; }
         if (verb === "mail") { location.href = document.querySelector('a[href^="mailto:"]').href; return "> mail"; }
         if (verb === "github") { open("https://github.com/Mkheir13", "_blank", "noopener"); return "> github"; }
@@ -245,7 +253,7 @@ if (cmd) {
 }
 
 // Project key numbers count up from 0 on hover, 400ms in 8 steps.
-document.querySelectorAll(".project .kpi b").forEach(b => {
+if (!matchMedia("(prefers-reduced-motion: reduce)").matches) document.querySelectorAll(".project .kpi b").forEach(b => {
     const v = parseFloat(b.dataset.val), d = +b.dataset.dec, sign = b.dataset.sign;
     b.closest(".project").addEventListener("mouseenter", () => {
         let k = 0;
