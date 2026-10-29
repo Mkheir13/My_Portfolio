@@ -98,8 +98,9 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
     display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: auto 1fr auto; row-gap: 24px;
     padding: 48px var(--gutter); background: var(--ink);
 }
-.hero > :not(canvas):not(.hud) { position: relative; z-index: 2; }
-#fx { opacity: .6; }
+.hero > :not(model-viewer):not(.hud) { position: relative; z-index: 2; }
+/* The 3D card fills the hero behind the text; wheel and touch pass through so the page keeps scrolling */
+#card3d { position: absolute; top: 0; bottom: 0; left: 38%; width: 62%; height: 100%; z-index: 0; pointer-events: none; --poster-color: transparent; }
 .hero-top { grid-column: 1; grid-row: 1; }
 .hero-top::after { content: ""; display: block; width: 60px; height: 6px; margin-top: 16px; background: var(--hatch); color: var(--acid); }
 .hey { display: block; margin-bottom: 12px; color: var(--grey); }
@@ -135,6 +136,7 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
 .readout { position: absolute; top: 46%; z-index: 1; font: 700 10px/1 var(--mono); letter-spacing: 2px; color: var(--acid); opacity: .8; }
 .readout-1 { right: var(--gutter); }
 .readout-2 { left: var(--gutter); }
+.hero > p.readout, .hero > div.tape { position: absolute; }
 .tape { position: absolute; left: 0; right: 0; bottom: 0; z-index: 1; overflow: hidden; white-space: nowrap; border-top: 1px solid var(--line); padding: 6px 0; font: 700 10px/1 var(--mono); letter-spacing: 2px; text-transform: uppercase; color: var(--grey); }
 .tape span { display: inline-block; animation: tape 60s linear infinite; }
 @keyframes tape { to { transform: translateX(-100%); } }
@@ -257,8 +259,10 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
 
 /* About as a manifesto: acid column sticky on the left, a big statement that decodes word by word on the right */
 .manifesto { display: grid; grid-template-columns: 1fr 2fr; gap: 48px; align-items: start; }
-.about-visual { position: sticky; z-index: 1; top: calc(var(--nav-h) + 24px); min-height: 70vh; display: flex; flex-direction: column; justify-content: space-between; align-items: flex-start; gap: 48px; padding: 48px; background: var(--blue); color: var(--white); }
-.words { font-size: clamp(34px, 3vw, 48px); line-height: 1.05; }
+/* The poster render, sticky, the job badge pinned over its bottom-left corner */
+.about-visual { position: sticky; z-index: 1; top: calc(var(--nav-h) + 24px); }
+.about-visual img { display: block; width: 100%; height: auto; border: 1px solid var(--ink); }
+.about-visual .looking { position: absolute; left: 16px; bottom: 16px; }
 .statement { margin-bottom: 40px; font: 900 clamp(28px, 4.4vw, 72px)/1.08 var(--display); font-stretch: 75%; text-transform: uppercase; text-align: justify; letter-spacing: -.01em; }
 .statement .w { opacity: .22; transition: opacity 100ms steps(2); }
 .statement .w.on { opacity: 1; }
@@ -319,6 +323,7 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
 @media (max-width: 760px) {
     :root { --gutter: 20px; }
     .rail, .card[data-n]::before, .cross, .contact::after, .readout { display: none; }
+    #card3d { left: 0; width: 100%; opacity: .5; }
     .hero { grid-template-columns: 1fr; grid-template-rows: auto 1fr auto; padding: 32px 20px; gap: 20px; }
     .hero-top, .hero-cta, .hero-name { grid-column: 1; }
     .hero-cta { grid-row: 2; justify-self: start; justify-content: flex-start; }
@@ -334,7 +339,7 @@ h1, h2, h3, .words { font-family: var(--display); font-weight: 900; font-stretch
     .featured .stat { grid-row: auto; font-size: 56px; }
     .jobs li { grid-template-columns: 1fr; gap: 10px; }
     .jobs h3, .skill-row h3 { font-size: 28px; }
-    .about-visual { position: static; min-height: 0; gap: 24px; padding: 32px 24px; }
+    .about-visual { position: static; }
     .marker { font-size: 40px; letter-spacing: -1px; margin-bottom: 32px; }
     .contact em { white-space: normal; }
 }
