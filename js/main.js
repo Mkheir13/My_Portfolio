@@ -131,8 +131,8 @@ const counters = new IntersectionObserver(entries => entries.forEach(e => {
     counters.unobserve(e.target);
     const el = e.target, target = parseFloat(el.dataset.count), decimals = (el.dataset.count.split(".")[1] || "").length, t0 = performance.now();
     const step = now => {
-        const p = Math.min(1, (now - t0) / 1200);
-        el.textContent = (target * (1 - Math.pow(1 - p, 3))).toFixed(decimals);
+        const p = Math.min(1, (now - t0) / 600);
+        el.textContent = (target * p).toFixed(decimals);
         if (p < 1) requestAnimationFrame(step);
     };
     requestAnimationFrame(step);
@@ -154,24 +154,21 @@ const links = [...document.querySelectorAll(".menu a")], where = document.getEle
 const sectionObserver = new IntersectionObserver(entries => entries.forEach(e => {
     if (!e.isIntersecting) return;
     links.forEach(a => a.classList.toggle("active", a.getAttribute("href") === "#" + e.target.id));
-    const label = e.target.dataset.side || "SEC_00 // HOME";
+    const label = e.target.dataset.side || "[00] // HOME";
     if (where.textContent !== label) scramble(where, label);
 }), { rootMargin: "-40% 0px -55% 0px" });
 document.querySelectorAll("main section, footer[id]").forEach(s => sectionObserver.observe(s));
 
-// Hero: the scatter fades and the name drifts up at a quarter of the scroll speed.
-const fx = document.getElementById("fx"), heroName = document.querySelector(".hero-name");
-addEventListener("scroll", () => {
-    fx.style.opacity = Math.max(0, .7 - scrollY / innerHeight);
-    if (scrollY < innerHeight) heroName.style.translate = `0 ${-scrollY * .25}px`;
-}, { passive: true });
+// Hero: the scatter fades as the hero scrolls away.
+const fx = document.getElementById("fx");
+addEventListener("scroll", () => { fx.style.opacity = Math.max(0, .6 - scrollY / innerHeight); }, { passive: true });
 
 // Preloader: counts to 100 in under a second, then slides away.
 const loader = document.querySelector(".loader"), count = loader?.querySelector(".count");
 if (loader) {
     let n = 0;
     const tick = setInterval(() => {
-        n = Math.min(100, n + 8 + Math.random() * 10); count.textContent = Math.floor(n);
+        n = Math.min(100, n + 12 + Math.random() * 12); count.textContent = Math.floor(n);
         if (n >= 100) { clearInterval(tick); loader.classList.add("done"); document.documentElement.classList.add("ready"); }
     }, 40);
 }
@@ -197,12 +194,7 @@ document.getElementById("lang").addEventListener("click", splitWords);
 const cursor = document.querySelector(".cursor");
 if (cursor && matchMedia("(hover: hover)").matches) {
     document.documentElement.classList.add("has-cursor");
-    const ring = document.querySelector(".ring");
-    let mx = 0, my = 0, rx = 0, ry = 0;
-    addEventListener("mousemove", e => { mx = e.clientX; my = e.clientY; cursor.style.left = mx + "px"; cursor.style.top = my + "px"; });
-    // The ring eases toward the dot (12% of the gap per frame)
-    const follow = () => { rx += (mx - rx) * .12; ry += (my - ry) * .12; ring.style.left = rx + "px"; ring.style.top = ry + "px"; requestAnimationFrame(follow); };
-    follow();
+    addEventListener("mousemove", e => { cursor.style.left = e.clientX + "px"; cursor.style.top = e.clientY + "px"; });
     document.querySelectorAll("a, button, .chips li, .project, .wall li").forEach(el => {
         el.addEventListener("mouseenter", () => cursor.classList.add("big"));
         el.addEventListener("mouseleave", () => cursor.classList.remove("big"));
